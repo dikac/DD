@@ -29,9 +29,12 @@
     <script src="js/tinymce_4.8.3/tinymce/js/tinymce/tinymce.min.js"></script>
 
 
-    <script defer="defer" src="js/dragdrop.js"></script>
+    <script  src="js/dragdrop.js"></script>
     <link rel="stylesheet" href="css/dragdrop.css" media="all">
 
+    <script defer="defer" src="js/dragdrop/row.js"></script>
+
+<!--
 
 
     <script defer="defer" src="js/dragdrop/raw.js"></script>
@@ -58,6 +61,7 @@
     <script defer="defer" src="js/dragdrop/column.js"></script>
     <link rel="stylesheet" href="css/dragdrop/column.css" media="all">
 
+-->
 
 
     <!--<script defer="defer" src="js/dragdrop/delete.js"></script>-->
@@ -97,75 +101,15 @@
 
 <body>
 
-<div class="btn-toolbar " role="toolbar" style="    position: sticky;top:0;z-index: 500">
-    <div class="btn-group ddPanelB ddPanel">
 
 
-    </div>
-</div>
+<div class="dragdrop DDContainer"></div>
 
+<script>
+    $(document).ready(function() {
+        DD.document.init('.dragdrop');
+    });
+</script>
 
-<div style="clear: both"></div>
-
-<div class="DD1 ddContent droppable">
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="btn-toolbar " role="toolbar" style="position: sticky;top:0;z-index: 500">
-    <div class="btn-group ddPanelB ddPanel">
-
-
-    </div>
-</div>
-
-
-<div style="clear: both"></div>
-
-<div class="DD2 ddContent droppable">
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Modal -->
-
-
-
-<div class="modal fade ddAttributeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <textarea class="ddAttributeModalTextarea" style="width: 100%"></textarea>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default ddRawModalCancel" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary ddRawModalSave">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
 </body>
 </html>
