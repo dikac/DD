@@ -1,0 +1,14 @@
+.ddMCEPanel:after {
+    display: block;
+    content : 'text';
+}
+
+.ddMCEContainer::before {
+    content: "text: double click to edit";
+    color: #c2c2c2;
+}
+
+.ddMCEContainer {
+    background-color: #fff;
+    border:  2px dotted #ddd;
+}
