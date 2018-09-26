@@ -18,37 +18,6 @@
 
      };
 
-     // DragDrop.panel.views['column'] = function() {
-     //
-     //     return DragDrop.panel.view(
-     //         [
-     //             panelRender.bind,
-     //             panelRender.style,
-     //         ]
-     //     );
-     // };
-
-     // DragDrop.new.events['column'] = function ()
-     // {
-     //     var on = false;
-     //
-     //     $('.' + panelRender.bind).off('click').click(function (e) {
-     //
-     //         var selector = $('.' + column.bind);
-     //
-     //         if(on) {
-     //
-     //             on = false;
-     //             selector.removeClass(panelRender.render);
-     //
-     //         } else {
-     //
-     //             on = true;
-     //             selector.addClass(panelRender.render);
-     //         }
-     //     });
-     // };
-
      DragDrop.name.views['column' + num] = function(element)
      {
          var e = $(element);

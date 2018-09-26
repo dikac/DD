@@ -170,13 +170,10 @@ DragDrop.droppable = {
 
     bind : function () {
 
-     //   console.log('.' + DragDrop.droppable.classes.bind.main);
-
         $('.' + DragDrop.droppable.classes.bind.main).sortable({
 
-         //   connectWith : '.' + DragDrop.droppable.classes.bind.main,
             tolerance:'pointer',
-           // containment: "parent",
+
             over: function(e, ui) {
 
                 $(e.target).addClass(DragDrop.droppable.classes.bind.hover);
