@@ -1,10 +1,140 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html class="no-js" lang="">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+
+    <script src="./jquery-ui-1.12.1/jquery-3.3.1.min.js"></script>
+    <script src="./jquery-ui-1.12.1/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" href="./css/bootstrap/css/bootstrap.min.css" media="all">
+    <link rel="stylesheet" href="./css/bootstrap/css/bootstrap-theme.min.css" media="all">
+    <link rel="stylesheet" href="./css/dragdrop.css" media="all">
+
+
+
+
+
+    <script src="./css/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="./js/tinymce_4.8.3/tinymce/js/tinymce/tinymce.min.js"></script>
+    <script defer="defer" src="./js/dragdrop.js"></script>
+
+    <script defer="defer" src="./js/dragdrop/raw.js"></script>
+    <link rel="stylesheet" href="./css/dragdrop/raw.css" media="all">
+
+
+    <script defer="defer" src="./js/dragdrop/mce.js"></script>
+    <link rel="stylesheet" href="./css/dragdrop/mce.css" media="all">
+
+
+    <script defer="defer" src="./js/dragdrop/row.js"></script>
+    <link rel="stylesheet" href="./css/dragdrop/row.css" media="all">
+
+
+    <script defer="defer" src="./js/dragdrop/column.js"></script>
+    <link rel="stylesheet" href="./css/dragdrop/column.css" media="all">
+
+
+
+    <script defer="defer" src="./js/dragdrop/delete.js"></script>
+    <link rel="stylesheet" href="./css/dragdrop/delete.css" media="all">
+
+    <style>
+        /*.marker {*/
+
+            /*padding: 5px;*/
+
+        /*}*/
+
+        /*.dd-button {*/
+            /*height: 38px;*/
+            /*width: 38px;*/
+        /*}*/
+
+        /*.ddhover {*/
+             /*background-color:#FCC*/
+        /*}*/
+        /*.panel {*/
+            /*clear: both;*/
+            /*padding: 15px;*/
+            /*margin: 5px; border:red solid 1px;*/
+        /*}*/
+
+        /*.marker2 {padding: 15px; margin: 5px; border:red solid 5px;;}*/
+        /*.panel-item {height: 50px; width: 50px}*/
+        /*.droppable:hover{*/
+            /*background-color:#FCC;*/
+        /*}*/
+
+    </style>
+
+
 </head>
+
 <body>
-Draft
+
+<div class="btn-toolbar " role="toolbar">
+    <div class="btn-group ddPanel">
+
+
+    </div>
+</div>
+
+
+<div style="clear: both"></div>
+
+<div class="ddContainer droppable">
+
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade ddMceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <textarea id="mytextarea"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default ddMceModalCancel" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary ddMceModalSave">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade ddRawModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <textarea class="ddRawModalTextarea" style="width: 100%"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default ddRawModalCancel" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary ddRawModalSave">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
