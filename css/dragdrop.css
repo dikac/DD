@@ -1,0 +1,53 @@
+.row {
+    margin: 0;
+}
+
+
+
+.ddPanelButton {
+    padding: 5px;
+
+    text-align: center;
+    vertical-align: center;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+
+.ddContent {
+    border: 1px solid #ddd;
+    padding: 0px;
+    padding-top: 25px;
+    margin: 10px;
+    position: relative;
+}
+
+.ddContentInner  {
+    /*margin-top: 15px;*/
+    padding: 25px;
+    border: 1px dashed #ddd;;
+}
+
+.ddDroppableHover{
+    background: rgba(0,175,0,0.05);
+    border: 1px solid green;;
+}
+
+.ddControl {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.ddName {
+    color: #c2c2c2;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.ddHidden {
+    display: none;
+}
+
+

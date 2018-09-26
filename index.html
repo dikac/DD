@@ -13,41 +13,55 @@
     <!-- Place favicon.ico in the root directory -->
 
 
-    <script src="./jquery-ui-1.12.1/jquery-3.3.1.min.js"></script>
-    <script src="./jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script src="jquery-ui-1.12.1/jquery-3.3.1.min.js"></script>
+    <script src="jquery-ui-1.12.1/jquery-ui.min.js"></script>
 
-    <link rel="stylesheet" href="./css/bootstrap/css/bootstrap.min.css" media="all">
-    <link rel="stylesheet" href="./css/bootstrap/css/bootstrap-theme.min.css" media="all">
-    <link rel="stylesheet" href="./css/dragdrop.css" media="all">
-
+    <link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css" media="all">
+    <link rel="stylesheet" href="css/bootstrap/css/bootstrap-theme.min.css" media="all">
 
 
 
 
-    <script src="./css/bootstrap/js/bootstrap.min.js"></script>
-
-    <script src="./js/tinymce_4.8.3/tinymce/js/tinymce/tinymce.min.js"></script>
-    <script defer="defer" src="./js/dragdrop.js"></script>
-
-    <script defer="defer" src="./js/dragdrop/raw.js"></script>
-    <link rel="stylesheet" href="./css/dragdrop/raw.css" media="all">
 
 
-    <script defer="defer" src="./js/dragdrop/mce.js"></script>
-    <link rel="stylesheet" href="./css/dragdrop/mce.css" media="all">
+    <script src="css/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="js/tinymce_4.8.3/tinymce/js/tinymce/tinymce.min.js"></script>
 
 
-    <script defer="defer" src="./js/dragdrop/row.js"></script>
-    <link rel="stylesheet" href="./css/dragdrop/row.css" media="all">
-
-
-    <script defer="defer" src="./js/dragdrop/column.js"></script>
-    <link rel="stylesheet" href="./css/dragdrop/column.css" media="all">
+    <script defer="defer" src="js/dragdrop.js"></script>
+    <link rel="stylesheet" href="css/dragdrop.css" media="all">
 
 
 
-    <script defer="defer" src="./js/dragdrop/delete.js"></script>
-    <link rel="stylesheet" href="./css/dragdrop/delete.css" media="all">
+    <script defer="defer" src="js/dragdrop/raw.js"></script>
+    <link rel="stylesheet" href="css/dragdrop/raw.css" media="all">
+
+
+    <script defer="defer" src="js/dragdrop/mce.js"></script>
+    <link rel="stylesheet" href="css/dragdrop/mce.css" media="all">
+
+
+    <script defer="defer" src="js/dragdrop/remove.js"></script>
+    <script defer="defer" src="js/dragdrop/render.js"></script>
+
+
+    <script defer="defer" src="js/dragdrop/attribute.js"></script>
+
+    <script defer="defer" src="js/dragdrop/show.js"></script>
+    <link rel="stylesheet" href="css/dragdrop/show.css" media="all">
+
+    <script defer="defer" src="js/dragdrop/row.js"></script>
+    <link rel="stylesheet" href="css/dragdrop/row.css" media="all">
+
+
+    <script defer="defer" src="js/dragdrop/column.js"></script>
+    <link rel="stylesheet" href="css/dragdrop/column.css" media="all">
+
+
+
+    <!--<script defer="defer" src="js/dragdrop/delete.js"></script>-->
+    <!--<link rel="stylesheet" href="css/dragdrop/delete.css" media="all">-->
 
     <style>
         /*.marker {*/
@@ -82,6 +96,76 @@
 </head>
 
 <body>
-PROTO
+
+<div class="btn-toolbar " role="toolbar" style="    position: sticky;top:0;z-index: 500">
+    <div class="btn-group ddPanelB ddPanel">
+
+
+    </div>
+</div>
+
+
+<div style="clear: both"></div>
+
+<div class="DD1 ddContent droppable">
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="btn-toolbar " role="toolbar" style="position: sticky;top:0;z-index: 500">
+    <div class="btn-group ddPanelB ddPanel">
+
+
+    </div>
+</div>
+
+
+<div style="clear: both"></div>
+
+<div class="DD2 ddContent droppable">
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Modal -->
+
+
+
+<div class="modal fade ddAttributeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <textarea class="ddAttributeModalTextarea" style="width: 100%"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default ddRawModalCancel" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary ddRawModalSave">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
