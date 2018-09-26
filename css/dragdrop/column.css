@@ -1,8 +1,4 @@
 
-.ddColumnContainer {
-
-}
-
 .ddColumnPanelRender::after {
     content: "render";
     display: block;
@@ -14,21 +10,11 @@
     width: 100%;
 }
 
-/*.ddColumnContainer3::before {*/
-    /*content: "column 3";*/
-    /*color: #c2c2c2;*/
-/*}*/
-
 .ddColumnPanel3::after {
     content: "col 3";
     display: block;
 }
 
-
-/*.ddColumnContainer4::before {*/
-    /*content: "column 4";*/
-    /*color: #c2c2c2;*/
-/*}*/
 
 .ddColumnPanel4::after {
     content: "col 4";
