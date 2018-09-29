@@ -1,16 +1,20 @@
 //
-//
-// const DDRow = new DDContainer();
-//
+
+const DDRow = new DDContainer();
+
 //
 // DDRow.item.attribute('class').push('glyphicon glyphicon-unchecked btn btn-default btn-xs');
 // DDRow.item.attribute('style').push('float:right;');
-//
-//
+
+
+
+DD.panel.menus['add'].items.push(new DDItem());
+DD.panel.menus['add'].items.push(22);
+
 //
 // DD.menu.items.push(DDRow.item);
 // DD.menu.items.push(new DDItem('a',[],{'style':['float:left;']}));
-//
+
 // var invoker = new DDViewAbstract('DDRow');
 // invoker.attribute('class').push('glyphicon glyphicon-unchecked btn btn-default btn-xs');
 // DDRow.invoker = invoker;
