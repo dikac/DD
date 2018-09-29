@@ -292,24 +292,39 @@ class DDItem extends DDViewPartAbstract {
 // }
 
 
-
-const DDItemShow = new DDItem();
-DDItemShow.attribute('class');
-
-
-
 const DD = new DDContainer();
 
 
 
-var menu = new DDMenu();
 
 
-menu.items.push(new DDItem('a'));
-menu.items.push(new DDItem('b'));
+
+const DDItemDelete = new DDItem();
+console.log(DDItemDelete);
+DDItemDelete.attribute('class').push('btn btn-danger btn-xs glyphicon-remove glyphicon pull-right');
+DDItemDelete.bind('DDItemDelete');
+DD.update.events['DDItemDelete'] = function() {
+
+};
 
 
-DD.panel.menus.push(menu);
+
+
+DD.panel.menus.push(DDItemDelete);
+DD.panel.menus.push(new DDItem('div', '', {'class':['clearfix']}));
+
+
+//
+//
+//
+// var menu = new DDMenu();
+//
+//
+// menu.items.push(new DDItem());
+// menu.items.push(new DDItem());
+//
+//
+// DD.panel.menus.push(menu);
 
 
 

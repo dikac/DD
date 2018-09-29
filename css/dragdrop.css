@@ -1,7 +1,7 @@
 .DDContainer {
     border: 1px solid #ddd;
     padding: 0px;
-    padding-top: 25px;
+   /* padding-top: 25px;*/
     margin: 10px;
     position: relative;
 }
