@@ -6,13 +6,20 @@
     position: relative;
 }
 
-.DDContainerContent  {
+.DDContent  {
     padding: 25px;
     border: 1px dashed #ddd;;
 }
 
-.DDContainerPanel {
+.DDMenu {
     position: absolute;
     top: 0;
-    right: 0;
+    left: 0;
+    width: 100%;
 }
+
+/*.DDContainerName {*/
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*left: 0;*/
+/*}*/
