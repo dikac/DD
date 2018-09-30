@@ -2,8 +2,13 @@
     border: 1px solid #ddd;
     padding: 0px;
    /* padding-top: 25px;*/
-    margin: 10px;
+    margin: 0px;
     position: relative;
+}
+
+.row {
+    margin: 0px;
+    padding: 0px;
 }
 
 .DDContent  {

@@ -1,6 +1,7 @@
 const DDRow = new DDContainer();
 
 DDRow.panel.menus = DD.panel.menus;
+DDRow.content.attribute('class').push('row');
 
 DDRow.panel.name.content = 'row';
 

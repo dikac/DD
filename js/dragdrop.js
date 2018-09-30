@@ -343,6 +343,7 @@ DD.panel.name.content = 'containerz';
 
 var $new = new DDMenuDropDown();
 $new.name = 'new';
+
 DD.panel.menus['new'] = $new;
 $new.attribute('class').push('pull-left');
 
