@@ -6,6 +6,8 @@ DDRow.content.attribute('class').push('row');
 DDRow.panel.name.content = 'row';
 
 DDRow.item = new DDElementClick('DDRow', 'Row');
+DDRow.attribute('class').push('aaaaaaaaaaaaaa');
+
 DDRow.item.handler = function(jquery) {
 
 

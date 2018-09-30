@@ -12,7 +12,7 @@ class DDElementAbstract  {
         this.$binds = [];
         this.$attributes = {};
 
-        this.bind(this.constructor.identifier());
+
     }
 
 
@@ -56,6 +56,17 @@ class DDElementAbstract  {
     }
 
 
+
+}
+
+class DDElementBind extends DDElementAbstract {
+
+    constructor() {
+
+        super();
+        this.bind(this.constructor.identifier());
+    }
+
     static identifier(selector = false) {
 
         return selector ? '.' + this.name : this.name ;
@@ -70,7 +81,6 @@ class DDElementAbstract  {
 
         return jquery.parents(this.identifier(true)).first();
     }
-
 }
 
 //
@@ -133,7 +143,7 @@ class DDElementAbstract  {
 //     }
 // }
 
-class DDContainer extends DDElementAbstract {
+class DDContainer extends DDElementBind {
 
 
     constructor() {
@@ -175,7 +185,7 @@ class DDContainer extends DDElementAbstract {
 /**
  * Container menu creation
  */
-class DDPanel extends DDElementAbstract {
+class DDPanel extends DDElementBind {
 
 
     constructor() {
@@ -199,7 +209,7 @@ class DDPanel extends DDElementAbstract {
 }
 
 
-class DDContent extends DDElementAbstract {
+class DDContent extends DDElementBind {
 
     setTo(jquery) {
 
@@ -345,7 +355,7 @@ var $new = new DDMenuDropDown();
 $new.name = 'new';
 
 DD.panel.menus['new'] = $new;
-$new.attribute('class').push('pull-left');
+$new.attribute('class').push('pull-left', 'DDMenu');
 
 // $new.items.push();
 
