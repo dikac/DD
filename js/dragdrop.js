@@ -4,65 +4,13 @@
  */
 
 
+class DDElementAbstract  {
 
+    constructor() {
 
-
-
-
-
-function content() {
-
-    this.bind = '';
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class DDElement  {
-
-    constructor(tag = 'div', attributes = {}, binds = []) {
-
-        this.$tag = tag;
+        this.$tag = 'div';
         this.$binds = [];
-        this.$attributes = attributes;
-
-        this.bind(...binds);
+        this.$attributes = {};
 
         this.bind(this.constructor.identifier());
     }
@@ -115,12 +63,12 @@ class DDElement  {
 
     static fromOuter(jquery) {
 
-        return jquery.children(this.identifier(true));
+        return jquery.children(this.identifier(true)).first();
     }
 
     static fromInner(jquery) {
 
-        return jquery.parents(this.identifier(true));
+        return jquery.parents(this.identifier(true)).first();
     }
 
 }
@@ -185,38 +133,26 @@ class DDElement  {
 //     }
 // }
 
-class DDContainer extends DDElement {
+class DDContainer extends DDElementAbstract {
 
-    /**
-     *
-     * @param {array} binds
-     * @param {DDContent} content
-     * @param {DDPanel} panel
-     * @param {DDItem} item
-     * @param classes
-     */
-    constructor(
-        tag = 'div',
-        content = new DDContent,
-        panel = new DDPanel,
-        classes = [],
-        binds = [],
-        item = new DDItem,
-    ) {
 
-        super(tag, classes, binds);
+    constructor() {
 
-        this.content = content;
-        this.item = item;
-        this.panel = panel;
+        super();
+
+        this.content = new DDContent;
+        this.item = new DDElement;
+        this.panel = new DDPanel;
     }
 
 
     static from(jquery) {
 
-        if(jquery.hasClass(this.identifier(true))) {
+       // console.log(this.identifier());
 
-            jquery = jquery.parents(this.identifier(true));
+        if(!jquery.hasClass(this.identifier())) {
+
+            jquery = jquery.parents(this.identifier(true)).first();
         }
 
         return jquery;
@@ -230,7 +166,8 @@ class DDContainer extends DDElement {
     }
 
     inner () {
-        return this.menu.toString() + this.content.toString();
+
+        return this.panel.toString() + this.content.toString();
     }
 }
 
@@ -238,25 +175,20 @@ class DDContainer extends DDElement {
 /**
  * Container menu creation
  */
-class DDPanel extends DDElement {
+class DDPanel extends DDElementAbstract {
 
-    /**
-     *
-     * @param tag
-     * @param menus
-     * @param $class
-     * @param binds
-     */
-    constructor(tag = 'div', menus = {}, $class = [], binds = []) {
 
-        super(tag, $class, binds);
-        this.menus = menus;
+    constructor() {
+
+        super();
+        this.name = new DDElementTitle('default');
+        this.menus = {};
     }
 
     inner() {
 
         var array = Object.values(this.menus);
-        return array.join('');
+        return this.name + array.join('');
     }
 
     setTo(jquery) {
@@ -267,7 +199,7 @@ class DDPanel extends DDElement {
 }
 
 
-class DDContent extends DDElement {
+class DDContent extends DDElementAbstract {
 
     setTo(jquery) {
 
@@ -279,12 +211,12 @@ class DDContent extends DDElement {
 /**
  * Container menu creation
  */
-class DDMenu extends DDElement {
+class DDMenu extends DDElementAbstract {
 
-    constructor(tag = 'div', items = [], $class = [], binds = []) {
+    constructor() {
 
-        super(tag, $class, binds);
-        this.items = items;
+        super();
+        this.items = [];
     }
 
     inner() {
@@ -292,19 +224,37 @@ class DDMenu extends DDElement {
         var array = Object.values(this.items);
         return array.join('');
     }
-
-    // setTo(jquery) {
-    //
-    //     this.constructor.getFrom(jquery).remove();
-    //     jquery.prepend(this.toString());
-    // }
 }
 
-class DDItem extends DDElement {
+class DDMenuDropDown extends DDMenu {
 
-    constructor(tag = 'div', content = '', attributes = {}, binds = []) {
+    constructor() {
+        super();
+        this.name = '';
 
-        super(tag, attributes, binds);
+        this.attribute('class').push("dropdown");
+        this.attribute('data-toggle').push("dropdown");
+    }
+
+    static identifier(selector = false) {
+
+        return DDMenu.identifier(selector);
+    }
+
+    inner() {
+
+        return `<nav class="dropdown-toggle" data-toggle="dropdown" type="button">${this.name}</nav>
+                <div class="dropdown-menu">${super.inner()}</div>`;
+
+        return `<nav  class="dropdown-toggle btn btn-xs btn-default"  data-toggle="dropdown" type="button">${this.name}</nav>
+                <div class="dropdown-menu">${super.inner()}</div>`;
+    }
+}
+
+class DDElement extends DDElementAbstract {
+
+    constructor(content = '') {
+        super();
         this.content = content;
     }
 
@@ -312,44 +262,112 @@ class DDItem extends DDElement {
 
         return this.content;
     }
-    //
-    //
-    // setTo(jquery) {
-    //
-    //     this.constructor.getFrom(jquery).remove();
-    //     jquery.prepend(this.toString());
-    // }
 }
 
-//
-// function removeFrom(Jquery) {
-//
-//     return Jquery.children(this.selector()).remove();
-// }
+class DDElementClick extends DDElement {
 
+    constructor(bind, content = '') {
+
+        super(content);
+
+        this.bind(bind);
+        this.$click = bind;
+        this.update();
+
+        this.handler = function (Jquery) {
+
+        };
+
+        var self = this;
+
+        DD.update.events['click' + bind] = function () {
+
+            self.update();
+        };
+    }
+
+    inner () {
+
+        return this.content;
+    }
+
+    update() {
+
+        var self = this;
+
+        $('.' + this.$click).off('click').click(function (e) {
+
+            self.handler(e);
+        });
+    }
+}
+
+class DDElementTitle extends DDElement {
+
+    constructor(content = '') {
+        super(content);
+
+        this.attribute('class').push('pull-left');
+    }
+
+
+}
 
 const DD = new DDContainer();
 
+DD.init = function (selector) {
+
+    var selector = $(selector);
+   // console.log(selector.hasClass(this.panel.constructor.identifier(true)));
 
 
-DD.document = {
+    if(!selector.hasClass(this.panel.constructor.identifier(true))) {
 
-    init : function (selector) {
-
-        var target = $(selector);
-
-        if(target.length <= 1) {
-
-            // DD.name.setTo(target);
-            DD.panel.setTo(target);
-            DD.content.setTo(target);
-        }
-
-        DD.update.trigger();
+        this.panel.setTo(selector);
     }
+
+    if(!selector.hasClass(this.content.constructor.identifier(true))) {
+
+        this.content.setTo(selector);
+    }
+
+    DD.update.trigger();
+
 };
 
 
+DD.panel.name.content = 'containerz';
+
+
+
+
+var $new = new DDMenuDropDown();
+$new.name = 'new';
+DD.panel.menus['new'] = $new;
+$new.attribute('class').push('pull-left');
+
+// $new.items.push();
+
+//
+//
+// DD.document = {
+//
+//     init : function (selector) {
+//
+//         var target = $(selector);
+//
+//         if(target.length <= 1) {
+//
+//             // DD.name.setTo(target);
+//             DD.panel.setTo(target);
+//             DD.content.setTo(target);
+//         }
+//
+//         DD.update.trigger();
+//     }
+// };
+//
+//
 DD.update = {
 
     events: {},
@@ -365,19 +383,28 @@ DD.update = {
 };
 
 
+DD.update.events['sortable'] = function () {
 
+    $(DDContent.identifier(true)).sortable({
+        containment: "parent",
+        tolerance:'pointer',
 
-
-
-DD.panel.menus['add'] = new DDMenu();
-
-
+    }).disableSelection();
+};
 
 
 
 //
 //
-// const DDItemDelete = new DDItem();
+// DD.panel.menus['add'] = new DDMenu();
+//
+//
+//
+
+
+//
+//
+// const DDItemDelete = new DDElement();
 // //console.log(DDItemDelete);
 // DDItemDelete.attribute('class').push('btn btn-danger btn-xs glyphicon-remove glyphicon pull-right');
 // DDItemDelete.bind('DDItemDelete');
@@ -396,7 +423,7 @@ DD.panel.menus['add'] = new DDMenu();
 //
 //
 // DD.panel.menus.push(DDItemDelete);
-// DD.panel.menus.push(new DDItem('div', '', {'class':['clearfix']}));
+// DD.panel.menus.push(new DDElement('div', '', {'class':['clearfix']}));
 //
 
 //
@@ -405,8 +432,8 @@ DD.panel.menus['add'] = new DDMenu();
 // var menu = new DDMenu();
 //
 //
-// menu.items.push(new DDItem());
-// menu.items.push(new DDItem());
+// menu.items.push(new DDElement());
+// menu.items.push(new DDElement());
 //
 //
 // DD.panel.menus.push(menu);
@@ -422,7 +449,7 @@ DD.panel.menus['add'] = new DDMenu();
 
 // //DD.binds.push('DDContainer');
 // console.log(DD.menu.items);
-// DD.menu.items['title'] = new DDItem('content', [], {'style':['float:left']});
+// DD.menu.items['title'] = new DDElement('content', [], {'style':['float:left']});
 
 
 //
