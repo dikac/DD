@@ -659,11 +659,11 @@ var i,
 	// http://www.w3.org/TR/CSS21/syndata.html#value-def-identifier
 	identifier = "(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",
 
-	// Attribute selectors: http://www.w3.org/TR/selectors/#attribute-selectors
+	// DDAttribute selectors: http://www.w3.org/TR/selectors/#attribute-selectors
 	attributes = "\\[" + whitespace + "*(" + identifier + ")(?:" + whitespace +
 		// Operator (capture 2)
 		"*([*^$|!~]?=)" + whitespace +
-		// "Attribute values must be CSS identifiers [capture 5] or strings [capture 3 or capture 4]"
+		// "DDAttribute values must be CSS identifiers [capture 5] or strings [capture 3 or capture 4]"
 		"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|(" + identifier + "))|)" + whitespace +
 		"*\\]",
 
@@ -955,7 +955,7 @@ function assert( fn ) {
 
 /**
  * Adds the same handler for all of the specified attrs
- * @param {String} attrs Pipe-separated list of attributes
+ * @param {String} attrs Pipe-separated list of attribute
  * @param {Function} handler The method that will be applied
  */
 function addHandle( attrs, handler ) {
@@ -1100,7 +1100,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 	---------------------------------------------------------------------- */
 
 	// Support: IE<8
-	// Verify that getAttribute really returns attributes and not properties
+	// Verify that getAttribute really returns attribute and not properties
 	// (excepting IE8 booleans)
 	support.attributes = assert(function( div ) {
 		div.className = "i";
@@ -1233,7 +1233,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 			}
 
 			// Support: IE8
-			// Boolean attributes and "value" are not treated correctly
+			// Boolean attribute and "value" are not treated correctly
 			if ( !div.querySelectorAll("[selected]").length ) {
 				rbuggyQSA.push( "\\[" + whitespace + "*(?:value|" + booleans + ")" );
 			}
@@ -1260,7 +1260,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 
 		assert(function( div ) {
 			// Support: Windows 8 Native Apps
-			// The type and name attributes are restricted during .innerHTML assignment
+			// The type and name attribute are restricted during .innerHTML assignment
 			var input = document.createElement("input");
 			input.setAttribute( "type", "hidden" );
 			div.appendChild( input ).setAttribute( "name", "D" );
@@ -1995,7 +1995,7 @@ Expr = Sizzle.selectors = {
 			// http://www.w3.org/TR/selectors/#empty-pseudo
 			// :empty is negated by element (1) or content nodes (text: 3; cdata: 4; entity ref: 5),
 			//   but not by others (comment: 8; processing instruction: 7; etc.)
-			// nodeType < 6 works because attributes (2) do not appear as children
+			// nodeType < 6 works because attribute (2) do not appear as children
 			for ( elem = elem.firstChild; elem; elem = elem.nextSibling ) {
 				if ( elem.nodeType < 6 ) {
 					return false;
@@ -2911,7 +2911,7 @@ var rootjQuery,
 							if ( jQuery.isFunction( this[ match ] ) ) {
 								this[ match ]( context[ match ] );
 
-							// ...and otherwise set as attributes
+							// ...and otherwise set as attribute
 							} else {
 								this.attr( match, context[ match ] );
 							}
@@ -4513,7 +4513,7 @@ function createSafeFragment( document ) {
 	support.noCloneEvent = !!div.addEventListener;
 
 	// Support: IE<9
-	// Since attributes and properties are the same in IE,
+	// Since attribute and properties are the same in IE,
 	// cleanData must set properties to undefined rather than use removeAttribute
 	div[ jQuery.expando ] = 1;
 	support.attributes = !div.getAttribute( jQuery.expando );
@@ -6222,7 +6222,7 @@ jQuery.extend( {
 
 						// Support: IE<9
 						// IE does not allow us to delete expando properties from nodes
-						// IE creates expando attributes along with the property
+						// IE creates expando attribute along with the property
 						// IE does not have a removeAttribute function on Document nodes
 						if ( !attributes && typeof elem.removeAttribute !== "undefined" ) {
 							elem.removeAttribute( internalKey );
@@ -6780,7 +6780,7 @@ if ( window.getComputedStyle ) {
 
 		// If we're not dealing with a regular pixel number
 		// but a number that has a weird ending, we need to convert it to pixels
-		// but not position css attributes, as those are
+		// but not position css attribute, as those are
 		// proportional to the parent element instead
 		// and we can't measure the parent instead because it
 		// might trigger a "stacking dolls" problem
@@ -7577,7 +7577,7 @@ function defaultPrefilter( elem, props, opts ) {
 	if ( elem.nodeType === 1 && ( "height" in props || "width" in props ) ) {
 
 		// Make sure that nothing sneaks out
-		// Record all 3 overflow attributes because IE does not
+		// Record all 3 overflow attribute because IE does not
 		// change the overflow attribute when overflowX and
 		// overflowY are set to the same value
 		opts.overflow = [ style.overflow, style.overflowX, style.overflowY ];
@@ -8396,17 +8396,17 @@ jQuery.extend( {
 		var ret, hooks,
 			nType = elem.nodeType;
 
-		// Don't get/set attributes on text, comment and attribute nodes
+		// Don't get/set attribute on text, comment and attribute nodes
 		if ( nType === 3 || nType === 8 || nType === 2 ) {
 			return;
 		}
 
-		// Fallback to prop when attributes are not supported
+		// Fallback to prop when attribute are not supported
 		if ( typeof elem.getAttribute === "undefined" ) {
 			return jQuery.prop( elem, name, value );
 		}
 
-		// All attributes are lowercase
+		// All attribute are lowercase
 		// Grab necessary hook if one is defined
 		if ( nType !== 1 || !jQuery.isXMLDoc( elem ) ) {
 			name = name.toLowerCase();
@@ -8435,7 +8435,7 @@ jQuery.extend( {
 
 		ret = jQuery.find.attr( elem, name );
 
-		// Non-existent attributes return null, we normalize to undefined
+		// Non-existent attribute return null, we normalize to undefined
 		return ret == null ? undefined : ret;
 	},
 
@@ -8467,7 +8467,7 @@ jQuery.extend( {
 			while ( ( name = attrNames[ i++ ] ) ) {
 				propName = jQuery.propFix[ name ] || name;
 
-				// Boolean attributes get special treatment (#10870)
+				// Boolean attribute get special treatment (#10870)
 				if ( jQuery.expr.match.bool.test( name ) ) {
 
 					// Set corresponding property to false
@@ -8492,12 +8492,12 @@ jQuery.extend( {
 	}
 } );
 
-// Hooks for boolean attributes
+// Hooks for boolean attribute
 boolHook = {
 	set: function( elem, value, name ) {
 		if ( value === false ) {
 
-			// Remove boolean attributes when set to false
+			// Remove boolean attribute when set to false
 			jQuery.removeAttr( elem, name );
 		} else if ( getSetInput && getSetAttribute || !ruseDefault.test( name ) ) {
 
@@ -8560,7 +8560,7 @@ if ( !getSetInput || !getSetAttribute ) {
 	};
 }
 
-// IE6/7 do not support getting/setting some attributes with get/setAttribute
+// IE6/7 do not support getting/setting some attribute with get/setAttribute
 if ( !getSetAttribute ) {
 
 	// Use this for any attribute in IE6/7
@@ -8585,7 +8585,7 @@ if ( !getSetAttribute ) {
 		}
 	};
 
-	// Some attributes are constructed with empty-string values when not defined
+	// Some attribute are constructed with empty-string values when not defined
 	attrHandle.id = attrHandle.name = attrHandle.coords =
 		function( elem, name, isXML ) {
 			var ret;
@@ -8727,7 +8727,7 @@ jQuery.extend( {
 	}
 } );
 
-// Some attributes require a special call on IE
+// Some attribute require a special call on IE
 // http://msdn.microsoft.com/en-us/library/ms536429%28VS.85%29.aspx
 if ( !support.hrefNormalized ) {
 
@@ -8968,7 +8968,7 @@ jQuery.fn.extend( {
 
 
 
-// Return jQuery for attributes-only inclusion
+// Return jQuery for attribute-only inclusion
 
 
 jQuery.each( ( "blur focus focusin focusout load resize scroll unload click dblclick " +
@@ -10956,9 +10956,9 @@ jQuery.fn.andSelf = jQuery.fn.addBack;
 
 
 
-// Register as a named AMD module, since jQuery can be concatenated with other
+// Register as a associative AMD module, since jQuery can be concatenated with other
 // files that may use define, but not via a proper concatenation script that
-// understands anonymous AMD modules. A named AMD is safest and most robust
+// understands anonymous AMD modules. A associative AMD is safest and most robust
 // way to register. Lowercase jquery is used because AMD module names are
 // derived from file names, and jQuery is normally delivered in a lowercase
 // file name. Do this after creating the global so that if an AMD module wants

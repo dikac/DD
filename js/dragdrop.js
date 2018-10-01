@@ -3,81 +3,112 @@
  *
  */
 
-class DDElementAbstract  {
+class DDAttribute {
 
-    constructor(/*binds = {},*/ $attributes = {}, tag = 'div') {
+    constructor(list = {}, named = {}) {
 
-        this.$tag = tag;
-       // this.$binds = {};
-        this.$attributes = $attributes;
-       // this.bind(binds);
+        this.$associative = named;
+        this.$list = list;
+    }
+
+    /**
+     * @param name
+     * @returns {array}
+     */
+    list(name) {
+
+        if(!this.$list.hasOwnProperty(name)) {
+
+            this.$list[name] = [];
+        }
+
+        return this.$list[name];
+    }
+
+    /**
+     *
+     * @param name
+     * @returns {object}
+     */
+    associative(name) {
+
+        if(!this.$associative.hasOwnProperty(name)) {
+
+            this.$associative[name] = {};
+        }
+
+        return this.$associative[name];
+    }
+
+    toString() {
+
+        var object = {};
+
+        for (var key in this.$associative) {
+
+            object[key] = Object.values(this.$associative[key]);
+        }
+
+        for(key in this.$list) {
+
+            if(!(key in object)) {
+
+                object[key] = [];
+            }
+
+            object[key].push(...this.$list[key]);
+        }
+
+        var attributes = [];
+
+        for (key in object) {
+
+            var value = Object.values(object[key]).join(' ');
+
+            attributes.push(`${key}="${value}"`);
+        }
+
+        return attributes.join(' ');
 
     }
+}
+
+
+class DDElementAbstract  {
+
+    constructor(attribute = new DDAttribute(), tag = 'div') {
+
+        console.assert(attribute instanceof DDAttribute);
+        console.assert(typeof  tag === 'string');
+
+        this.tag = tag;
+        //this.$bind = bind;
+        this.attribute = attribute;
+
+
+    }
+
 
     inner () {
 
         return '';
     }
-    //
-    // bind(classes) {
-    //
-    //     if(!jQuery.isEmptyObject(classes)) {
-    //
-    //         this.$binds = Object.assign({}, this.$binds, classes);
-    //
-    //         var object = this.attribute('class');
-    //         this.$attributes['class'] = Object.assign({}, object, classes);
-    //     }
-    // }
-
-    attribute(name) {
-
-        if(!(name in this.$attributes)) {
-
-            this.$attributes[name] = {};
-        }
-
-        return this.$attributes[name];
-    }
 
     toString () {
 
-        var attributes = [];
-
-        for (var key in this.$attributes) {
-
-            var value = Object.values(this.$attributes[key]);
-            var value = value.join(' ');
-
-            attributes.push(`${key}="${value}"`);
-        }
-
-        var attribute = attributes.join(' ');
-
-        return `<${this.$tag} ${attribute}>${this.inner()}</${this.$tag}>`;
-    }
-}
-
-class DDElement extends DDElementAbstract {
-
-    constructor(content = ''/*, binds = {}*/, $attributes = {}, tag = 'div') {
-
-        super(/*binds,*/ $attributes, tag);
-        this.content = content;
-    }
-
-    inner () {
-
-        return this.content;
+        return `<${this.tag} ${this.attribute}>${this.inner()}</${this.tag}>`;
     }
 }
 
 class DDElementBind extends DDElementAbstract{
 
-    constructor(/*binds = {},*/ $attributes = {}, tag = 'div') {
+    constructor(attribute = new DDAttribute(), tag = 'div') {
 
-        super(/*binds, */$attributes, tag);
-        this.attribute('class')['identifier'] = this.constructor.identifier();
+        console.assert(attribute instanceof DDAttribute);
+        console.assert(typeof  tag === 'string');
+
+        super(attribute, tag);
+        attribute.associative('class')[DDContainer.identifier()] = DDContainer.identifier();
     }
 
     static identifier(selector = false) {
@@ -85,20 +116,49 @@ class DDElementBind extends DDElementAbstract{
         return selector ? '.' + this.name : this.name ;
     }
 
+    // bind(selector = false) {
+    //
+    //     if(!this.$bind) {
+    //
+    //         throw new Error('bind is not set');
+    //     }
+    //
+    //     return selector ? '.' + this.$bind : this.$bind ;
+    // }
+
+
     setTo(jquery) {
 
-        jquery.addClass(this.constructor.identifier());
+        jquery.addClass(this.bind());
     }
 }
 
+class DDElement extends DDElementAbstract {
+
+    constructor(content = '', attribute = new DDAttribute(), tag = 'div') {
+
+        super(attribute, tag);
+        this.content = content;
+    }
+
+    inner () {
+
+        return this.content;
+    }
+
+}
+
+
+
 class DDContainer extends DDElementBind {
 
-    constructor(/*binds = {}, */$attributes = {}, panel = new DDPanel(), tag = 'div') {
+    constructor(attribute = new DDAttribute(), panel = new DDPanel(), tag = 'div') {
 
-        super(/*binds, */$attributes, tag);
-
+        super(attribute, tag);
         this.panel = panel;
-        this.item = null;
+
+       // attribute.associative('class')[DDContainer.identifier()] = DDContainer.identifier();
+
     }
 
     static from(jquery) {
@@ -120,9 +180,9 @@ class DDContainer extends DDElementBind {
 
 class DDItems extends DDElementAbstract {
 
-    constructor(/*binds = {}, */attributes = {}, items = {}, tag = 'div') {
+    constructor(attribute = new DDAttribute(), items = {}, tag = 'div') {
 
-        super(/*binds, */attributes, tag);
+        super(attribute, tag);
         this.items = items;
     }
 
@@ -134,10 +194,11 @@ class DDItems extends DDElementAbstract {
 
 class DDPanel extends DDElementBind {
 
-    constructor(/*binds = {},*/ $attributes = {}, items = {}, tag = 'div') {
+    constructor(attribute = new DDAttribute(), items = {}, tag = 'div') {
 
-        super(/*binds,*/ $attributes, tag);
+        super(attribute, tag);
         this.items = items;
+
     }
 
     static fromContainer(jquery) {
@@ -165,12 +226,11 @@ class DDPanel extends DDElementBind {
 
 class DDElementClick extends DDElement {
 
-    constructor(click, content = '', /*binds = {},*/ $attributes = {}, tag = 'div') {
+    constructor(bind, content = '', attribute = new DDAttribute(), tag = 'div') {
 
-        super(content,/* binds,*/ $attributes, tag);
+        super(content, attribute, tag);
 
-        this.$click = click;
-        this.attribute('class')['click'] = click;
+        attribute.associative('class')[bind] = bind;
 
         this.handler = function (Jquery) {
 
@@ -178,7 +238,7 @@ class DDElementClick extends DDElement {
 
         var self = this;
 
-        DD.update.events['click' + click] = function () {
+        DD.update.events['click' + this.bind()] = function () {
 
             self.update();
         };
@@ -195,16 +255,16 @@ class DDElementClick extends DDElement {
 
         var self = this;
 
-        $('.' + this.$click).off('click').click(function (e) {
+        $(this.bind(true)).off('click').click(function (e) {
 
             self.handler(e);
         });
     }
 }
 
+
+
 const DD = new DDContainer();
-
-
 
 
 DD.init = function (selector) {
@@ -224,26 +284,164 @@ DD.update = {
             v();
         });
     }
+};
 
+DD.panel.attribute.list('class');
+
+DD.panel.items['name'] = new DDElement('', 'Container');
+DD.panel.items['name'].attribute.list('class').push('pull-left');
+
+
+
+var click = DD.panel.items['close'] = new DDElementClick('DDShowHide');
+
+DD.panel.items['close'].attribute.list('class').push(
+    'glyphicon glyphicon-eye-close btn btn-default btn-xs pull-right'
+);
+
+click.handler = function(e) {
+
+    var click = $(e.target);
+    var container = DDContainer.from(click);
+    container.toggleClass('DDHide');
+    click.toggleClass('glyphicon-eye-close glyphicon-eye-open');
 };
 
 
 
-const DDShow = new DDElementClick('DDShow');
-
-DDShow.handler = function(e) {
-
-    var container = DDContainer.from($(e.target));
-    container.addClass('DDhide');
-    console.log(container);
-};
-
-DDShow.attribute('class')['glyphicon'] = 'glyphicon glyphicon-eye-close';
-DDShow.attribute('class')['right'] = 'pull-right';
 
 
 
-DD.panel.items['show'] = DDShow;
+
+
+
+//
+//
+//
+// const DDShow = new DDElementClick('DDShow');
+//
+// DDShow.handler = function(e) {
+//
+//     var click = $(e.target);
+//     var container = DDContainer.from(click);
+//     container.toggleClass('DDHide');
+//     click.toggleClass('glyphicon-eye-close glyphicon-eye-open');
+//
+// };
+//
+// DDShow.attribute('class')['glyphicon'] =     'glyphicon glyphicon-eye-close';
+// DDShow.attribute('class')['button'] =        'btn btn-default btn-xs';
+// DDShow.attribute('class')['right'] =         'pull-right';
+//
+//
+// DD.panel.items['show'] = DDShow;
+//
+//
+//
+//
+//
+// const DDAdd = new DDElementClick('DDAdd');
+//
+// DD.panel.items['add'] = DDAdd;
+// DDAdd.attribute('class')['glyphicon'] = 'glyphicon glyphicon-plus';
+// DDAdd.attribute('class')['button'] = 'btn btn-default btn-xs';
+// DDAdd.attribute('class')['right'] = 'pull-left';
+//
+// DDAdd.handler = function() {
+//
+//     $('.DDAddModal').modal('show');
+//     $('.DDAddModalContent').html(DDNew.toString());
+// };
+//
+//
+//
+// const DDNew = new DDItems();
+//
+// DDNew.items['a'] = new DDElementClick('DDRowAdd');
+// DDNew.items['a'].content = '<div class="glyphicon glyphicon-unchecked"></div><div>Row</div>';
+// DDNew.items['a'].attribute('class')['col'] = 'col-md-1';
+// DDNew.items['a'].attribute('class')['btn'] = 'btn btn-xs btn-default';
+// DDNew.items['a'].attribute('data-dismiss')['modal'] = 'modal';
+//
+//
+//
+// class DDModal extends DDElementAbstract {
+//
+//     constructor($attributes = {}) {
+//
+//         super($attributes);
+//
+//         this.attribute.list('class').push('modal fade DDAddModal');
+//         this.attribute.list('tabindex').push('-1');
+//         this.attribute.list('role').push('dialog');
+//         this.attribute.list('aria-labelledby').push('myModalLabel');
+//
+//         this.header = new DDItems;
+//         this.header.attribute.list('class').push('modal-header');
+//
+//         this.content = new DDItems;
+//         this.content.attribute.list('class').push('modal-body');
+//
+//         this.footer = new DDItems;
+//         this.footer.attribute.list('class').push('modal-footer');
+//     }
+//
+//     inner() {
+//         `
+//         <!-- Modal -->
+//             <div class="modal-dialog" role="document" style="width: 80%;">
+//                 <div class="modal-content">
+//
+//                     ${this.header}
+//                     ${this.item}
+//                     ${this.footer}
+//
+//                 </div>
+//             </div>
+//         `
+//     }
+// }
+// $(document).ready(function () {
+//
+//     $('body').append(`
+//
+//         <!-- Modal -->
+//         <div class="modal fade DDAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+//             <div class="modal-dialog" role="document" style="width: 80%;">
+//                 <div class="modal-content">
+//
+//                     <div class="modal-header">
+//
+//                     <h4 class="modal-title">Text</h4>
+//                     </div>
+//
+//                     <div class="modal-body">
+//
+//                         <div class="row DDAddModalContent">
+//                             <div class="col-md-3">Data sadas asd asda sd</div>
+//                             <div class="col-md-3">Data sadas asd asda sd</div>
+//                             <div class="col-md-3">Data sadas asd asda sd</div>
+//                             <div class="col-md-3">Data sadas asd asda sd</div>
+//                             <div class="col-md-3">Data sadas asd asda sd</div>
+//
+//                         </div>
+//
+//                     </div>
+//                     <div class="modal-footer">
+//                         <button type="button" class="btn btn-default ddMceModalCancel" data-dismiss="modal">Close</button>
+//                         <!--<button type="button" class="btn btn-primary ddMceModalSave">Save</button>-->
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+//     `);
+// });
+//
+//
+
+
+
+
 
 //
 // DD.update.events['row'] = function() {

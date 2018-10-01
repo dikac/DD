@@ -3,10 +3,18 @@
     padding: 5px;
     padding-top: 25px;
    /* padding-top: 25px;*/
-    margin: 0px;
+    margin: 0;
     position: relative;
 }
 
+
+.DDNew {
+    border: 1px solid #ddd;
+    padding: 5px;
+    /* padding-top: 25px;*/
+    margin: 0;
+    position: relative;
+}
 
 .DDPanel {
     position: absolute;
@@ -33,5 +41,5 @@
 
 .DDHide {
     overflow: hidden;;
-    background-color: red;
+    height: 50px;
 }
