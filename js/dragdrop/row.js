@@ -5,14 +5,13 @@ DDRow.content.attribute('class').push('row');
 
 DDRow.panel.name.content = 'row';
 
-DDRow.item = new DDElementClick('DDRow', 'Row');
-DDRow.attribute('class').push('aaaaaaaaaaaaaa');
+var click = DDRow.item = new DDElementClick('DDRow', 'Row');
+
 
 DDRow.item.handler = function(jquery) {
 
 
     var container = DDContainer.from($(jquery.target));
-    console.log(container);
     var content = DDContent.fromOuter(container);
 
 

@@ -115,7 +115,7 @@ if (typeof jQuery === 'undefined') {
 }(jQuery);
 
 /* ========================================================================
- * Bootstrap: button.js v3.3.7
+ * Bootstrap: main.js v3.3.7
  * http://getbootstrap.com/javascript/#buttons
  * ========================================================================
  * Copyright 2011-2016 Twitter, Inc.
@@ -206,7 +206,7 @@ if (typeof jQuery === 'undefined') {
 
   var old = $.fn.button
 
-  $.fn.button             = Plugin
+  $.fn.main             = Plugin
   $.fn.button.Constructor = Button
 
 
@@ -214,7 +214,7 @@ if (typeof jQuery === 'undefined') {
   // ==================
 
   $.fn.button.noConflict = function () {
-    $.fn.button = old
+    $.fn.main = old
     return this
   }
 
@@ -223,18 +223,18 @@ if (typeof jQuery === 'undefined') {
   // ===============
 
   $(document)
-    .on('click.bs.button.data-api', '[data-toggle^="button"]', function (e) {
+    .on('click.bs.button.data-api', '[data-toggle^="main"]', function (e) {
       var $btn = $(e.target).closest('.btn')
       Plugin.call($btn, 'toggle')
       if (!($(e.target).is('input[type="radio"], input[type="checkbox"]'))) {
         // Prevent double click on radios, and the double selections (so cancellation) on checkboxes
         e.preventDefault()
         // The target component still receive the focus
-        if ($btn.is('input,button')) $btn.trigger('focus')
-        else $btn.find('input:visible,button:visible').first().trigger('focus')
+        if ($btn.is('input,main')) $btn.trigger('focus')
+        else $btn.find('input:visible,main:visible').first().trigger('focus')
       }
     })
-    .on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function (e) {
+    .on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="main"]', function (e) {
       $(e.target).closest('.btn').toggleClass('focus', /^focus(in)?$/.test(e.type))
     })
 

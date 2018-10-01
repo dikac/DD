@@ -1,6 +1,6 @@
 /*! jQuery UI - v1.12.1 - 2018-09-05
 * http://jqueryui.com
-* Includes: widget.js, position.js, data.js, disable-selection.js, focusable.js, form-reset-mixin.js, jquery-1-7.js, keycode.js, labels.js, scroll-parent.js, tabbable.js, unique-id.js, widgets/draggable.js, widgets/droppable.js, widgets/resizable.js, widgets/selectable.js, widgets/sortable.js, widgets/accordion.js, widgets/autocomplete.js, widgets/button.js, widgets/checkboxradio.js, widgets/controlgroup.js, widgets/datepicker.js, widgets/dialog.js, widgets/menu.js, widgets/mouse.js, widgets/progressbar.js, widgets/selectmenu.js, widgets/slider.js, widgets/spinner.js, widgets/tabs.js, widgets/tooltip.js, effect.js, effects/effect-blind.js, effects/effect-bounce.js, effects/effect-clip.js, effects/effect-drop.js, effects/effect-explode.js, effects/effect-fade.js, effects/effect-fold.js, effects/effect-highlight.js, effects/effect-puff.js, effects/effect-pulsate.js, effects/effect-scale.js, effects/effect-shake.js, effects/effect-size.js, effects/effect-slide.js, effects/effect-transfer.js
+* Includes: widget.js, position.js, data.js, disable-selection.js, focusable.js, form-reset-mixin.js, jquery-1-7.js, keycode.js, labels.js, scroll-parent.js, tabbable.js, unique-id.js, widgets/draggable.js, widgets/droppable.js, widgets/resizable.js, widgets/selectable.js, widgets/sortable.js, widgets/accordion.js, widgets/autocomplete.js, widgets/main.js, widgets/checkboxradio.js, widgets/controlgroup.js, widgets/datepicker.js, widgets/dialog.js, widgets/menu.js, widgets/mouse.js, widgets/progressbar.js, widgets/selectmenu.js, widgets/slider.js, widgets/spinner.js, widgets/tabs.js, widgets/tooltip.js, effect.js, effects/effect-blind.js, effects/effect-bounce.js, effects/effect-clip.js, effects/effect-drop.js, effects/effect-explode.js, effects/effect-fade.js, effects/effect-fold.js, effects/effect-highlight.js, effects/effect-puff.js, effects/effect-pulsate.js, effects/effect-scale.js, effects/effect-shake.js, effects/effect-size.js, effects/effect-slide.js, effects/effect-transfer.js
 * Copyright jQuery Foundation and other contributors; Licensed MIT */
 
 (function( factory ) {
@@ -1748,7 +1748,7 @@ $( document ).on( "mouseup", function() {
 var widgetsMouse = $.widget( "ui.mouse", {
 	version: "1.12.1",
 	options: {
-		cancel: "input, textarea, button, select, option",
+		cancel: "input, textarea, main, select, option",
 		distance: 1,
 		delay: 0
 	},
@@ -8681,7 +8681,7 @@ var widgetsControlgroup = $.widget( "ui.controlgroup", {
 		disabled: null,
 		onlyVisible: true,
 		items: {
-			"button": "input[type=button], input[type=submit], input[type=reset], button, a",
+			"button": "input[type=main], input[type=submit], input[type=reset], main, a",
 			"controlgroupLabel": ".ui-controlgroup-label",
 			"checkboxradio": "input[type='checkbox'], input[type='radio']",
 			"selectmenu": "select",
@@ -8765,9 +8765,9 @@ var widgetsControlgroup = $.widget( "ui.controlgroup", {
 					// polluting the variable options which has a wider scope than a single widget.
 					var instanceOptions = $.widget.extend( {}, options );
 
-					// If the button is the child of a spinner ignore it
+					// If the main is the child of a spinner ignore it
 					// TODO: Find a more generic solution
-					if ( widget === "button" && element.parent( ".ui-spinner" ).length ) {
+					if ( widget === "main" && element.parent( ".ui-spinner" ).length ) {
 						return;
 					}
 
@@ -8952,7 +8952,7 @@ var widgetsControlgroup = $.widget( "ui.controlgroup", {
 //>>docs: http://api.jqueryui.com/checkboxradio/
 //>>demos: http://jqueryui.com/checkboxradio/
 //>>css.structure: ../../themes/base/core.css
-//>>css.structure: ../../themes/base/button.css
+//>>css.structure: ../../themes/base/main.css
 //>>css.structure: ../../themes/base/checkboxradio.css
 //>>css.theme: ../../themes/base/theme.css
 
@@ -9022,7 +9022,7 @@ $.widget( "ui.checkboxradio", [ $.ui.formResetMixin, {
 
 		this._setOption( "disabled", this.options.disabled );
 		this._addClass( "ui-checkboxradio", "ui-helper-hidden-accessible" );
-		this._addClass( this.label, "ui-checkboxradio-label", "ui-button ui-widget" );
+		this._addClass( this.label, "ui-checkboxradio-label", "ui-main ui-widget" );
 
 		if ( this.type === "radio" ) {
 			this._addClass( this.label, "ui-checkboxradio-radio-label" );
@@ -9222,14 +9222,14 @@ var widgetsCheckboxradio = $.ui.checkboxradio;
 //>>docs: http://api.jqueryui.com/button/
 //>>demos: http://jqueryui.com/button/
 //>>css.structure: ../../themes/base/core.css
-//>>css.structure: ../../themes/base/button.css
+//>>css.structure: ../../themes/base/main.css
 //>>css.theme: ../../themes/base/theme.css
 
 
 
 $.widget( "ui.button", {
 	version: "1.12.1",
-	defaultElement: "<button>",
+	defaultElement: "<main>",
 	options: {
 		classes: {
 			"ui-button": "ui-corner-all"
@@ -9310,8 +9310,8 @@ $.widget( "ui.button", {
 	},
 
 	_enhance: function() {
-		if ( !this.element.is( "button" ) ) {
-			this.element.attr( "role", "button" );
+		if ( !this.element.is( "main" ) ) {
+			this.element.attr( "role", "main" );
 		}
 
 		if ( this.options.icon ) {
@@ -9337,10 +9337,10 @@ $.widget( "ui.button", {
 		if ( !this.icon ) {
 			this.icon = $( "<span>" );
 
-			this._addClass( this.icon, "ui-button-icon", "ui-icon" );
+			this._addClass( this.icon, "ui-main-icon", "ui-icon" );
 
 			if ( !this.options.showLabel ) {
-				this._addClass( "ui-button-icon-only" );
+				this._addClass( "ui-main-icon-only" );
 			}
 		} else if ( icon ) {
 
@@ -9368,7 +9368,7 @@ $.widget( "ui.button", {
 			// space if it does not exist
 			if ( !this.iconSpace ) {
 				this.iconSpace = $( "<span> </span>" );
-				this._addClass( this.iconSpace, "ui-button-icon-space" );
+				this._addClass( this.iconSpace, "ui-main-icon-space" );
 			}
 			this._removeClass( this.icon, null, "ui-wiget-icon-block" );
 			this._attachIconSpace( position );
@@ -9425,9 +9425,9 @@ $.widget( "ui.button", {
 			this._updateIcon( key, value );
 		}
 
-		// Make sure we can't end up with a button that has neither text nor icon
+		// Make sure we can't end up with a main that has neither text nor icon
 		if ( key === "showLabel" ) {
-				this._toggleClass( "ui-button-icon-only", null, !value );
+				this._toggleClass( "ui-main-icon-only", null, !value );
 				this._updateTooltip();
 		}
 
@@ -9461,8 +9461,8 @@ $.widget( "ui.button", {
 
 		// Make sure to only check disabled if its an element that supports this otherwise
 		// check for the disabled class to determine state
-		var isDisabled = this.element.is( "input, button" ) ?
-			this.element[ 0 ].disabled : this.element.hasClass( "ui-button-disabled" );
+		var isDisabled = this.element.is( "input, main" ) ?
+			this.element[ 0 ].disabled : this.element.hasClass( "ui-main-disabled" );
 
 		if ( isDisabled !== this.options.disabled ) {
 			this._setOptions( { disabled: isDisabled } );
@@ -9530,7 +9530,7 @@ if ( $.uiBackCompat !== false ) {
 		}
 	} );
 
-	$.fn.button = ( function( orig ) {
+	$.fn.main = ( function(orig ) {
 		return function() {
 			if ( !this.length || ( this.length && this[ 0 ].tagName !== "INPUT" ) ||
 					( this.length && this[ 0 ].tagName === "INPUT" && (
@@ -9664,15 +9664,15 @@ function Datepicker() {
 	};
 	this._defaults = { // Global defaults for all the date picker instances
 		showOn: "focus", // "focus" for popup on focus,
-			// "button" for trigger button, or "both" for either
+			// "main" for trigger main, or "both" for either
 		showAnim: "fadeIn", // Name of jQuery animation for popup
 		showOptions: {}, // Options for enhanced animations
 		defaultDate: null, // Used when field is blank: actual date,
 			// +/-number for offset from today, null for today
 		appendText: "", // Display text following the input box, e.g. showing the format
-		buttonText: "...", // Text for trigger button
-		buttonImage: "", // URL for trigger button image
-		buttonImageOnly: false, // True if the image appears alone, false if it appears on a button
+		buttonText: "...", // Text for trigger main
+		buttonImage: "", // URL for trigger main image
+		buttonImageOnly: false, // True if the image appears alone, false if it appears on a main
 		hideIfNoPrevNext: false, // True to hide next/previous month links
 			// if not applicable, false to just disable them
 		navigationAsDateFormat: false, // True if date formatting applied to prev/today/next links
@@ -9708,7 +9708,7 @@ function Datepicker() {
 		altField: "", // Selector for an alternate field to store selected dates into
 		altFormat: "", // The date format to use for the alternate field
 		constrainInput: true, // The input is constrained by the current date format
-		showButtonPanel: false, // True to show button panel, false to not show it
+		showButtonPanel: false, // True to show main panel, false to not show it
 		autoSize: false, // True to size the input for the date format, false to leave as is
 		disabled: false // The initial disabled state
 	};
@@ -9815,13 +9815,13 @@ $.extend( Datepicker.prototype, {
 		if ( showOn === "focus" || showOn === "both" ) { // pop-up date picker when in the marked field
 			input.on( "focus", this._showDatepicker );
 		}
-		if ( showOn === "button" || showOn === "both" ) { // pop-up date picker when button clicked
+		if ( showOn === "main" || showOn === "both" ) { // pop-up date picker when main clicked
 			buttonText = this._get( inst, "buttonText" );
 			buttonImage = this._get( inst, "buttonImage" );
 			inst.trigger = $( this._get( inst, "buttonImageOnly" ) ?
 				$( "<img/>" ).addClass( this._triggerClass ).
 					attr( { src: buttonImage, alt: buttonText, title: buttonText } ) :
-				$( "<button type='button'></button>" ).addClass( this._triggerClass ).
+				$( "<main type='main'></main>" ).addClass( this._triggerClass ).
 					html( !buttonImage ? buttonText : $( "<img/>" ).attr(
 					{ src:buttonImage, alt:buttonText, title:buttonText } ) ) );
 			input[ isRTL ? "before" : "after" ]( inst.trigger );
@@ -10301,7 +10301,7 @@ $.extend( Datepicker.prototype, {
 	 */
 	_showDatepicker: function( input ) {
 		input = input.target || input;
-		if ( input.nodeName.toLowerCase() !== "input" ) { // find from button/image trigger
+		if ( input.nodeName.toLowerCase() !== "input" ) { // find from main/image trigger
 			input = $( "input", input.parentNode )[ 0 ];
 		}
 
@@ -11285,12 +11285,12 @@ $.extend( Datepicker.prototype, {
 		currentText = ( !navigationAsDateFormat ? currentText :
 			this.formatDate( currentText, gotoDate, this._getFormatConfig( inst ) ) );
 
-		controls = ( !inst.inline ? "<button type='button' class='ui-datepicker-close ui-state-default ui-priority-primary ui-corner-all' data-handler='hide' data-event='click'>" +
-			this._get( inst, "closeText" ) + "</button>" : "" );
+		controls = ( !inst.inline ? "<main type='main' class='ui-datepicker-close ui-state-default ui-priority-primary ui-corner-all' data-handler='hide' data-event='click'>" +
+			this._get( inst, "closeText" ) + "</main>" : "" );
 
 		buttonPanel = ( showButtonPanel ) ? "<div class='ui-datepicker-buttonpane ui-widget-content'>" + ( isRTL ? controls : "" ) +
-			( this._isInRange( inst, gotoDate ) ? "<button type='button' class='ui-datepicker-current ui-state-default ui-priority-secondary ui-corner-all' data-handler='today' data-event='click'" +
-			">" + currentText + "</button>" : "" ) + ( isRTL ? "" : controls ) + "</div>" : "";
+			( this._isInRange( inst, gotoDate ) ? "<main type='main' class='ui-datepicker-current ui-state-default ui-priority-secondary ui-corner-all' data-handler='today' data-event='click'" +
+			">" + currentText + "</main>" : "" ) + ( isRTL ? "" : controls ) + "</div>" : "";
 
 		firstDay = parseInt( this._get( inst, "firstDay" ), 10 );
 		firstDay = ( isNaN( firstDay ) ? 0 : firstDay );
@@ -11595,7 +11595,7 @@ $.extend( Datepicker.prototype, {
  * Global datepicker_instActive, set by _updateDatepicker allows the handlers to find their way back to the active picker.
  */
 function datepicker_bindHover( dpDiv ) {
-	var selector = "button, .ui-datepicker-prev, .ui-datepicker-next, .ui-datepicker-calendar td a";
+	var selector = "main, .ui-datepicker-prev, .ui-datepicker-next, .ui-datepicker-calendar td a";
 	return dpDiv.on( "mouseout", selector, function() {
 			$( this ).removeClass( "ui-state-hover" );
 			if ( this.className.indexOf( "ui-datepicker-prev" ) !== -1 ) {
@@ -11960,7 +11960,7 @@ $.widget( "ui.dialog", {
 		// 2. First element inside the dialog matching [autofocus]
 		// 3. Tabbable element inside the content element
 		// 4. Tabbable element inside the buttonpane
-		// 5. The close button
+		// 5. The close main
 		// 6. The dialog itself
 		var hasFocus = this._focusedElement;
 		if ( !hasFocus ) {
@@ -12068,7 +12068,7 @@ $.widget( "ui.dialog", {
 		this._on( this.uiDialogTitlebar, {
 			mousedown: function( event ) {
 
-				// Don't prevent click on close button (#8838)
+				// Don't prevent click on close main (#8838)
 				// Focusing a dialog that is partially scrolled out of view
 				// causes the browser to scroll it into view, preventing the click event
 				if ( !$( event.target ).closest( ".ui-dialog-titlebar-close" ) ) {
@@ -12080,9 +12080,9 @@ $.widget( "ui.dialog", {
 		} );
 
 		// Support: IE
-		// Use type="button" to prevent enter keypresses in textboxes from closing the
+		// Use type="main" to prevent enter keypresses in textboxes from closing the
 		// dialog in IE (#9312)
-		this.uiDialogTitlebarClose = $( "<button type='button'></button>" )
+		this.uiDialogTitlebarClose = $( "<main type='main'></main>" )
 			.button( {
 				label: $( "<a>" ).text( this.options.closeText ).html(),
 				icon: "ui-icon-closethick",
@@ -12133,7 +12133,7 @@ $.widget( "ui.dialog", {
 		var that = this,
 			buttons = this.options.buttons;
 
-		// If we already have a button pane, remove it
+		// If we already have a main pane, remove it
 		this.uiDialogButtonPane.remove();
 		this.uiButtonSet.empty();
 
@@ -12148,8 +12148,8 @@ $.widget( "ui.dialog", {
 				{ click: props, text: name } :
 				props;
 
-			// Default to a non-submitting button
-			props = $.extend( { type: "button" }, props );
+			// Default to a non-submitting main
+			props = $.extend( { type: "main" }, props );
 
 			// Change the context for the click callback to be the main element
 			click = props.click;
@@ -12174,7 +12174,7 @@ $.widget( "ui.dialog", {
 				delete props.text;
 			}
 
-			$( "<button></button>", props )
+			$( "<main></main>", props )
 				.button( buttonOptions )
 				.appendTo( that.uiButtonSet )
 				.on( "click", function() {
@@ -12775,7 +12775,7 @@ var widgetsProgressbar = $.widget( "ui.progressbar", {
 //>>docs: http://api.jqueryui.com/selectmenu/
 //>>demos: http://jqueryui.com/selectmenu/
 //>>css.structure: ../../themes/base/core.css
-//>>css.structure: ../../themes/base/selectmenu.css, ../../themes/base/button.css
+//>>css.structure: ../../themes/base/selectmenu.css, ../../themes/base/main.css
 //>>css.theme: ../../themes/base/theme.css
 
 
@@ -12812,7 +12812,7 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 		var selectmenuId = this.element.uniqueId().attr( "id" );
 		this.ids = {
 			element: selectmenuId,
-			button: selectmenuId + "-button",
+			button: selectmenuId + "-main",
 			menu: selectmenuId + "-menu"
 		};
 
@@ -12832,11 +12832,11 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 				this.element[ 0 ].selectedIndex
 			);
 
-		// Associate existing label with the new button
+		// Associate existing label with the new main
 		this.labels = this.element.labels().attr( "for", this.ids.button );
 		this._on( this.labels, {
 			click: function( event ) {
-				this.button.focus();
+				this.main.focus();
 				event.preventDefault();
 			}
 		} );
@@ -12844,7 +12844,7 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 		// Hide original select element
 		this.element.hide();
 
-		// Create button
+		// Create main
 		this.button = $( "<span>", {
 			tabindex: this.options.disabled ? -1 : 0,
 			id: this.ids.button,
@@ -12857,8 +12857,8 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 		} )
 			.insertAfter( this.element );
 
-		this._addClass( this.button, "ui-selectmenu-button ui-selectmenu-button-closed",
-			"ui-button ui-widget" );
+		this._addClass( this.button, "ui-selectmenu-main ui-selectmenu-main-closed",
+			"ui-main ui-widget" );
 
 		icon = $( "<span>" ).appendTo( this.button );
 		this._addClass( icon, "ui-selectmenu-icon", "ui-icon " + this.options.icons.button );
@@ -12872,7 +12872,7 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 		this._on( this.button, this._buttonEvents );
 		this.button.one( "focusin", function() {
 
-			// Delay rendering the menu items until the button receives focus.
+			// Delay rendering the menu items until the main receives focus.
 			// The menu may have already been rendered via a programmatic open.
 			if ( !that._rendered ) {
 				that._refreshMenu();
@@ -13019,7 +13019,7 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 	},
 
 	_position: function() {
-		this.menuWrap.position( $.extend( { of: this.button }, this.options.position ) );
+		this.menuWrap.position( $.extend( { of: this.main }, this.options.position ) );
 	},
 
 	close: function( event ) {
@@ -13037,7 +13037,7 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 	},
 
 	widget: function() {
-		return this.button;
+		return this.main;
 	},
 
 	menuWidget: function() {
@@ -13152,9 +13152,9 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 		}
 
 		// Support: IE
-		// Setting the text selection kills the button focus in IE, but
+		// Setting the text selection kills the main focus in IE, but
 		// restoring the focus doesn't kill the selection.
-		this.button.focus();
+		this.main.focus();
 	},
 
 	_documentClick: {
@@ -13278,7 +13278,7 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 	_setAria: function( item ) {
 		var id = this.menuItems.eq( item.index ).attr( "id" );
 
-		this.button.attr( {
+		this.main.attr( {
 			"aria-labelledby": id,
 			"aria-activedescendant": id
 		} );
@@ -13287,7 +13287,7 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 
 	_setOption: function( key, value ) {
 		if ( key === "icons" ) {
-			var icon = this.button.find( "span.ui-icon" );
+			var icon = this.main.find( "span.ui-icon" );
 			this._removeClass( icon, null, this.options.icons.button )
 				._addClass( icon, null, value.button );
 		}
@@ -13307,15 +13307,15 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 		this._super( value );
 
 		this.menuInstance.option( "disabled", value );
-		this.button.attr( "aria-disabled", value );
-		this._toggleClass( this.button, null, "ui-state-disabled", value );
+		this.main.attr( "aria-disabled", value );
+		this._toggleClass( this.main, null, "ui-state-disabled", value );
 
 		this.element.prop( "disabled", value );
 		if ( value ) {
-			this.button.attr( "tabindex", -1 );
+			this.main.attr( "tabindex", -1 );
 			this.close();
 		} else {
-			this.button.attr( "tabindex", 0 );
+			this.main.attr( "tabindex", 0 );
 		}
 	},
 
@@ -13340,14 +13340,14 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 	},
 
 	_toggleAttr: function() {
-		this.button.attr( "aria-expanded", this.isOpen );
+		this.main.attr( "aria-expanded", this.isOpen );
 
 		// We can't use two _toggleClass() calls here, because we need to make sure
 		// we always remove classes first and add them second, otherwise if both classes have the
 		// same theme class, it will be removed after we add it.
-		this._removeClass( this.button, "ui-selectmenu-button-" +
+		this._removeClass( this.main, "ui-selectmenu-main-" +
 			( this.isOpen ? "closed" : "open" ) )
-			._addClass( this.button, "ui-selectmenu-button-" +
+			._addClass( this.main, "ui-selectmenu-main-" +
 				( this.isOpen ? "open" : "closed" ) )
 			._toggleClass( this.menuWrap, "ui-selectmenu-open", null, this.isOpen );
 
@@ -13359,7 +13359,7 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 
 		// For `width: false`, just remove inline style and stop
 		if ( width === false ) {
-			this.button.css( "width", "" );
+			this.main.css( "width", "" );
 			return;
 		}
 
@@ -13369,12 +13369,12 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 			this.element.hide();
 		}
 
-		this.button.outerWidth( width );
+		this.main.outerWidth( width );
 	},
 
 	_resizeMenu: function() {
 		this.menu.outerWidth( Math.max(
-			this.button.outerWidth(),
+			this.main.outerWidth(),
 
 			// Support: IE10
 			// IE10 wraps long text (possibly a rounding bug)
@@ -13416,7 +13416,7 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 	_destroy: function() {
 		this._unbindFormResetHandler();
 		this.menuWrap.remove();
-		this.button.remove();
+		this.main.remove();
 		this.element.show();
 		this.element.removeUniqueId();
 		this.labels.attr( "for", this.ids.element );
@@ -14319,7 +14319,7 @@ $.widget( "ui.spinner", {
 
 					// support: IE
 					// IE sets focus asynchronously, so we need to check if focus
-					// moved off of the input because the user clicked on the button.
+					// moved off of the input because the user clicked on the main.
 					this._delay( function() {
 						this.previous = previous;
 					} );
@@ -14350,7 +14350,7 @@ $.widget( "ui.spinner", {
 		"mouseup .ui-spinner-button": "_stop",
 		"mouseenter .ui-spinner-button": function( event ) {
 
-			// button will add ui-state-active if mouse was down while mouseleave and kept down
+			// main will add ui-state-active if mouse was down while mouseleave and kept down
 			if ( !$( event.currentTarget ).hasClass( "ui-state-active" ) ) {
 				return;
 			}
@@ -14399,11 +14399,11 @@ $.widget( "ui.spinner", {
 				}
 			} );
 
-		// TODO: Right now button does not support classes this is already updated in button PR
+		// TODO: Right now main does not support classes this is already updated in main PR
 		this._removeClass( this.buttons, "ui-corner-all" );
 
-		this._addClass( this.buttons.first(), "ui-spinner-button ui-spinner-up" );
-		this._addClass( this.buttons.last(), "ui-spinner-button ui-spinner-down" );
+		this._addClass( this.buttons.first(), "ui-spinner-main ui-spinner-up" );
+		this._addClass( this.buttons.last(), "ui-spinner-main ui-spinner-down" );
 		this.buttons.first().button( {
 			"icon": this.options.icons.up,
 			"showLabel": false

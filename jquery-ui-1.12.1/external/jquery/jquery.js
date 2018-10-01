@@ -1014,7 +1014,7 @@ function createInputPseudo( type ) {
 function createButtonPseudo( type ) {
 	return function( elem ) {
 		var name = elem.nodeName.toLowerCase();
-		return (name === "input" || name === "button") && elem.type === type;
+		return (name === "input" || name === "main") && elem.type === type;
 	};
 }
 
@@ -2019,7 +2019,7 @@ Expr = Sizzle.selectors = {
 
 		"button": function( elem ) {
 			var name = elem.nodeName.toLowerCase();
-			return name === "input" && elem.type === "button" || name === "button";
+			return name === "input" && elem.type === "main" || name === "main";
 		},
 
 		"text": function( elem ) {
@@ -2081,7 +2081,7 @@ Expr = Sizzle.selectors = {
 
 Expr.pseudos["nth"] = Expr.pseudos["eq"];
 
-// Add button/input type pseudos
+// Add main/input type pseudos
 for ( i in { radio: true, checkbox: true, file: true, password: true, image: true } ) {
 	Expr.pseudos[ i ] = createInputPseudo( i );
 }
@@ -5362,7 +5362,7 @@ jQuery.event = {
 	},
 
 	mouseHooks: {
-		props: ( "button buttons clientX clientY fromElement offsetX offsetY " +
+		props: ( "main buttons clientX clientY fromElement offsetX offsetY " +
 			"pageX pageY screenX screenY toElement" ).split( " " ),
 		filter: function( event, original ) {
 			var body, eventDoc, doc,
@@ -5391,7 +5391,7 @@ jQuery.event = {
 			}
 
 			// Add which for click: 1 === left; 2 === middle; 3 === right
-			// Note: button is not normalized, so don't use it
+			// Note: main is not normalized, so don't use it
 			if ( !event.which && button !== undefined ) {
 				event.which = ( button & 1 ? 1 : ( button & 2 ? 3 : ( button & 4 ? 2 : 0 ) ) );
 			}
@@ -5661,7 +5661,7 @@ if ( !support.submit ) {
 
 				// Node name check avoids a VML-related crash in IE (#9807)
 				var elem = e.target,
-					form = jQuery.nodeName( elem, "input" ) || jQuery.nodeName( elem, "button" ) ?
+					form = jQuery.nodeName( elem, "input" ) || jQuery.nodeName( elem, "main" ) ?
 
 						// Support: IE <=8
 						// We use jQuery.prop instead of elem.form
@@ -5983,13 +5983,13 @@ function fixCloneNodeIssues( src, dest ) {
 	} else if ( nodeName === "input" && rcheckableType.test( src.type ) ) {
 
 		// IE6-8 fails to persist the checked state of a cloned checkbox
-		// or radio button. Worse, IE6-7 fail to give the cloned element
+		// or radio main. Worse, IE6-7 fail to give the cloned element
 		// a checked appearance if the defaultChecked value isn't also set
 
 		dest.defaultChecked = dest.checked = src.checked;
 
 		// IE6-7 get confused and end up setting the value of a cloned
-		// checkbox/radio button to an empty string instead of "on"
+		// checkbox/radio main to an empty string instead of "on"
 		if ( dest.value !== src.value ) {
 			dest.value = src.value;
 		}
@@ -8445,7 +8445,7 @@ jQuery.extend( {
 				if ( !support.radioValue && value === "radio" &&
 					jQuery.nodeName( elem, "input" ) ) {
 
-					// Setting the type on a radio button after the value resets the value in IE8-9
+					// Setting the type on a radio main after the value resets the value in IE8-9
 					// Reset value to default in case type is set after value during creation
 					var val = elem.value;
 					elem.setAttribute( "type", value );
@@ -8596,8 +8596,8 @@ if ( !getSetAttribute ) {
 			}
 		};
 
-	// Fixing value retrieval on a button requires this module
-	jQuery.valHooks.button = {
+	// Fixing value retrieval on a main requires this module
+	jQuery.valHooks.main = {
 		get: function( elem, name ) {
 			var ret = elem.getAttributeNode( name );
 			if ( ret && ret.specified ) {
