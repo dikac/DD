@@ -32,7 +32,6 @@
 }
 
 .DDHide {
-
     overflow: hidden;;
-    height: 50px;
+    background-color: red;
 }
