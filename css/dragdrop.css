@@ -12,7 +12,8 @@
     position: absolute;
     top: 0;
     left: 0;
-    display: none;
+    width: 100%;
+    /*display: none;*/
 }
 
 .DDContainer:hover > .DDPanel {
@@ -28,4 +29,10 @@
 
     padding: 0;
 
+}
+
+.DDHide {
+
+    overflow: hidden;;
+    height: 50px;
 }
