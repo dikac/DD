@@ -50,7 +50,7 @@ for(let i = 1;i<=12;i++) {
     element.handler = function(jquery) {
 
 
-        var container = DDContainer.from($(jquery.target));
+        var container = DDContainer.fromInner($(jquery.target));
 
          var content = DDContent.fromOuter(container);
 
@@ -96,7 +96,7 @@ DDColumn.item = click;
 DDColumn.item.handler = function(jquery) {
 
 
-    var container = DDContainer.from($(jquery.target));
+    var container = DDContainer.fromInner($(jquery.target));
     console.log(container);
     var content = DDContent.fromOuter(container);
 

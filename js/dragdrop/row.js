@@ -10,7 +10,7 @@ var click = DDRow.item = new DDElementClick('DDRow', 'Row');
 
 DDRow.item.handler = function(jquery) {
 
-    var container = DDContainer.from($(jquery.target));
+    var container = DDContainer.fromInner($(jquery.target));
     var content = DDContent.fromOuter(container);
 
     content.append(DDRow.toString());

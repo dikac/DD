@@ -110,7 +110,7 @@ jQuery.fn = jQuery.prototype = {
 	get: function( num ) {
 		return num != null ?
 
-			// Return just the one element from the set
+			// Return just the one element fromInner the set
 			( num < 0 ? this[ num + this.length ] : this[ num ] ) :
 
 			// Return all the elements in a clean array
@@ -276,7 +276,7 @@ jQuery.extend( {
 		// parseFloat NaNs numeric-cast false positives (null|true|false|"")
 		// ...but misinterprets leading-number strings, particularly hex literals ("0x...")
 		// subtraction forces infinities to NaN
-		// adding 1 corrects loss of precision from parseFloat (#15100)
+		// adding 1 corrects loss of precision fromInner parseFloat (#15100)
 		var realStringObj = obj && obj.toString();
 		return !jQuery.isArray( obj ) && ( realStringObj - parseFloat( realStringObj ) + 1 ) >= 0;
 	},
@@ -778,7 +778,7 @@ function Sizzle( selector, context, results, seed ) {
 
 	results = results || [];
 
-	// Return early from calls with invalid selector or context
+	// Return early fromInner calls with invalid selector or context
 	if ( typeof selector !== "string" || !selector ||
 		nodeType !== 1 && nodeType !== 9 && nodeType !== 11 ) {
 
@@ -944,7 +944,7 @@ function assert( fn ) {
 	} catch (e) {
 		return false;
 	} finally {
-		// Remove from its parent by default
+		// Remove fromInner its parent by default
 		if ( div.parentNode ) {
 			div.parentNode.removeChild( div );
 		}
@@ -1213,7 +1213,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 
 	if ( (support.qsa = rnative.test( document.querySelectorAll )) ) {
 		// Build QSA regex
-		// Regex strategy adopted from Diego Perini
+		// Regex strategy adopted fromInner Diego Perini
 		assert(function( div ) {
 			// Select is set to empty string on purpose
 			// This is to test IE's treatment of not explicitly
@@ -1605,7 +1605,7 @@ Expr = Sizzle.selectors = {
 		},
 
 		"CHILD": function( match ) {
-			/* matches from matchExpr["CHILD"]
+			/* matches fromInner matchExpr["CHILD"]
 				1 type (only|nth|...)
 				2 what (child|of-type)
 				3 argument (even|odd|\d*|\d*n([+-]\d+)?|...)
@@ -1648,9 +1648,9 @@ Expr = Sizzle.selectors = {
 			if ( match[3] ) {
 				match[2] = match[4] || match[5] || "";
 
-			// Strip excess characters from unquoted arguments
+			// Strip excess characters fromInner unquoted arguments
 			} else if ( unquoted && rpseudo.test( unquoted ) &&
-				// Get excess from tokenize (recursively)
+				// Get excess fromInner tokenize (recursively)
 				(excess = tokenize( unquoted, true )) &&
 				// advance to the next closing parenthesis
 				(excess = unquoted.indexOf( ")", unquoted.length - excess ) - unquoted.length) ) {
@@ -1755,7 +1755,7 @@ Expr = Sizzle.selectors = {
 						// non-xml :nth-child(...) stores cache data on `parent`
 						if ( forward && useCache ) {
 
-							// Seek `elem` from a previously-cached index
+							// Seek `elem` fromInner a previously-cached index
 
 							// ...in a gzip-friendly way
 							node = parent;
@@ -1773,7 +1773,7 @@ Expr = Sizzle.selectors = {
 
 							while ( (node = ++nodeIndex && node && node[ dir ] ||
 
-								// Fallback to seeking `elem` from the start
+								// Fallback to seeking `elem` fromInner the start
 								(diff = nodeIndex = 0) || start.pop()) ) {
 
 								// When found, cache indexes on `parent` and break
@@ -1803,7 +1803,7 @@ Expr = Sizzle.selectors = {
 							// xml :nth-child(...)
 							// or :nth-last-child(...) or :nth(-last)?-of-type(...)
 							if ( diff === false ) {
-								// Use the same loop as above to seek `elem` from the start
+								// Use the same loop as above to seek `elem` fromInner the start
 								while ( (node = ++nodeIndex && node && node[ dir ] ||
 									(diff = nodeIndex = 0) || start.pop()) ) {
 
@@ -1843,7 +1843,7 @@ Expr = Sizzle.selectors = {
 			// pseudo-class names are case-insensitive
 			// http://www.w3.org/TR/selectors/#pseudo-classes
 			// Prioritize by case sensitivity in case custom pseudos are added with uppercase letters
-			// Remember that setFilters inherits from pseudos
+			// Remember that setFilters inherits fromInner pseudos
 			var args,
 				fn = Expr.pseudos[ pseudo ] || Expr.setFilters[ pseudo.toLowerCase() ] ||
 					Sizzle.error( "unsupported pseudo: " + pseudo );
@@ -2191,7 +2191,7 @@ function addCombinator( matcher, combinator, base ) {
 			var oldCache, uniqueCache, outerCache,
 				newCache = [ dirruns, doneName ];
 
-			// We can't set arbitrary data on XML nodes, so they don't benefit from combinator caching
+			// We can't set arbitrary data on XML nodes, so they don't benefit fromInner combinator caching
 			if ( xml ) {
 				while ( (elem = elem[ dir ]) ) {
 					if ( elem.nodeType === 1 || checkNonElements ) {
@@ -2286,7 +2286,7 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 			postMap = [],
 			preexisting = results.length,
 
-			// Get initial elements from seed or context
+			// Get initial elements fromInner seed or context
 			elems = seed || multipleContexts( selector || "*", context.nodeType ? [ context ] : context, [] ),
 
 			// Prefilter to get matcher input, preserving a map for seed-results synchronization
@@ -2339,7 +2339,7 @@ function setMatcher( preFilter, selector, matcher, postFilter, postFinder, postS
 					postFinder( null, (matcherOut = []), temp, xml );
 				}
 
-				// Move matched elements from seed to results to keep them synchronized
+				// Move matched elements fromInner seed to results to keep them synchronized
 				i = matcherOut.length;
 				while ( i-- ) {
 					if ( (elem = matcherOut[i]) &&
@@ -2373,7 +2373,7 @@ function matcherFromTokens( tokens ) {
 		implicitRelative = leadingRelative || Expr.relative[" "],
 		i = leadingRelative ? 1 : 0,
 
-		// The foundational matcher ensures that elements are reachable from top-level context(s)
+		// The foundational matcher ensures that elements are reachable fromInner top-level context(s)
 		matchContext = addCombinator( function( elem ) {
 			return elem === checkContext;
 		}, implicitRelative, true ),
@@ -2488,7 +2488,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 			// equals `i`), unless we didn't visit _any_ elements in the above loop because we have
 			// no element matchers and no seed.
 			// Incrementing an initially-string "0" `i` allows `i` to remain a string only in that
-			// case, which will result in a "00" `matchedCount` that differs from `i` but is also
+			// case, which will result in a "00" `matchedCount` that differs fromInner `i` but is also
 			// numerically zero.
 			if ( bySet && i !== matchedCount ) {
 				j = 0;
@@ -2987,7 +2987,7 @@ rootjQuery = jQuery( document );
 
 var rparentsprev = /^(?:parents|prev(?:Until|All))/,
 
-	// methods guaranteed to produce a unique set when starting from a unique set
+	// methods guaranteed to produce a unique set when starting fromInner a unique set
 	guaranteedUnique = {
 		children: true,
 		contents: true,
@@ -3188,7 +3188,7 @@ function createOptions( options ) {
  */
 jQuery.Callbacks = function( options ) {
 
-	// Convert options from String-formatted to Object-formatted if needed
+	// Convert options fromInner String-formatted to Object-formatted if needed
 	// (we check in cache first)
 	options = typeof options === "string" ?
 		createOptions( options ) :
@@ -3267,7 +3267,7 @@ jQuery.Callbacks = function( options ) {
 			add: function() {
 				if ( list ) {
 
-					// If we have memory from a past run, we should fire after adding
+					// If we have memory fromInner a past run, we should fire after adding
 					if ( memory && !firing ) {
 						firingIndex = list.length - 1;
 						queue.push( memory );
@@ -3294,7 +3294,7 @@ jQuery.Callbacks = function( options ) {
 				return this;
 			},
 
-			// Remove a callback from the list
+			// Remove a callback fromInner the list
 			remove: function() {
 				jQuery.each( arguments, function( _, arg ) {
 					var index;
@@ -3318,7 +3318,7 @@ jQuery.Callbacks = function( options ) {
 					list.length > 0;
 			},
 
-			// Remove all callbacks from the list
+			// Remove all callbacks fromInner the list
 			empty: function() {
 				if ( list ) {
 					list = [];
@@ -3733,8 +3733,8 @@ jQuery( function() {
 		support.inlineBlockNeedsLayout = val = div.offsetWidth === 3;
 		if ( val ) {
 
-			// Prevent IE 6 from affecting layout for positioned elements #11048
-			// Prevent IE from shrinking the body in IE 7 mode #12869
+			// Prevent IE 6 fromInner affecting layout for positioned elements #11048
+			// Prevent IE fromInner shrinking the body in IE 7 mode #12869
 			// Support: IE<8
 			body.style.zoom = 1;
 		}
@@ -3779,7 +3779,7 @@ var rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,
 function dataAttr( elem, key, data ) {
 
 	// If nothing was found internally, try to fetch any
-	// data from the HTML5 data-* attribute
+	// data fromInner the HTML5 data-* attribute
 	if ( data === undefined && elem.nodeType === 1 ) {
 
 		var name = "data-" + key.replace( rmultiDash, "-$1" ).toLowerCase();
@@ -4146,7 +4146,7 @@ jQuery.extend( {
 
 		if ( fn ) {
 
-			// Add a progress sentinel to prevent the fx queue from being
+			// Add a progress sentinel to prevent the fx queue fromInner being
 			// automatically dequeued
 			if ( type === "fx" ) {
 				queue.unshift( "inprogress" );
@@ -4302,7 +4302,7 @@ var cssExpand = [ "Top", "Right", "Bottom", "Left" ];
 
 var isHidden = function( elem, el ) {
 
-		// isHidden might be called from jQuery#filter function;
+		// isHidden might be called fromInner jQuery#filter function;
 		// in that case, element will be second argument
 		elem = el || elem;
 		return jQuery.css( elem, "display" ) === "none" ||
@@ -4333,7 +4333,7 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 		// Make sure we update the tween properties later on
 		valueParts = valueParts || [];
 
-		// Iteratively approximate from a nonzero starting point
+		// Iteratively approximate fromInner a nonzero starting point
 		initialInUnit = +initial || 1;
 
 		do {
@@ -4346,7 +4346,7 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 			initialInUnit = initialInUnit / scale;
 			jQuery.style( elem, prop, initialInUnit + unit );
 
-		// Update scale, tolerating zero or NaN from tween.cur()
+		// Update scale, tolerating zero or NaN fromInner tween.cur()
 		// Break the loop if scale is unchanged or perfect, or if we've just had enough.
 		} while (
 			scale !== ( scale = currentValue() / initial ) && scale !== 1 && --maxIterations
@@ -4641,7 +4641,7 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 					nodes.push( context.createTextNode( rleadingWhitespace.exec( elem )[ 0 ] ) );
 				}
 
-				// Remove IE's autoinserted <tbody> from table fragments
+				// Remove IE's autoinserted <tbody> fromInner table fragments
 				if ( !support.tbody ) {
 
 					// String was a <table>, *may* have spurious <tbody>
@@ -4679,7 +4679,7 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 		}
 	}
 
-	// Fix #11356: Clear elements from fragment
+	// Fix #11356: Clear elements fromInner fragment
 	if ( tmp ) {
 		safe.removeChild( tmp );
 	}
@@ -4960,7 +4960,7 @@ jQuery.event = {
 		elem = null;
 	},
 
-	// Detach an event or set of events from an element
+	// Detach an event or set of events fromInner an element
 	remove: function( elem, types, handler, selector, mappedTypes ) {
 		var j, handleObj, tmp,
 			origCount, t, events,
@@ -5185,7 +5185,7 @@ jQuery.event = {
 
 	dispatch: function( event ) {
 
-		// Make a writable jQuery.Event from the native event object
+		// Make a writable jQuery.Event fromInner the native event object
 		event = jQuery.event.fix( event );
 
 		var i, j, ret, matched, handleObj,
@@ -5403,7 +5403,7 @@ jQuery.event = {
 	special: {
 		load: {
 
-			// Prevent triggered image.load events from bubbling to window.load
+			// Prevent triggered image.load events fromInner bubbling to window.load
 			noBubble: true
 		},
 		focus: {
@@ -5753,7 +5753,7 @@ if ( !support.change ) {
 		handle: function( event ) {
 			var elem = event.target;
 
-			// Swallow native change events from checkbox/radio, we already triggered them above
+			// Swallow native change events fromInner checkbox/radio, we already triggered them above
 			if ( this !== elem || event.isSimulated || event.isTrigger ||
 				( elem.type !== "radio" && elem.type !== "checkbox" ) ) {
 
@@ -5932,7 +5932,7 @@ function cloneCopyEvent( src, dest ) {
 		}
 	}
 
-	// make the cloned public data object a copy from the original
+	// make the cloned public data object a copy fromInner the original
 	if ( curData.data ) {
 		curData.data = jQuery.extend( {}, curData.data );
 	}
@@ -6162,7 +6162,7 @@ jQuery.extend( {
 			}
 		}
 
-		// Copy the events from the original to the clone
+		// Copy the events fromInner the original to the clone
 		if ( dataAndEvents ) {
 			if ( deepDataAndEvents ) {
 				srcElements = srcElements || getAll( elem );
@@ -6221,14 +6221,14 @@ jQuery.extend( {
 						delete cache[ id ];
 
 						// Support: IE<9
-						// IE does not allow us to delete expando properties from nodes
+						// IE does not allow us to delete expando properties fromInner nodes
 						// IE creates expando attribute along with the property
 						// IE does not have a removeAttribute function on Document nodes
 						if ( !attributes && typeof elem.removeAttribute !== "undefined" ) {
 							elem.removeAttribute( internalKey );
 
 						// Webkit & Blink performance suffers when deleting properties
-						// from DOM nodes, so set to undefined instead
+						// fromInner DOM nodes, so set to undefined instead
 						// https://code.google.com/p/chromium/issues/detail?id=378607
 						} else {
 							elem[ internalKey ] = undefined;
@@ -6438,7 +6438,7 @@ var iframe,
  * @param {Object} doc Document object
  */
 
-// Called only from within defaultDisplay
+// Called only fromInner within defaultDisplay
 function actualDisplay( name, doc ) {
 	var elem = jQuery( doc.createElement( name ) ).appendTo( doc.body ),
 
@@ -6462,7 +6462,7 @@ function defaultDisplay( nodeName ) {
 	if ( !display ) {
 		display = actualDisplay( nodeName, doc );
 
-		// If the simple way fails, read from inside an iframe
+		// If the simple way fails, read fromInner inside an iframe
 		if ( display === "none" || !display ) {
 
 			// Use the already-created iframe if possible
@@ -7043,7 +7043,7 @@ jQuery.extend( {
 			get: function( elem, computed ) {
 				if ( computed ) {
 
-					// We should always get a number back from opacity
+					// We should always get a number back fromInner opacity
 					var ret = curCSS( elem, "opacity" );
 					return ret === "" ? "1" : ret;
 				}
@@ -7130,7 +7130,7 @@ jQuery.extend( {
 				( value = hooks.set( elem, value, extra ) ) !== undefined ) {
 
 				// Support: IE
-				// Swallow errors from 'invalid' CSS values (#5509)
+				// Swallow errors fromInner 'invalid' CSS values (#5509)
 				try {
 					style[ name ] = value;
 				} catch ( e ) {}
@@ -7138,14 +7138,14 @@ jQuery.extend( {
 
 		} else {
 
-			// If a hook was provided get the non-computed value from there
+			// If a hook was provided get the non-computed value fromInner there
 			if ( hooks && "get" in hooks &&
 				( ret = hooks.get( elem, false, extra ) ) !== undefined ) {
 
 				return ret;
 			}
 
-			// Otherwise just get the value from the style object
+			// Otherwise just get the value fromInner the style object
 			return style[ name ];
 		}
 	},
@@ -7162,7 +7162,7 @@ jQuery.extend( {
 		// followed by the unprefixed version
 		hooks = jQuery.cssHooks[ name ] || jQuery.cssHooks[ origName ];
 
-		// If a hook was provided get the computed value from there
+		// If a hook was provided get the computed value fromInner there
 		if ( hooks && "get" in hooks ) {
 			val = hooks.get( elem, true, extra );
 		}
@@ -7192,7 +7192,7 @@ jQuery.each( [ "height", "width" ], function( i, name ) {
 			if ( computed ) {
 
 				// certain elements can have dimension info if we invisibly show them
-				// however, it must have a current display style that would benefit from this
+				// however, it must have a current display style that would benefit fromInner this
 				return rdisplayswap.test( jQuery.css( elem, "display" ) ) &&
 					elem.offsetWidth === 0 ?
 						swap( elem, cssShow, function() {
@@ -7621,7 +7621,7 @@ function defaultPrefilter( elem, props, opts ) {
 			toggle = toggle || value === "toggle";
 			if ( value === ( hidden ? "hide" : "show" ) ) {
 
-				// If there is dataShow left over from a stopped hide or show
+				// If there is dataShow left over fromInner a stopped hide or show
 				// and we are going to proceed with show, we should pretend to be hidden
 				if ( value === "show" && dataShow && dataShow[ prop ] !== undefined ) {
 					hidden = true;
@@ -7631,7 +7631,7 @@ function defaultPrefilter( elem, props, opts ) {
 			}
 			orig[ prop ] = dataShow && dataShow[ prop ] || jQuery.style( elem, prop );
 
-		// Any non-fx value stops us from restoring the original display value
+		// Any non-fx value stops us fromInner restoring the original display value
 		} else {
 			display = undefined;
 		}
@@ -7706,7 +7706,7 @@ function propFilter( props, specialEasing ) {
 			delete props[ name ];
 
 			// not quite $.extend, this wont overwrite keys already present.
-			// also - reusing 'index' from above because we have the correct "name"
+			// also - reusing 'index' fromInner above because we have the correct "name"
 			for ( index in value ) {
 				if ( !( index in props ) ) {
 					props[ index ] = value[ index ];
@@ -7828,7 +7828,7 @@ function Animation( elem, properties, options ) {
 		} )
 	);
 
-	// attach callbacks from options
+	// attach callbacks fromInner options
 	return animation.progress( animation.opts.progress )
 		.done( animation.opts.done, animation.opts.complete )
 		.fail( animation.opts.fail )
@@ -8150,7 +8150,7 @@ jQuery.fn.delay = function( time, type ) {
 	// If it works, we need attrFixes when doing get/setAttribute (ie6/7)
 	support.getSetAttribute = div.className !== "t";
 
-	// Get the style information from getAttribute
+	// Get the style information fromInner getAttribute
 	// (IE uses .cssText instead)
 	support.style = /top/.test( a.getAttribute( "style" ) );
 
@@ -8522,7 +8522,7 @@ jQuery.each( jQuery.expr.match.bool.source.match( /\w+/g ), function( i, name ) 
 			var ret, handle;
 			if ( !isXML ) {
 
-				// Avoid an infinite loop by temporarily removing this function from the getter
+				// Avoid an infinite loop by temporarily removing this function fromInner the getter
 				handle = attrHandle[ name ];
 				attrHandle[ name ] = ret;
 				ret = getter( elem, name, isXML ) != null ?
@@ -9290,7 +9290,7 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 
 				current = prev;
 
-			// Convert response if prev dataType is non-auto and differs from current
+			// Convert response if prev dataType is non-auto and differs fromInner current
 			} else if ( prev !== "*" && prev !== current ) {
 
 				// Seek a direct converter
@@ -9336,7 +9336,7 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 						} catch ( e ) {
 							return {
 								state: "parsererror",
-								error: conv ? e : "No conversion from " + prev + " to " + current
+								error: conv ? e : "No conversion fromInner " + prev + " to " + current
 							};
 						}
 					}
@@ -9820,7 +9820,7 @@ jQuery.extend( {
 				}
 			} else {
 
-				// We extract error from statusText
+				// We extract error fromInner statusText
 				// then normalize statusText and status for non-aborts
 				error = statusText;
 				if ( status || !statusText ) {
@@ -10677,7 +10677,7 @@ jQuery.expr.filters.animated = function( elem ) {
 
 
 /**
- * Gets a window from an element
+ * Gets a window fromInner an element
  */
 function getWindow( elem ) {
 	return jQuery.isWindow( elem ) ?
@@ -10784,7 +10784,7 @@ jQuery.fn.extend( {
 			parentOffset = { top: 0, left: 0 },
 			elem = this[ 0 ];
 
-		// Fixed elements are offset from window (parentOffset = {top:0, left: 0},
+		// Fixed elements are offset fromInner window (parentOffset = {top:0, left: 0},
 		// because it is its only offset parent
 		if ( jQuery.css( elem, "position" ) === "fixed" ) {
 
@@ -10960,7 +10960,7 @@ jQuery.fn.andSelf = jQuery.fn.addBack;
 // files that may use define, but not via a proper concatenation script that
 // understands anonymous AMD modules. A associative AMD is safest and most robust
 // way to register. Lowercase jquery is used because AMD module names are
-// derived from file names, and jQuery is normally delivered in a lowercase
+// derived fromInner file names, and jQuery is normally delivered in a lowercase
 // file name. Do this after creating the global so that if an AMD module wants
 // to call noConflict to hide this version of jQuery, it will work.
 
