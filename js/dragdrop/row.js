@@ -1,85 +1,105 @@
 
 
-let panel = Object.assign(new DDElement(), new DDPanel());
-const DD = Object.assign(new DDElement(), new DDContainer(new DDAttribute, panel));
 
-DDInit.events['row'] = function(selector) {
+const DDRow = function() {
 
-    DD.setTo(selector);
-    DDUpdate.trigger();
+    let panel = Object.assign(new DDElement(), new DDPanel());
+    return Object.assign(new DDElement(), new DDContainer(new DDAttribute, panel));
+
+}();
+
+DDRow.content.content = new DDItems({
+    menu:DDMenu(DD.menu.new),
+    show:DD.menu.show
+});
+
+DDRow.attribute.named('class')['bootstrap-row'] = 'row';
+
+
+DD.boot.handlers['row'] = function(selector) {
+
+    DDRow.setTo(selector);
+    DD.update.trigger();
 
 };
 
-DDNew.list['container'] = function () {
+DD.menu.new['container'] = function () {
 
     let attribute = new DDAttribute();
     let click = new DDClick('DDNewContainer', null, attribute);
 
-    attribute.list('class').push('btn btn-default btn-xl col-md-1 glyphicon glyphicon-unchecked');
-    attribute.named('data-dismiss')['modal'] = 'modal';
+
+    attribute.list('class').push();
+   // attribute.named('data-dismiss')['modal'] = 'modal';
 
     click.setHandler(function(e) {
 
-        var click = $(DDNew.event.target);
+        var click = $(e.target);
         var container = DDContainer.fromInner(click);
-        container.append(DD.toString());
-        DDUpdate.trigger();
+        container.append(DDRow.toString());
+        DD.update.trigger();
 
     });
 
     return Object.assign(new DDElement('<div>Container</div>'), click);
 }();
 
-
-
-DD.content.content = new DDItems();
-
-DD.content.content.content['show/hide'] = function () {
-
-    let attribute = new DDAttribute();
-
-    attribute.list('class').push(
-        'glyphicon glyphicon-eye-close btn btn-default btn-xs pull-right'
-    );
-
-    let click = new DDClick('DDShowHide', null, attribute);
-
-    click.setHandler(function(e) {
-
-        var click = $(e.target);
-        var container = DDContainer.fromInner(click);
-        container.toggleClass('DDHide');
-        click.toggleClass('glyphicon-eye-close glyphicon-eye-open');
-    });
-
-    return Object.assign(new DDElement(), click);
-}();
+// DD.new.list['container'] = function () {
+//
+//     let attribute = new DDAttribute();
+//     let click = new DDClick('DDNewContainer', null, attribute);
+//
+//     attribute.list('class').push('btn btn-default btn-xl col-md-1 glyphicon glyphicon-unchecked');
+//     attribute.named('data-dismiss')['modal'] = 'modal';
+//
+//     click.setHandler(function(e) {
+//
+//         var click = $(DD.new.event.target);
+//         var container = DDContainer.fromInner(click);
+//         container.append(DDRow.toString());
+//         DD.update.trigger();
+//
+//     });
+//
+//     return Object.assign(new DDElement('<div>Container</div>'), click);
+// }();
 
 
 
 
-DD.content.content.content['add'] = function () {
 
-    let attribute = new DDAttribute();
-    let modal = new DDModal('DDNew');
-    modal.header = 'new Item';
-    modal.content = new DDItems(DDNew.list);
+//DDRow.content.content.content
 
-    attribute.list('class').push(
-        'glyphicon glyphicon-plus btn btn-default btn-xs pull-left'
-    );
 
-    let click = new DDClick('DDAdd', null, attribute);
 
-    click.setHandler(function(e) {
 
-        DDNew.event = e;
-        modal.show();
-    });
+//DDRow.content.content.content['add'] =
 
-    return Object.assign(new DDElement(), click);
 
-}();
+
+// DDRow.content.content.content['add'] = function () {
+//
+//     let attribute = new DDAttribute();
+//     let modal = new DDModal('DDNew');
+//
+//     modal.header = 'new Item';
+//     modal.content = new DDItems(DD.new.list);
+//
+//     attribute.list('class').push(
+//         'glyphicon glyphicon-plus btn btn-default btn-xs pull-left'
+//     );
+//
+//     let click = new DDClick('DDAdd', null, attribute);
+//
+//     click.setHandler(function(e) {
+//
+//         DD.new.event = e;
+//         modal.show();
+//     });
+//
+//     return Object.assign(new DDElement(), click);
+//
+// }();
 
 
 

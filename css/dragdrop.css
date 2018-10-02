@@ -3,8 +3,12 @@
     padding: 5px;
     padding-top: 20px;
    /* padding-top: 25px;*/
-    margin: 5px;
+  /* // margin: 5px;*/
     position: relative;
+}
+
+.row {
+    margin:  0;
 }
 
 
@@ -16,21 +20,16 @@
     /*display: none;*/
 }
 
-.DDContainer:hover > .DDPanel {
-    display: block;
+
+.ddMenu {
+
+    position: relative;
+    z-index: 99999;
+    padding: 5px;
+    background-color: white;
+    border: 1px solid #ddd;
 }
 
-.DDname {
-    color: darkgrey;;
-    margin-right: 5px;
-}
-
-.dropdown {
-
-    padding: 0;
-}
-
-.DDHide {
-    overflow: hidden;;
-    height: 20px;
+.ddHide {
+    display: none;
 }
