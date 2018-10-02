@@ -8,14 +8,6 @@
 }
 
 
-.DDNew {
-    border: 1px solid #ddd;
-    padding: 5px;
-    /* padding-top: 25px;*/
-    margin: 0;
-    position: relative;
-}
-
 .DDPanel {
     position: absolute;
     top: 0;

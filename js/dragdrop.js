@@ -316,7 +316,7 @@ function DDClick(click, handler = function () {}, attribute = new DDAttribute())
 
 
 
-function DDModal (bind, header, content, footer) {
+function DDModal (bind = '', header = '', content = '', footer = '') {
 
     this.bind = bind;
     this.header = header;
@@ -347,19 +347,23 @@ function DDModal (bind, header, content, footer) {
 
     this.show = function() {
 
+        $(`.${this.bind}`).remove();
         $('body').append(this.toString());
-        $('.DDAddModalContent').html(DDNew.toString());
+        $(`.${this.bind}`).modal('show');
+
+        DD.update.trigger();
     };
 
     this.toString = function() {
-        `
+
+        return `
         <!-- Modal -->
           <div class="modal fade ${this.bind}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document" style="width: 80%;">
                 <div class="modal-content">
 
                     <div class="modal-header">${this.header}</div>
-                    <div class="modal-body">${this.item}</div>
+                    <div class="modal-body row">${this.content}</div>
                     <div class="modal-footer">${this.footer}</div>
 
                 </div>
@@ -399,6 +403,33 @@ DD.update = {
 };
 
 
+const DDNew = {
+    list : {},
+    event : null
+};
+
+
+DDNew.list['container'] = function () {
+
+    let attribute = new DDAttribute();
+    let click = new DDClick('DDNewContainer', null, attribute);
+
+    attribute.list('class').push('btn btn-default btn-xl col-md-1 glyphicon glyphicon-unchecked');
+    attribute.named('data-dismiss')['modal'] = 'modal';
+
+    click.setHandler(function(e) {
+
+        var click = $(DDNew.event.target);
+        var container = DDContainer.fromInner(click);
+        container.append(DD.toString());
+        DD.update.trigger();
+
+    });
+
+    return Object.assign(new DDElement('<div>Container</div>'), click);
+}();
+
+
 
 DD.content.content = new DDItems();
 
@@ -425,7 +456,27 @@ DD.content.content.content['show/hide'] = function () {
 
 
 
+
 DD.content.content.content['add'] = function () {
+
+    let attribute = new DDAttribute();
+    let modal = new DDModal('DDNew');
+    modal.header = 'new Item';
+    modal.content = new DDItems(DDNew.list);
+
+    attribute.list('class').push(
+        'glyphicon glyphicon-plus btn btn-default btn-xs pull-left'
+    );
+
+    let click = new DDClick('DDAdd', null, attribute);
+
+    click.setHandler(function(e) {
+
+        DDNew.event = e;
+        modal.show();
+    });
+
+    return Object.assign(new DDElement(), click);
 
 }();
 
