@@ -1,9 +1,9 @@
 .DDContainer {
     border: 1px solid #ddd;
     padding: 5px;
-    padding-top: 25px;
+    padding-top: 20px;
    /* padding-top: 25px;*/
-    margin: 0;
+    margin: 5px;
     position: relative;
 }
 
@@ -28,10 +28,9 @@
 .dropdown {
 
     padding: 0;
-
 }
 
 .DDHide {
     overflow: hidden;;
-    height: 50px;
+    height: 20px;
 }
