@@ -2,50 +2,46 @@
  * Unified wrapper for Jquery drag & drop
  *
  */
-//
-// var a = Object.assign(new DDAttribute({class:[1]}), new DDAttribute({zz:[2]}));
-// console.log(a);
-//
 
 
-// const DDUpdate = {
-//
-//     events: {},
-//
-//     trigger : function () {
-//
-//         $.each(DDUpdate.events, function(k, v) {
-//
-//             v();
-//         });
-//     }
-// };
-//
-// const DDInit = {
-//
-//     events: {},
-//
-//     trigger : function (selector) {
-//
-//         var selector = $(selector);
-//
-//         for(let k in DDInit.events) {
-//
-//             DDInit.events[k](selector);
-//         }
-//     }
-// };
+const DD = {};
 
-// DD.init = function (selector) {
-//
-//     DD.setTo($(selector));
-//     DDUpdate.trigger();
-// };
+DD.update = {
 
-// const DDNew = {
-//     list : {},
-//     event : null
-// };
+    handlers: {},
+
+    trigger : function () {
+
+        for(let k in DD.update.handlers) {
+
+            DD.update.handlers[k]();
+        }
+    }
+};
+
+DD.boot = {
+
+    handlers : {},
+
+    selector : function (selector) {
+
+        selector = $(selector);
+
+        for(let k in DD.boot.handlers) {
+
+            DD.boot.handlers[k](selector);
+        }
+    }
+};
+
+DD.hide = {
+    handlers : {}
+};
+
+
+DD.menu = {
+    new : {}
+};
 
 
 
@@ -53,6 +49,7 @@ function identifier(selector = false) {
 
     return selector ? '.' + this.name : this.name ;
 }
+
 
 function DDAttribute ($list = {}, $named = {}) {
 
@@ -128,6 +125,16 @@ function DDAttribute ($list = {}, $named = {}) {
 
 
 
+
+DDAttribute.container = function(attribute = new DDAttribute) {
+
+    console.assert(attribute instanceof DDAttribute);
+
+    return function () {
+
+        return attribute;
+    }
+};
 
 
 
@@ -242,39 +249,65 @@ function tag(tag = 'div') {
 }
 
 
-function DDElement(content = '', tag = 'div', attribute = '') {
+function DDElement(content = '', tag = 'div', attribute = new DDAttribute()) {
 
-    this.attribute = attribute;
+    this.attribute = DDAttribute.container(attribute);
+
     this.tag  = tag;
     this.content = content;
 
     this.toString = function() {
 
-        let open = `${this.tag} ${this.attribute}`.trim();
+        let open = `${this.tag} ${this.attribute().toString()}`.trim();
 
         return `<${open}>${this.content}</${this.tag}>`;
     };
 }
+DDElement.container = function (element = new DDElement()) {
 
-function DDLateBind(object) {
+    console.assert(element instanceof DDElement);
 
-    object.attribute.named('class')[this.identifier()] = this.identifier();
+    return function () {
+
+        return element;
+    }
+};
+
+
+
+
+function DDBindAttribute(attribute, extra = '') {
+
+    console.assert(typeof extra === "string");
+
+    console.assert(attribute instanceof DDAttribute);
+    attribute.named('class')[this.identifier()] = this.identifier();
+    attribute.named('class')[extra] = extra;
 }
 
-function DDContainer(attribute = new DDAttribute, content = new DDPanel) {
 
-    let self = this.constructor;
 
-    this.attribute = attribute;
-    this.content = content;
+function DDContainer(bind = '', element = new DDElement(), panel = new DDPanel) {
 
-    this.constructor.lateBind(this);
+    this.constructor.bind(element.attribute, bind);
+
+    if(bind.length > 0) {
+
+        element.attribute.named('class')[bind] = 'bind';
+    }
+
+    this.element = DDElement.container(element);
+    this.panel = DDPanel.container();
+
+    this.toString = function () {
+
+        return this.element().toString();
+
+    };
 
     this.setTo = function(jquery) {
 
         this.content.setTo(jquery);
-
-
 
         jquery.addClass(
             this.attribute.list('class').join(' ') + ' ' +
@@ -284,7 +317,7 @@ function DDContainer(attribute = new DDAttribute, content = new DDPanel) {
 }
 
 DDContainer.identifier = identifier;
-DDContainer.lateBind = DDLateBind;
+DDContainer.bind = DDBindAttribute;
 
 DDContainer.fromInner = function (jquery) {
 
@@ -297,24 +330,25 @@ DDContainer.fromInner = function (jquery) {
 };
 
 
-function DDItems(items = {}) {
 
-    this.content = items;
+function DDPanel(bind = '', element = new DDElement()) {
 
-    this.toString = function () {
+    var items = {};
 
-        return Object.values(items).join('');
-    }
-}
+    this.element = element;
 
+    this.constructor.bind(this.attribute, bind);
 
-function DDPanel(attribute = new DDAttribute) {
+    this.items = function (name) {
 
-    let self = this.constructor;
+        if(!items.hasOwnProperty(name)) {
 
-    this.attribute = attribute;
+            items[name] = new DDItems();
+        }
 
-    this.constructor.lateBind(this);
+        return items[name];
+
+    };
 
     this.setTo = function(jquery) {
 
@@ -324,7 +358,28 @@ function DDPanel(attribute = new DDAttribute) {
 }
 
 
-DDPanel.lateBind = DDLateBind;
+DDPanel.container = function (panel = new DDPanel()) {
+
+    console.assert(panel instanceof DDPanel);
+
+    return function () {
+
+        return panel;
+    }
+};
+
+
+function DDItems(items = {}) {
+
+    this.items = items;
+
+    this.toString = function () {
+
+        return Object.values(items).join('');
+    }
+}
+
+DDPanel.bind = DDBindAttribute;
 DDPanel.identifier = identifier;
 
 DDPanel.fromContainer = function (jquery) {
@@ -335,16 +390,15 @@ DDPanel.fromContainer = function (jquery) {
 
 
 
-function DDClick(click, handler = function () {}, attribute = new DDAttribute()) {
+function DDClick(click, handler = function () {}, element = new DDElement()) {
 
-    this.attribute = attribute;
+    console.assert(typeof handler === "function");
+    console.assert(typeof click === "string");
 
-    attribute.named('class')[click] = click;
+    this.element = DDElement.container(element);
 
-    this.setHandler = function($handler) {
+    element.attribute().named('class')[click] = click;
 
-        handler = $handler;
-    };
 
     function update() {
 
@@ -361,37 +415,12 @@ function DDClick(click, handler = function () {}, attribute = new DDAttribute())
 
 
 
-
-
-
 function DDModal (bind = '', header = '', content = '', footer = '') {
 
     this.bind = bind;
     this.header = header;
     this.content = content;
     this.footer = footer;
-
-    // constructor(bind, $attributes = new DDAttribute()) {
-    //
-    //     super($attributes, 'div');
-    //
-    //     attribute.associative('class')[bind] = bind;
-    //
-    //     this.attribute.list('class').push(this.constructor.identifier());
-    //     this.attribute.list('class').push('modal fade');
-    //     this.attribute.list('tabindex').push('-1');
-    //     this.attribute.list('role').push('dialog');
-    //     this.attribute.list('aria-labelledby').push('myModalLabel');
-    //
-    //     this.header = new DDItems;
-    //     this.header.attribute.list('class').push('modal-header');
-    //
-    //     this.content = new DDItems;
-    //     this.content.attribute.list('class').push('modal-body');
-    //
-    //     this.footer = new DDItems;
-    //     this.footer.attribute.list('class').push('modal-footer');
-    // }
 
     this.show = function() {
 
@@ -420,56 +449,6 @@ function DDModal (bind = '', header = '', content = '', footer = '') {
         `
     }
 }
-
-
-
-
-const DD = {
-
-    // new : {
-    //
-    //     list : {},
-    //     event : null
-    // },
-
-    update : {
-
-        handlers: {},
-
-        trigger : function () {
-
-            for(let k in DD.update.handlers) {
-
-                DD.update.handlers[k]();
-            }
-        }
-    },
-
-    boot : {
-
-        handlers : {},
-
-        selector : function (selector) {
-
-            selector = $(selector);
-
-            for(let k in DD.boot.handlers) {
-
-                DD.boot.handlers[k](selector);
-            }
-        }
-    },
-
-    hide : {
-        handlers : {}
-    },
-
-
-    menu : {
-        new : {}
-
-    }
-};
 
 // DD.menu.new =
 
@@ -523,26 +502,41 @@ function DDMenu (menus = {}) {
 
 }//();
 
+
+
+
+
+
+
 DD.menu.show = function () {
 
-    let attribute = new DDAttribute();
-
-    attribute.list('class').push(
-        'glyphicon glyphicon-eye-close btn btn-default btn-xs pull-right'
-    );
-
-    let click = new DDClick('DDShowHide', null, attribute);
-
-    click.setHandler(function(e) {
+    let click = new DDClick('DDShowHide', function(e) {
 
         var click = $(e.target);
         var container = DDContainer.fromInner(click);
         container.toggleClass('DDHide');
         click.toggleClass('glyphicon-eye-close glyphicon-eye-open');
+
     });
 
-    return Object.assign(new DDElement(), click);
+    click.element().attribute().list('class').push(
+        'glyphicon glyphicon-eye-close btn btn-default btn-xs pull-right'
+    );
+
+    return click;
+
 }();
+
+
+
+
+
+
+
+
+
+
+
 
 DD.update.handlers['sortable'] = function () {
 
@@ -569,427 +563,3 @@ $(document).click(function(e) {
 });
 
 
-
-//
-//
-//
-//
-// function exit() {
-//
-// function DDContent(content = '') {
-//
-//     this.set  = function ($content) {
-//
-//         content = $content;
-//     };
-//
-//     this.toString = function () {
-//
-//         return content;
-//     }
-// }
-//
-// //
-// //
-// // var DD = new DDElement();
-// //
-// // DD.attribute = new DDAttribute();
-// // DD.attribute.named('z')['z'] = 'z';
-// // console.log(DD);
-// // console.log(DD.toString());
-// //
-// // var AA = new DDElement();
-// // AA.attribute = 'a';
-// // console.log(AA);
-// // console.log(AA.toString());
-// //
-// //
-//
-//
-// //
-// // function DDElement(obj) {
-// //
-// //     if(!obj.hasOwnProperty(this.constructor.name)) {
-// //
-// //         obj[this.constructor.name] = {
-// //             tag : 'div',
-// //             content : ''
-// //         };
-// //     }
-// //
-// //     this.set  = function (tag) {
-// //
-// //         console.assert(typeof obj.element instanceof "string");
-// //         console.assert(obj.element.length > 0);
-// //
-// //         obj[this.constructor.name]['tag'] = tag;
-// //     };
-// //
-// //     this.content = function (content) {
-// //
-// //         obj[this.constructor.name]['content'] = content;
-// //     };
-// //
-// //     this.toString  = function () {
-// //
-// //         let tag     = obj[this.constructor.name]['tag'];
-// //         let content = obj[this.constructor.name]['content'];
-// //         let attribute = '';
-// //
-// //         if(obj.hasOwnProperty(DDAttribute.name)) {
-// //
-// //             attribute = new DDAttribute(obj);
-// //         }
-// //
-// //         return `<${tag} ${attribute}>${content}</${tag}>`;
-// //     };
-// // }
-//
-// // (new DDElement(a));
-// // (new DDElement(b));
-// //
-// // console.log((new DDElement(a)).toString());
-// // console.log((new DDElement(b)).toString());
-//
-//
-//
-//
-//
-//
-//
-// function DDContainer(attribute = new DDAttribute, panel = new DDPanel) {
-//
-//     let self = this.constructor;
-//
-//     attribute.named('class')[self.identifier()] = self.identifier();
-//
-//
-//     this.panel = function () {
-//
-//         return panel;
-//     };
-//
-//     this.setTo = function(jquery) {
-//
-//         this.panel().setTo(jquery);
-//         jquery.addClass(self.identifier());
-//     };
-// }
-//
-// DDContainer.identifier = identifier;
-//
-// DDContainer.fromInner = function (jquery) {
-//
-//     if(!jquery.hasClass(this.identifier())) {
-//
-//         jquery = jquery.parents(this.identifier(true)).first();
-//     }
-//
-//     return jquery;
-// };
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// function DDItems(items = {}) {
-//
-//     this.content = items;
-//
-//     this.content = function () {
-//
-//        // console.log(Object.values(items).join(''))
-//         return Object.values(items).join('');
-//     }
-// }
-//
-// function DDClick(click, $function = function () {}, attribute = null) {
-//
-//     var handler = $function;
-//
-//     this.setHandler = function($function) {
-//
-//         handler = $function;
-//     };
-//
-//     this.setAttribute = function(attribute) {
-//
-//         console.assert(attribute instanceof DDAttribute);
-//
-//         attribute.named('class')[click] = click;
-//     };
-//
-//     function update() {
-//
-//         $('.' + click).off('click').click(function (e) {
-//
-//             handler(e);
-//
-//         });
-//     }
-//
-//     if(attribute) {
-//
-//         this.setAttribute(attribute);
-//     }
-//
-//     DDUpdate.events['click' + click] = update;
-// }
-//
-// class DDElementClick extends DDElement {
-//
-//     constructor(bind, content = '', attribute = new DDAttribute(), tag = 'div') {
-//
-//         super(bind, content, attribute, tag);
-//
-//         attribute.associative('class')[bind] = bind;
-//
-//         this.handler = function (Jquery) {
-//
-//         };
-//
-//         var self = this;
-//
-//         DDUpdate.events['click' + this.bind()] = function () {
-//
-//             self.update();
-//         };
-//
-//         this.update();
-//     }
-//
-//     //
-//     // bind(selector = false) {
-//     //
-//     //     return selector ? '.' + this.$bind : this.$bind ;
-//     // }
-//
-//     inner () {
-//
-//         return this.content;
-//     }
-//
-//     update() {
-//
-//         var self = this;
-//
-//         $(this.bind(true)).off('click').click(function (e) {
-//
-//             self.handler(e);
-//         });
-//     }
-// }
-//
-//
-// class DDModal extends DDElementBind {
-//
-//     constructor(bind, $attributes = new DDAttribute()) {
-//
-//         super($attributes, 'div');
-//
-//         attribute.associative('class')[bind] = bind;
-//
-//         this.attribute.list('class').push(this.constructor.identifier());
-//         this.attribute.list('class').push('modal fade');
-//         this.attribute.list('tabindex').push('-1');
-//         this.attribute.list('role').push('dialog');
-//         this.attribute.list('aria-labelledby').push('myModalLabel');
-//
-//         this.header = new DDItems;
-//         this.header.attribute.list('class').push('modal-header');
-//
-//         this.content = new DDItems;
-//         this.content.attribute.list('class').push('modal-body');
-//
-//         this.footer = new DDItems;
-//         this.footer.attribute.list('class').push('modal-footer');
-//     }
-//
-//     show() {
-//
-//         $('body').append(this.toString());
-//         $('.DDAddModalContent').html(DDNew.toString());
-//     }
-//
-//     inner() {
-//         `
-//         <!-- Modal -->
-//             <div class="modal-dialog" role="document" style="width: 80%;">
-//                 <div class="modal-content">
-//
-//                     ${this.header}
-//                     ${this.item}
-//                     ${this.footer}
-//
-//                 </div>
-//             </div>
-//         `
-//     }
-// }
-//
-// //
-// //
-// // function DDPanel(obj) {
-// //
-// //     let attribute = new DDAttribute(obj);
-// //
-// //     attribute.named('class')[this.constructor.name] = this.constructor.name;
-// //
-// //     this.fromContainer = function (jquery) {
-// //
-// //         return jquery.children('.' + this.constructor.name).first();
-// //     };
-// //
-// //     this.toString = function () {
-// //
-// //         return (new DDElement(object)).toString();;
-// //     };
-// //
-// //     /**
-// //      * container
-// //      * @param jquery
-// //      */
-// //     this.setTo = function(jquery) {
-// //
-// //         this.fromContainer(jquery).remove();
-// //         jquery.prepend(obj);
-// //     }
-// // }
-// //
-// // function DDContainer(object) {
-// //
-// //     let attribute = new DDAttribute(object);
-// //
-// //     attribute.named('class')[this.constructor.name] = this.constructor.name;
-// //
-// //     if(!object.hasOwnProperty(DDPanel.name)) {
-// //
-// //         object[DDPanel.name] = {};
-// //     }
-// //
-// //     let panel = object[DDPanel.name];
-// //
-// //     this.panel = function () {
-// //
-// //         return panel;
-// //     };
-// //
-// //     this.toString = function () {
-// //
-// //         return (new DDElement(object)).toString();
-// //     };
-// //
-// //     this.setTo = function(jquery) {
-// //
-// //         this.panel().setTo(jquery);
-// //         jquery.addClass(this.constructor.name);
-// //     };
-// //
-// //
-// // }
-// //
-// // const DD = {};
-// //
-// // let container = new DDContainer(DD);
-// // let content = new DDContent(container.panel());
-// // content.set('content');
-// //
-//
-//
-// const DD = function () {
-//
-//     let attribute = new DDAttribute();
-//     let panel = Object.assign(new DDElement('', 'div', attribute), new DDPanel(attribute), new DDItems());
-//
-//     attribute = new DDAttribute();
-//     return Object.assign(new DDElement('', 'div', attribute), new DDContainer(attribute, panel));
-//
-// }();
-//
-//
-// console.log(DD);
-//
-//
-//
-// //
-// //
-// // DD.init = function (selector) {
-// //
-// //     DD.setTo($(selector));
-// //     DDUpdate.trigger();
-// // };
-//
-// //
-// // DD.update = {
-// //
-// //     events: {},
-// //
-// //     trigger : function () {
-// //
-// //         $.each(DD.update.events, function(k, v) {
-// //
-// //             v();
-// //         });
-// //     }
-// // };
-//
-//
-//
-//
-//
-// DD.panel().items()['show/hide'] = function () {
-//
-//     let element = new DDElement();
-//
-//     element.attribute().list('class').push(
-//         'glyphicon glyphicon-eye-close btn btn-default btn-xs pull-right'
-//     );
-//
-//     let click = new DDClick('DDShowHide');
-//
-//     click.setAttribute(element.attribute());
-//
-//     click.setHandler(function(e) {
-//
-//         var click = $(e.target);
-//         var container = DDContainer.fromInner(click);
-//         container.toggleClass('DDHide');
-//         click.toggleClass('glyphicon-eye-close glyphicon-eye-open');
-//     });
-//
-//     return element;
-// }();
-//
-//
-// // function DDBindClass(object) {
-// //
-// //     console.assert(object instanceof DDElement);
-// //
-// //     this.identifier = function(selector = false) {
-// //
-// //         return selector ? '.' + object.constructor.name : object.constructor.name ;
-// //     };
-// //
-// //     object.bind = function(selector = false) {
-// //
-// //         return selector ? '.' + bind : bind ;
-// //     };
-// //
-// //     object.setTo = function(jquery) {
-// //
-// //         jquery.addClass(object.constructor.identifier());
-// //     };
-// //
-// //     attribute.named('class')[object.identifier()] = object.identifier();
-// //     attribute.named('class')[bind] = bind;
-// // }
-//
-//
-//
-//
-// }
