@@ -5,7 +5,9 @@
 
 const DDMCE = function() {
 
-    var extra = {};
+    var extra = {
+        new : ''
+    };
     let container = new DDContainer('DDMCE', new DDElement(), new DDPanel(DD.menu, extra));
     container.menus = extra;
     return container;
@@ -48,10 +50,22 @@ DDMCE.modal = new function() {
     let item = new DDItems();
     modal.footer = item;
 
-    item.items['cancel'] = new DDElement();
-    item.items['cancel'].content = 'Cancel';
-    item.items['cancel'].attribute().list('class').push('btn btn-default');
-    item.items['cancel'].attribute().list('data-dismiss').push('modal');
+
+    item.items['cancel'] = function () {
+
+        let click = new DDClick(selector.save, function (e) {
+
+            DDMCE.tinymce.shutdown();
+            DDMCE.setPanel();
+            DD.update.trigger();
+        });
+
+        click.element().content = 'Cancel';
+        click.element().attribute().list('class').push('btn btn-default');
+        click.element().attribute().list('data-dismiss').push('modal');
+
+        return click.element();
+    }();
 
 
     item.items['save'] = function () {
@@ -59,7 +73,9 @@ DDMCE.modal = new function() {
         let click = new DDClick(selector.save, function (e) {
 
             DDMCE.tinymce.save();
+            DDMCE.tinymce.shutdown();
             DDMCE.setPanel();
+            DD.update.trigger();
         });
 
         click.element().content = 'Save';
@@ -84,10 +100,10 @@ DDMCE.tinymce = new function () {
 
     this.dom = null;
 
-    this.identifier = function($selector = false) {
-
-        return $selector ? '#' + selector : selector ;
-    };
+    // this.identifier = function($selector = false) {
+    //
+    //     return $selector ? '#' + selector : selector ;
+    // };
 
     this.save = function () {
 
@@ -102,7 +118,7 @@ DDMCE.tinymce = new function () {
 
         let self;
 
-        if(self = tinymce.get(this.identifier())) {
+        if(self = tinymce.get(DDMCE.modal.selector.text)) {
 
             self.remove();
         }
@@ -132,6 +148,10 @@ DDMCE.tinymce = new function () {
         console.log(init);
 
         tinymce.init(init);
+
+        setTimeout(function () {
+            $('.mce-notification').remove()
+        },500)
     }
 };
 
@@ -144,12 +164,12 @@ DDMCE.tinymce = new function () {
 
         let click = new DDClick('DDMCEEdit',function(e) {
 
-
             DDMCE.dom = DDMCE.fromInner($(e.target));
             DDMCE.removePanel();
 
             DDMCE.modal.show();
             DDMCE.tinymce.boot();
+
 
         });
 

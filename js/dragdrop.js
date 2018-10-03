@@ -229,6 +229,10 @@ function DDContainer(bind = '', element = new DDElement(), panel = new DDPanel(m
     this.element = DDElement.container(element);
     this.panel = DDPanel.container(panel);
 
+
+
+
+
     this.toString = function () {
 
         let element = this.element();
@@ -241,10 +245,19 @@ function DDContainer(bind = '', element = new DDElement(), panel = new DDPanel(m
         return selector ? label + binds.join(label) : binds.join(' ') ;
     };
 
+    let self = this;
+
+    DD.update.handlers[this.identifier(true)] = function () {
+
+        console.log(1);
+        self.update();
+    };
+
 
     this.setPanel = function () {
 
       this.panel().set(this.select());
+
     };
 
     this.removePanel = function () {
@@ -267,11 +280,10 @@ function DDContainer(bind = '', element = new DDElement(), panel = new DDPanel(m
         return jquery;
     };
 
-    // this.update = function () {
-    //
-    //    // console.log(this.select());
-    //     this.setTo(this.select());
-    // };
+    this.update = function () {
+
+        this.boot(this.select());
+    };
 
 
     // this.boot = function(jquery) {
@@ -322,8 +334,12 @@ function DDPanel(menus = {}, extras = {}, element = new DDElement()) {
 
     this.set = function (jquery) {
 
-        this.remove(jquery);
-        jquery.prepend(this.toString());
+        let panel = jquery.children(this.constructor.identifier(true));
+
+        if(!panel.length) {
+
+            jquery.prepend(this.toString());
+        }
     };
 
     this.remove = function (jquery) {
@@ -535,8 +551,6 @@ new DDClick('DDMenuButton', function(e) {
 })();
 
 
-
-
 (function () {
 
     let panel = new DDPanel(DD.menu);
@@ -555,15 +569,18 @@ new DDClick('DDMenuButton', function(e) {
             var click = $(e.target);
             var container = DDContainer.fromInner(click);
 
-            $(container).childrens().not(DDPanel.identifier(true)).toggle();
+            console.log(container);
+            var children = container.children().not(DDPanel.identifier(true));
 
             if(click.html() === 'Hide') {
 
                 click.html('Show');
+                children.hide();
 
             } else {
 
                 click.html('Hide');
+                children.show();
             }
 
         },element);
@@ -595,6 +612,11 @@ new DDClick('DDMenuButton', function(e) {
             if(DDContainer.fromInner(container, true).length) {
 
                 container.remove();
+
+            } else {
+
+                container.empty();
+                DD.update.trigger();
             }
 
         },element);
@@ -603,13 +625,8 @@ new DDClick('DDMenuButton', function(e) {
         element.attribute().list('class').push('ddMenu');
 
         return click.element();
-
     }();
-
-
-
 })();
-
 
 
 
@@ -624,11 +641,6 @@ DD.update.handlers['sortable'] = function () {
 
 };
 
-// function DDClickHide() {
-//
-// }
-//
-// DDClickHide.identifier = identifier;
 
 $(document).click(function(e) {
 
