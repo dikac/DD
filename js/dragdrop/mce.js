@@ -1,31 +1,29 @@
 
 
 
-
-
-const DDMCE = function() {
+const HtmeTinyMce = function() {
 
     var extra = {
         new : ''
     };
-    let container = new DDContainer('DDMCE', new DDElement(), new DDPanel(DD.menu, extra));
+    let container = new HtmeComponentContainer('HtmeTinyMce', new HtmeComponentElement(), new HtmeComponentPanel(Htme.menu, extra));
     container.menus = extra;
     return container;
 }();
 
-//DDMCE.element().attribute().list('class').push('row');
-DDMCE.panel().name = '<div class="pull-left ddname">text</div>';
+//HtmeTinyMce.element().attribute().list('class').push('row');
+HtmeTinyMce.panel().name = '<div class="pull-left htmeName">text</div>';
 
-DDMCE.panel().menu('new').submenus['text'] = function () {
+HtmeTinyMce.panel().menu('new').submenus['text'] = function () {
 
-    let click = new DDClick('DDNewMCE', function(e) {
+    let click = new HtmeComponentClick('HtmeNewMCE', function(e) {
 
         var click = $(e.target);
-        var container = DDContainer.fromInner(click);
-        container.append(DDMCE.toString());
-        DD.update.trigger();
+        var container = HtmeComponentContainer.fromInner(click);
+        container.append(HtmeTinyMce.toString());
+        Htme.update.trigger();
     });
-    click.element().attribute().list('class').push('ddMenu');
+    click.element().attribute().list('class').push('htmeMenu');
     click.element().attribute().list('class').push();
     click.element().content = 'text';
 
@@ -35,29 +33,29 @@ DDMCE.panel().menu('new').submenus['text'] = function () {
 
 
 
-DDMCE.modal = new function() {
+HtmeTinyMce.modal = new function() {
 
     var selector = {
-        modal   : 'DDMCEModal',
-        cancel  : 'DDMCEModalCancel',
-        save    : 'DDMCEModalSave',
-        text    : 'DDMCEModalText',
+        modal   : 'HtmeMCEModal',
+        cancel  : 'HtmeMCEModalCancel',
+        save    : 'HtmeMCEModalSave',
+        text    : 'HtmeMCEModalText',
     };
 
-    let modal = new DDModal(selector.modal);
+    let modal = new HtmeComponentModal(selector.modal);
     modal.selector = selector;
 
-    let item = new DDItems();
+    let item = new HtmeComponentItems();
     modal.footer = item;
 
 
     item.items['cancel'] = function () {
 
-        let click = new DDClick(selector.save, function (e) {
+        let click = new HtmeComponentClick(selector.save, function (e) {
 
-            DDMCE.tinymce.shutdown();
-            DDMCE.setPanel();
-            DD.update.trigger();
+            HtmeTinyMce.tinymce.shutdown();
+            HtmeTinyMce.setPanel();
+            Htme.update.trigger();
         });
 
         click.element().content = 'Cancel';
@@ -70,12 +68,12 @@ DDMCE.modal = new function() {
 
     item.items['save'] = function () {
 
-        let click = new DDClick(selector.save, function (e) {
+        let click = new HtmeComponentClick(selector.save, function (e) {
 
-            DDMCE.tinymce.save();
-            DDMCE.tinymce.shutdown();
-            DDMCE.setPanel();
-            DD.update.trigger();
+            HtmeTinyMce.tinymce.save();
+            HtmeTinyMce.tinymce.shutdown();
+            HtmeTinyMce.setPanel();
+            Htme.update.trigger();
         });
 
         click.element().content = 'Save';
@@ -92,7 +90,7 @@ DDMCE.modal = new function() {
 
 }();
 
-DDMCE.tinymce = new function () {
+HtmeTinyMce.tinymce = new function () {
 
    // var selector = 'DDTinyMCE';
 
@@ -100,25 +98,25 @@ DDMCE.tinymce = new function () {
 
     this.dom = null;
 
-    // this.identifier = function($selector = false) {
+    // this.HtmeComponentSelector = function($selector = false) {
     //
     //     return $selector ? '#' + selector : selector ;
     // };
 
     this.save = function () {
 
-        let input = tinymce.get(DDMCE.modal.selector.text);
+        let input = tinymce.get(HtmeTinyMce.modal.selector.text);
         let content = input.getContent();
 
-        DDMCE.dom.html(content);
-        DDMCE.dom.removeAttr('style');
+        HtmeTinyMce.dom.html(content);
+        HtmeTinyMce.dom.removeAttr('style');
     };
 
     this.shutdown = function () {
 
         let self;
 
-        if(self = tinymce.get(DDMCE.modal.selector.text)) {
+        if(self = tinymce.get(HtmeTinyMce.modal.selector.text)) {
 
             self.remove();
         }
@@ -127,7 +125,7 @@ DDMCE.tinymce = new function () {
 
     function contentSetter(editor) {
 
-        editor.setContent(DDMCE.dom.html());
+        editor.setContent(HtmeTinyMce.dom.html());
     }
 
     this.boot = function() {
@@ -137,10 +135,10 @@ DDMCE.tinymce = new function () {
 
             init_instance_callback : function(editor) {
 
-                editor.setContent(DDMCE.dom.html());
+                editor.setContent(HtmeTinyMce.dom.html());
             },
 
-            selector : '#' + DDMCE.modal.selector.text
+            selector : '#' + HtmeTinyMce.modal.selector.text
         };
 
         let init = Object.assign(this.arguments, arguments);
@@ -158,17 +156,17 @@ DDMCE.tinymce = new function () {
 
 (function () {
 
-    let panel = new DDPanel(DDMCE.menus);
+    let panel = new HtmeComponentPanel(HtmeTinyMce.menus);
 
     panel.menu('edit').submenus['text'] = function () {
 
-        let click = new DDClick('DDMCEEdit',function(e) {
+        let click = new HtmeComponentClick('HtmeMCEEdit',function(e) {
 
-            DDMCE.dom = DDMCE.fromInner($(e.target));
-            DDMCE.removePanel();
+            HtmeTinyMce.dom = HtmeTinyMce.fromInner($(e.target));
+            HtmeTinyMce.removePanel();
 
-            DDMCE.modal.show();
-            DDMCE.tinymce.boot();
+            HtmeTinyMce.modal.show();
+            HtmeTinyMce.tinymce.boot();
 
 
         });

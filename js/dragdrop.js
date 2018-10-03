@@ -16,22 +16,22 @@
 //     return 'c';
 // };
 
-const DD = {};
+const Htme = {};
 
-DD.update = {
+Htme.update = {
 
     handlers: {},
 
     trigger : function () {
 
-        for(let k in DD.update.handlers) {
+        for(let k in Htme.update.handlers) {
 
-            DD.update.handlers[k]();
+            Htme.update.handlers[k]();
         }
     }
 };
 
-DD.boot = {
+Htme.boot = {
 
     handlers : {},
 
@@ -39,30 +39,30 @@ DD.boot = {
 
         selector = $(selector);
 
-        for(let k in DD.boot.handlers) {
+        for(let k in Htme.boot.handlers) {
 
-            DD.boot.handlers[k](selector);
+            Htme.boot.handlers[k](selector);
         }
 
-        DD.update.trigger();
+        Htme.update.trigger();
     }
 };
 
-DD.hide = {
+Htme.hide = {
     handlers : {}
 };
 
 
-DD.menu = {};
+Htme.menu = {};
 
 
-function identifier(selector = false, label = '.') {
+function HtmeComponentSelector(name, selector = false, label = '.') {
 
-    return selector ? label + this.name : this.name ;
+    return selector ? label + name : name ;
 }
 
 
-function DDAttribute ($list = {}, $named = {}) {
+function HtmeComponentAttribute ($list = {}, $named = {}) {
 
     var named = {};
     var list = {};
@@ -143,9 +143,9 @@ function DDAttribute ($list = {}, $named = {}) {
 };
 
 
-DDAttribute.container = function(attribute = new DDAttribute) {
+HtmeComponentAttribute.container = function(attribute = new HtmeComponentAttribute) {
 
-    console.assert(attribute instanceof DDAttribute);
+    console.assert(attribute instanceof HtmeComponentAttribute);
 
     return function () {
 
@@ -154,26 +154,26 @@ DDAttribute.container = function(attribute = new DDAttribute) {
 };
 
 
-function tag(tag = 'div') {
+// function tag(tag = 'div') {
+//
+//     this.set  = function ($tag) {
+//
+//         console.assert(typeof $tag === "string");
+//         console.assert($tag.length > 0);
+//
+//         tag = $tag;
+//     };
+//
+//     this.toString = function () {
+//
+//         return tag;
+//     }
+// }
 
-    this.set  = function ($tag) {
 
-        console.assert(typeof $tag === "string");
-        console.assert($tag.length > 0);
+function HtmeComponentElement(content = '', tag = 'div', attribute = new HtmeComponentAttribute()) {
 
-        tag = $tag;
-    };
-
-    this.toString = function () {
-
-        return tag;
-    }
-}
-
-
-function DDElement(content = '', tag = 'div', attribute = new DDAttribute()) {
-
-    this.attribute = DDAttribute.container(attribute);
+    this.attribute = HtmeComponentAttribute.container(attribute);
 
     this.tag  = tag;
     this.content = content;
@@ -185,9 +185,9 @@ function DDElement(content = '', tag = 'div', attribute = new DDAttribute()) {
         return `<${open}>${this.content}</${this.tag}>`;
     };
 }
-DDElement.container = function (element = new DDElement()) {
+HtmeComponentElement.container = function (element = new HtmeComponentElement()) {
 
-    console.assert(element instanceof DDElement);
+    console.assert(element instanceof HtmeComponentElement);
 
     return function () {
 
@@ -196,11 +196,11 @@ DDElement.container = function (element = new DDElement()) {
 };
 
 
-function DDBindAttribute(attribute, extra = '') {
+function HtmeComponentAttributeBinding(attribute, extra = '') {
 
     console.assert(typeof extra === "string");
 
-    console.assert(attribute instanceof DDAttribute);
+    console.assert(attribute instanceof HtmeComponentAttribute);
 
     var binds = [];
 
@@ -222,12 +222,12 @@ function DDBindAttribute(attribute, extra = '') {
 }
 
 
-function DDContainer(bind = '', element = new DDElement(), panel = new DDPanel(menus)) {
+function HtmeComponentContainer(bind = '', element = new HtmeComponentElement(), panel = new HtmeComponentPanel(menus)) {
 
     let binds = this.select = this.constructor.bind(element.attribute(), bind);
 
-    this.element = DDElement.container(element);
-    this.panel = DDPanel.container(panel);
+    this.element = HtmeComponentElement.container(element);
+    this.panel = HtmeComponentPanel.container(panel);
 
 
 
@@ -247,7 +247,7 @@ function DDContainer(bind = '', element = new DDElement(), panel = new DDPanel(m
 
     let self = this;
 
-    DD.update.handlers[this.identifier(true)] = function () {
+    Htme.update.handlers[this.identifier(true)] = function () {
 
         console.log(1);
         self.update();
@@ -299,10 +299,14 @@ function DDContainer(bind = '', element = new DDElement(), panel = new DDPanel(m
     };
 }
 
-DDContainer.identifier = identifier;
-DDContainer.bind = DDBindAttribute;
+HtmeComponentContainer.identifier = identifier = function (selector = false) {
 
-DDContainer.fromInner = function (jquery, bypass = false) {
+    return HtmeComponentSelector('Htme', selector);
+};;
+
+HtmeComponentContainer.bind = HtmeComponentAttributeBinding;
+
+HtmeComponentContainer.fromInner = function (jquery, bypass = false) {
 
     if(!jquery.hasClass(this.identifier()) || bypass) {
 
@@ -314,9 +318,9 @@ DDContainer.fromInner = function (jquery, bypass = false) {
 
 
 
-function DDPanel(menus = {}, extras = {}, element = new DDElement()) {
+function HtmeComponentPanel(menus = {}, extras = {}, element = new HtmeComponentElement()) {
 
-    this.element = DDElement.container(element);
+    this.element = HtmeComponentElement.container(element);
     this.name;
 
     this.constructor.bind(element.attribute());
@@ -326,7 +330,7 @@ function DDPanel(menus = {}, extras = {}, element = new DDElement()) {
 
         if(!menus.hasOwnProperty(name)) {
 
-            menus[name] = new DDMenu({}, name);
+            menus[name] = new HtmeComponentMenu({}, name);
         }
 
         return menus[name];
@@ -371,11 +375,11 @@ function DDPanel(menus = {}, extras = {}, element = new DDElement()) {
 
 /**
  * @param panel
- * @returns {function(): DDPanel}
+ * @returns {function(): HtmeComponentPanel}
  */
-DDPanel.container = function (panel = new DDPanel()) {
+HtmeComponentPanel.container = function (panel = new HtmeComponentPanel()) {
 
-    console.assert(panel instanceof DDPanel);
+    console.assert(panel instanceof HtmeComponentPanel);
 
     return function () {
 
@@ -384,7 +388,7 @@ DDPanel.container = function (panel = new DDPanel()) {
 };
 
 
-function DDItems(items = {}) {
+function HtmeComponentItems(items = {}) {
 
     this.items = items;
 
@@ -394,10 +398,13 @@ function DDItems(items = {}) {
     }
 }
 
-DDPanel.bind = DDBindAttribute;
-DDPanel.identifier = identifier;
+HtmeComponentPanel.bind = HtmeComponentAttributeBinding;
+HtmeComponentPanel.identifier = identifier = function (selector = false) {
 
-DDPanel.fromContainer = function (jquery) {
+    return HtmeComponentSelector('HtmePanel', selector);
+};;
+
+HtmeComponentPanel.fromContainer = function (jquery) {
 
     return jquery.children(this.identifier(true)).first();
 };
@@ -405,12 +412,12 @@ DDPanel.fromContainer = function (jquery) {
 
 
 
-function DDClick(click, handler = function () {}, element = new DDElement()) {
+function HtmeComponentClick(click, handler = function () {}, element = new HtmeComponentElement()) {
 
     console.assert(typeof handler === "function");
     console.assert(typeof click === "string");
 
-    this.element = DDElement.container(element);
+    this.element = HtmeComponentElement.container(element);
 
     element.attribute().named('class')[click] = click;
 
@@ -424,13 +431,13 @@ function DDClick(click, handler = function () {}, element = new DDElement()) {
         });
     }
 
-    DD.update.handlers['click' + click] = update;
+    Htme.update.handlers['click' + click] = update;
 }
 
 
 
 
-function DDModal (bind, header = '', content = '', footer = '') {
+function HtmeComponentModal (bind, header = '', content = '', footer = '') {
 
     console.assert(typeof bind === "string");
 
@@ -452,7 +459,7 @@ function DDModal (bind, header = '', content = '', footer = '') {
 
         dom.modal('show');
 
-        DD.update.trigger();
+        Htme.update.trigger();
     };
 
     this.remove = function () {
@@ -482,36 +489,35 @@ function DDModal (bind, header = '', content = '', footer = '') {
     }
 }
 
-function DDMenu(submenus = {}, content ='UNDEFINED', container = new DDElement()) {
+function HtmeComponentMenu(submenus = {}, content ='UNDEFINED', container = new HtmeComponentElement()) {
 
 
     container.attribute().list('class').push('dropdown');
 
     // style
-    container.attribute().list('class').push('ddMenu');
-    //container.attribute().list('class').push('btn btn-default btn-xs');
+    container.attribute().list('class').push('htmeMenu');
 
 
     this.submenus = submenus;
-    this.element = DDElement.container(container);
+    this.element = HtmeComponentElement.container(container);
     this.constructor.bind(container.attribute(), '');
 
     container.attribute().named('class')['float'] = 'pull-left';
 
-    let click = new DDElement();
+    let click = new HtmeComponentElement();
 
     click.attribute().list('class').push('dropdown-toggle');
     click.attribute().list('data-toggle').push('dropdown');
     click.content = content;
 
-    let menu = new DDElement();
+    let menu = new HtmeComponentElement();
 
     menu.attribute().list('class').push('dropdown-menu');
    // menu.attribute().named('class')['DDMenuContent'] = 'DDMenuContent';
-    menu.content = new DDItems(this.submenus);
+    menu.content = new HtmeComponentItems(this.submenus);
 
 
-    container.content = new DDItems({button:click, menu:menu});
+    container.content = new HtmeComponentItems({button:click, menu:menu});
 
 
     this.toString = function () {
@@ -524,13 +530,17 @@ function DDMenu(submenus = {}, content ='UNDEFINED', container = new DDElement()
         return '';
     }
 }
-DDMenu.identifier = identifier;
-DDMenu.bind = DDBindAttribute;
+HtmeComponentMenu.identifier = function (selector = false) {
+
+    return HtmeComponentSelector('HtmeMenu', selector);
+};
+
+HtmeComponentMenu.bind = HtmeComponentAttributeBinding;
 
 
-new DDClick('DDMenuButton', function(e) {
+new HtmeComponentClick('HtmeMenuButton', function(e) {
 
-    $(e.target).siblings('.DDMenuContent').first().toggle();
+    $(e.target).siblings('.HtmeMenuContent').first().toggle();
 
 });
 
@@ -539,7 +549,7 @@ new DDClick('DDMenuButton', function(e) {
 
 (function () {
 
-    let panel = new DDPanel(DD.menu);
+    let panel = new HtmeComponentPanel(Htme.menu);
     panel.menu('new').element().attribute().named('class')['float'] = 'pull-left';
 
 })();
@@ -547,7 +557,7 @@ new DDClick('DDMenuButton', function(e) {
 
 (function () {
 
-    let panel = new DDPanel(DD.menu);
+    let panel = new HtmeComponentPanel(Htme.menu);
     panel.menu('edit').element().attribute().named('class')['float'] = 'pull-left';
 
 })();
@@ -555,7 +565,7 @@ new DDClick('DDMenuButton', function(e) {
 
 (function () {
 
-    let panel = new DDPanel(DD.menu);
+    let panel = new HtmeComponentPanel(Htme.menu);
     panel.menu('window').element().attribute().named('class')['float'] = 'pull-right';
 
 })();
@@ -563,16 +573,16 @@ new DDClick('DDMenuButton', function(e) {
 
 (function () {
 
-    new DDPanel(DD.menu).menu('window').submenus['show/hide'] = function () {
+    new HtmeComponentPanel(Htme.menu).menu('window').submenus['show/hide'] = function () {
 
-        let element = new DDElement();
-        let click = new DDClick('DDShowHide', function(e) {
+        let element = new HtmeComponentElement();
+        let click = new HtmeComponentClick('HtmeShowHide', function(e) {
 
             var click = $(e.target);
-            var container = DDContainer.fromInner(click);
+            var container = HtmeComponentContainer.fromInner(click);
 
             console.log(container);
-            var children = container.children().not(DDPanel.identifier(true));
+            var children = container.children().not(HtmeComponentPanel.identifier(true));
 
             if(click.html() === 'Hide') {
 
@@ -589,7 +599,7 @@ new DDClick('DDMenuButton', function(e) {
 
         element.content = 'Hide';
         // style
-        element.attribute().list('class').push('ddMenu');
+        element.attribute().list('class').push('htmeMenu');
 
         return click.element();
 
@@ -599,32 +609,32 @@ new DDClick('DDMenuButton', function(e) {
 
 (function () {
 
-    let panel = new DDPanel(DD.menu);
+    let panel = new HtmeComponentPanel(Htme.menu);
 
     panel.menu('window').submenus['remove'] = function () {
 
-        let element = new DDElement();
-        let click = new DDClick('DDRemove', function(e) {
+        let element = new HtmeComponentElement();
+        let click = new HtmeComponentClick('HtmeRemove', function(e) {
 
             var click = $(e.target);
-            var container = DDContainer.fromInner(click);
+            var container = HtmeComponentContainer.fromInner(click);
 
-            console.log(DDContainer.fromInner(container).length);
+            console.log(HtmeComponentContainer.fromInner(container).length);
 
-            if(DDContainer.fromInner(container, true).length) {
+            if(HtmeComponentContainer.fromInner(container, true).length) {
 
                 container.remove();
 
             } else {
 
                 container.empty();
-                DD.update.trigger();
+                Htme.update.trigger();
             }
 
         },element);
 
         element.content = 'Remove';
-        element.attribute().list('class').push('ddMenu');
+        element.attribute().list('class').push('htmeMenu');
 
         return click.element();
     }();
@@ -632,12 +642,12 @@ new DDClick('DDMenuButton', function(e) {
 
 
 
-DD.update.handlers['sortable'] = function () {
+Htme.update.handlers['sortable'] = function () {
 
-    $(DDContainer.identifier(true)).sortable({
+    $(HtmeComponentContainer.identifier(true)).sortable({
         containment: "parent",
         tolerance:'pointer',
-        items : DDContainer.identifier(true)
+        items : HtmeComponentContainer.identifier(true)
 
     }).disableSelection();
 
@@ -646,17 +656,17 @@ DD.update.handlers['sortable'] = function () {
 
 $(document).click(function(e) {
 
-    for(let k in DD.hide.handlers) {
+    for(let k in Htme.hide.handlers) {
 
-        DD.hide.handlers[k](e);
+        Htme.hide.handlers[k](e);
     }
 });
 
 
 
-DD.update.handlers['bootstrapDropDown'] = function () {
+Htme.update.handlers['bootstrapDropDown'] = function () {
 
-    new DDClick('dropdown-menu', function(e) {
+    new HtmeComponentClick('dropdown-menu', function(e) {
         e.stopPropagation();
     })
 

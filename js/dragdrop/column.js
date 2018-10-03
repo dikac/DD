@@ -1,33 +1,33 @@
 
 
-const DDColumn = new DDContainer('DDRow', new DDElement(), new DDPanel(DD.menu));
-DDColumn.panel().name = '<div class="pull-left ddname">column</div>';
+const HtmeColumn = new HtmeComponentContainer('HtmeRow', new HtmeComponentElement(), new HtmeComponentPanel(Htme.menu));
+HtmeColumn.panel().name = '<div class="pull-left htmeName">column</div>';
 
-DDColumn.panel().menu('new').submenus['column'] = function () {
+HtmeColumn.panel().menu('new').submenus['column'] = function () {
 
-    let click = new DDClick('DDNewColumn',function(e) {
+    let click = new HtmeComponentClick('HtmeNewColumn',function(e) {
 
         var click = $(e.target);
-        var container = DDContainer.fromInner(click);
-        var col = click.children('.DDColumnInput').val();
+        var container = HtmeComponentContainer.fromInner(click);
+        var col = click.children('.HtmeColumnInput').val();
 
-        DDColumn.element().attribute().named('class')['col'] = 'col-md-' + col;
+        HtmeColumn.element().attribute().named('class')['col'] = 'col-md-' + col;
 
-        container.append(DDColumn.toString());
+        container.append(HtmeColumn.toString());
 
-        DD.update.trigger();
+        Htme.update.trigger();
     });
 
 
-    new DDClick('DDColumnInput',function(e) {
+    new HtmeComponentClick('HtmeColumnInput',function(e) {
         e.stopPropagation();
     });
 
-    click.element().attribute().list('class').push('ddMenu');
+    click.element().attribute().list('class').push('htmeMenu');
     click.element().content = `
     column
     
-    <input class=" DDColumnInput" type="number" value="3"
+    <input class=" HtmeColumnInput" type="number" value="3"
     name="quantity" min="1" max="12" style="height: 20px; width: 40px; margin-left: 10px">
     `;
 
@@ -36,19 +36,19 @@ DDColumn.panel().menu('new').submenus['column'] = function () {
 
 
 //
-// const DDColumn = function() {
+// const HtmeColumn = function() {
 //
-//     let panel = Object.assign(new DDElement(), new DDPanel());
-//     return Object.assign(new DDElement(), new DDContainer(new DDAttribute, panel));
+//     let panel = Object.assign(new HtmeComponentElement(), new HtmeComponentPanel());
+//     return Object.assign(new HtmeComponentElement(), new HtmeComponentContainer(new HtmeComponentAttribute, panel));
 //
 // }();
 //
-// DDColumn.content.content = new DDItems({
-//     menu:DDMenu(DD.menu.new),
-//     show:DD.menu.show
+// HtmeColumn.content.content = new HtmeComponentItems({
+//     menu:HtmeComponentMenu(Htme.menu.new),
+//     show:Htme.menu.show
 // });
 //
-// new function DDItems(items = {}) {
+// new function HtmeComponentItems(items = {}) {
 //
 //     this.content = items;
 //
@@ -69,12 +69,12 @@ DDColumn.panel().menu('new').submenus['column'] = function () {
 //         return array.join('');
 //     }
 //
-// }(DD.menu.new);
+// }(Htme.menu.new);
 //
 //
-// DD.menu.new['column'] = function () {
+// Htme.menu.new['column'] = function () {
 //
-//     let click = Object.assign(new DDElement(), new DDClick('DDNewColumn'));
+//     let click = Object.assign(new HtmeComponentElement(), new HtmeComponentClick('DDNewColumn'));
 //
 //     click.attribute.list('class').push('pull-left');
 //     click.content = 'Column';
@@ -84,11 +84,11 @@ DDColumn.panel().menu('new').submenus['column'] = function () {
 //         let click = $(e.target);
 //         let col = click.siblings('.DDColumnInput').val();
 //
-//         DDColumn.attribute.named('class')['col'] = 'col-md-' + col;
+//         HtmeColumn.attribute.named('class')['col'] = 'col-md-' + col;
 //
-//         let container = DDContainer.fromInner(click);
-//         container.append(DDColumn.toString());
-//         DD.update.trigger();
+//         let container = HtmeComponentContainer.fromInner(click);
+//         container.append(HtmeColumn.toString());
+//         Htme.update.trigger();
 //
 //     });
 //
@@ -96,7 +96,7 @@ DDColumn.panel().menu('new').submenus['column'] = function () {
 //                 class="pull-left DDColumnInput" type="number" value="3"
 //                 name="quantity" min="1" max="12" style="height: 20px; width: 40px; margin-left: 10px">`
 //
-//     return new DDItems({name:click, input:input});
+//     return new HtmeComponentItems({name:click, input:input});
 // }();
 //
 //
@@ -133,12 +133,12 @@ DDColumn.panel().menu('new').submenus['column'] = function () {
 
 
 //
-// DDColumn.attribute('class').push('col-md-4');
-// DDColumn.panel.menus['new'] = DD.panel.menus['new'];
+// HtmeColumn.attribute('class').push('col-md-4');
+// HtmeColumn.panel.menus['new'] = Htme.panel.menus['new'];
 //
-// DDColumn.panel.name.content = 'column';
+// HtmeColumn.panel.name.content = 'column';
 //
-// var click = new DDElementAbstract('DDColumn', 'Column');
+// var click = new DDElementAbstract('HtmeColumn', 'Column');
 // click.attribute('class').push('DDmenu');
 //
 // //click.attribute('class').push('dropdown-submenu');
@@ -159,13 +159,13 @@ DDColumn.panel().menu('new').submenus['column'] = function () {
 // // `;
 //
 //
-// var menu = click.content = new DDMenu();
+// var menu = click.content = new HtmeComponentMenu();
 // menu.attribute('class').push('dropdown-submenu');
 // menu.attribute('role').push('toolbar');
 // menu.items.push(new DDElementAbstract('Column'));
 //
 //
-// var sub = new DDMenu();
+// var sub = new HtmeComponentMenu();
 // sub.attribute('class').push('dropdown-menu btn-toolbar');
 // menu.items.push(sub);
 //
@@ -173,7 +173,7 @@ DDColumn.panel().menu('new').submenus['column'] = function () {
 // for(let i = 1;i<=12;i++) {
 //
 //
-//     let element = new DDElementClick('DDColumn' + i, i);
+//     let element = new DDElementClick('HtmeColumn' + i, i);
 //     element.attribute('class').push('btn btn-xs btn-default btn-group');
 //     element.attribute('style').push('width: 30px;');
 //     // element.attribute('class').push('btn btn-default btn-group');
@@ -183,27 +183,27 @@ DDColumn.panel().menu('new').submenus['column'] = function () {
 //     element.handler = function(jquery) {
 //
 //
-//         var container = DDContainer.fromInner($(jquery.target));
+//         var container = HtmeComponentContainer.fromInner($(jquery.target));
 //
 //          var content = DDContent.fromOuter(container);
 //
-//         DDColumn.content = new DDContent();
-//         DDColumn.attribute('class').push('col-md-' + i);
+//         HtmeColumn.content = new DDContent();
+//         HtmeColumn.attribute('class').push('col-md-' + i);
 //        // console.log(content);
-//          content.append(DDColumn.toString());
+//          content.append(HtmeColumn.toString());
 //         //
-//         // DD.update.trigger();
+//         // Htme.update.trigger();
 //     };
 //
 //
-//   //  DD.panel.menus['new'].items.push(DDRow.item);
+//   //  Htme.panel.menus['new'].items.push(HtmeRow.item);
 // }
 
 
 
 
 
-// var menu = click.content =  new DDMenu();
+// var menu = click.content =  new HtmeComponentMenu();
 //
 // var main = new DDElementAbstract();
 // main.content = 'aw';
@@ -212,7 +212,7 @@ DDColumn.panel().menu('new').submenus['column'] = function () {
 //
 // //click.items.push(new Element('a'));
 //
-// var sub = new DDMenu();
+// var sub = new HtmeComponentMenu();
 // sub.attribute('class').push('dropdown-menu');
 //
 // menu.items.push(sub);
@@ -225,22 +225,22 @@ DDColumn.panel().menu('new').submenus['column'] = function () {
 // // click.content = sub;
 //
 //
-// DDColumn.item = click;
-// DDColumn.item.handler = function(jquery) {
+// HtmeColumn.item = click;
+// HtmeColumn.item.handler = function(jquery) {
 //
 //
-//     var container = DDContainer.fromInner($(jquery.target));
+//     var container = HtmeComponentContainer.fromInner($(jquery.target));
 //     console.log(container);
 //     var content = DDContent.fromOuter(container);
 //
 //
-//     content.append(DDColumn.toString());
+//     content.append(HtmeColumn.toString());
 //
-//     DD.update.trigger();
+//     Htme.update.trigger();
 // };
 //
 //
-// DD.panel.menus['new'].items.push(DDColumn.item);
+// Htme.panel.menus['new'].items.push(HtmeColumn.item);
 //
 //
 //
@@ -261,4 +261,4 @@ DDColumn.panel().menu('new').submenus['column'] = function () {
 //
 // $new.items.push(new DDElementClick('A', '1111111111111111111111'));
 //
-// DDColumn.panel.menus['size'] = $new;
+// HtmeColumn.panel.menus['size'] = $new;

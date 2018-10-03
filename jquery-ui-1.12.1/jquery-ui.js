@@ -10867,7 +10867,7 @@ $.extend( Datepicker.prototype, {
 	COOKIE: "D, dd M yy",
 	ISO_8601: "yy-mm-dd",
 	RFC_822: "D, d M y",
-	RFC_850: "DD, dd-M-y",
+	RFC_850: "Htme, dd-M-y",
 	RFC_1036: "D, d M y",
 	RFC_1123: "D, d M yy",
 	RFC_2822: "D, d M yy",
@@ -10886,7 +10886,7 @@ $.extend( Datepicker.prototype, {
 	 * o  - day of year (no leading zeros)
 	 * oo - day of year (three digit)
 	 * D  - day name short
-	 * DD - day name long
+	 * Htme - day name long
 	 * m  - month of year (no leading zero)
 	 * mm - month of year (two digit)
 	 * M  - month name short
@@ -14826,7 +14826,7 @@ $.widget( "ui.tabs", {
 
 		if ( active === null ) {
 
-			// check the fragment identifier in the URL
+			// check the fragment HtmeComponentSelector in the URL
 			if ( locationHash ) {
 				this.tabs.each( function( i, tab ) {
 					if ( $( tab ).attr( "aria-controls" ) === locationHash ) {
@@ -15332,7 +15332,7 @@ $.widget( "ui.tabs", {
 		}
 
 		if ( !toHide.length && !toShow.length ) {
-			$.error( "jQuery UI Tabs: Mismatching fragment identifier." );
+			$.error( "jQuery UI Tabs: Mismatching fragment HtmeComponentSelector." );
 		}
 
 		if ( toShow.length ) {

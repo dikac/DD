@@ -2,13 +2,13 @@
 
 
 
-function DDAttributeEditor (attribute = '', value = '') {
+function HtmeAttributeComponentEditor (attribute = '', value = '') {
 
     return `
         <div class="input-group col-md-12" style="margin-bottom: 5px; margin-top: 5px">
             <div class="col-md-2"><input value="${attribute}" class="form-control" type="text"></div>
             <div class="col-md-8"><input value="${value}" class=" form-control" type="text"></div>
-            <div class="col-md-2"><button class="btn btn-danger DDAttributeRemove">Remove</button></div>
+            <div class="col-md-2"><button class="btn btn-danger HtmeAttributeRemove">Remove</button></div>
         </div>`;
 }
 
@@ -17,18 +17,18 @@ function DDAttributeEditor (attribute = '', value = '') {
 
 (function () {
 
-    let panel = new DDPanel(DD.menu);
+    let panel = new HtmeComponentPanel(Htme.menu);
 
     panel.menu('edit').submenus['element'] = function () {
 
-        let click = new DDClick('DDElement',function(e) {
+        let click = new HtmeComponentClick('HtmeComponentElement',function(e) {
 
 
-            let container = DDContainer.fromInner($(e.target));
+            let container = HtmeComponentContainer.fromInner($(e.target));
 
             console.log(container);
 
-            let attribute = container.attr('DDAttributeData');
+            let attribute = container.attr('HtmeAttributeData');
             console.log(attribute);
 
             if(attribute === undefined) {
@@ -42,16 +42,16 @@ function DDAttributeEditor (attribute = '', value = '') {
             }
 
 
-            let modal = new DDModal('DDAttributeModal');
+            let modal = new HtmeComponentModal('HtmeAttributeModal');
 
 
             modal.content = function () {
 
-                let items  = new DDItems();
+                let items  = new HtmeComponentItems();
 
                 for(let k in attribute) {
 
-                    items.items[k] = DDAttributeEditor(k, attribute[k]);
+                    items.items[k] = HtmeAttributeComponentEditor(k, attribute[k]);
                 }
 
                 return items;
@@ -60,17 +60,17 @@ function DDAttributeEditor (attribute = '', value = '') {
             modal.header = `
                 <div class="col-md-2">Attribute</div>
                 <div class="col-md-8">Value</div>
-                <div class="col-md-2"><button class="btn btn-default DDAttributeAdd">Add</button></div>
+                <div class="col-md-2"><button class="btn btn-default HtmeAttributeAdd">Add</button></div>
             `;
 
 
             modal.footer = function() {
 
-                let items = new DDItems();
+                let items = new HtmeComponentItems();
 
                 items.items['cancel'] = function () {
 
-                    let click = new DDClick('DDAttributeCancel', function (e) {
+                    let click = new HtmeComponentClick('HtmeAttributeCancel', function (e) {
 
                         console.log('save');
                     });
@@ -85,7 +85,7 @@ function DDAttributeEditor (attribute = '', value = '') {
 
                 items.items['save'] = function () {
 
-                    let click = new DDClick('DDAttributeSave', function (e) {
+                    let click = new HtmeComponentClick('HtmeAttributeSave', function (e) {
 
                         let buffer = [];
 
@@ -133,18 +133,18 @@ function DDAttributeEditor (attribute = '', value = '') {
 
 
 
-    new DDClick('DDAttributeAdd', function (e) {
+    new HtmeComponentClick('HtmeAttributeAdd', function (e) {
 
         console.log($(e.target).parents('.modal-content'));
-        console.log($(e.target).parents('.modal-content').children('.DDAttributeContent'));
+        console.log($(e.target).parents('.modal-content').children('.HtmeAttributeContent'));
 
-        $(e.target).parents('.modal-content').children('.modal-body').append(DDAttributeEditor());
+        $(e.target).parents('.modal-content').children('.modal-body').append(HtmeAttributeComponentEditor());
 
-        DD.update.trigger();
+        Htme.update.trigger();
     });
 
 
-    new DDClick('DDAttributeRemove', function (e) {
+    new HtmeComponentClick('HtmeAttributeRemove', function (e) {
 
         $(e.target).parents('.input-group').remove();
     });
