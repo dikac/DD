@@ -430,7 +430,9 @@ function DDClick(click, handler = function () {}, element = new DDElement()) {
 
 
 
-function DDModal (bind = '', header = '', content = '', footer = '') {
+function DDModal (bind, header = '', content = '', footer = '') {
+
+    console.assert(typeof bind === "string");
 
     this.bind = bind;
     this.header = header;
