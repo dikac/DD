@@ -56,6 +56,35 @@ Htme.hide = {
 Htme.menu = {};
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function HtmeComponentSelector(name, selector = false, label = '.') {
 
     return selector ? label + name : name ;
