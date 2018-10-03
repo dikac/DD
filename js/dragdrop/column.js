@@ -1,67 +1,136 @@
 
 
-const DDColumn = function() {
+const DDColumn = new DDContainer('DDRow', new DDElement(), new DDPanel(DD.menu));
+DDColumn.panel().name = '<div class="pull-left ddname">column</div>';
 
-    let panel = Object.assign(new DDElement(), new DDPanel());
-    return Object.assign(new DDElement(), new DDContainer(new DDAttribute, panel));
+DDColumn.panel().menu('new').submenus['column'] = function () {
 
-}();
+    let click = new DDClick('DDNewColumn',function(e) {
 
-DDColumn.content.content = new DDItems({
-    menu:DDMenu(DD.menu.new),
-    show:DD.menu.show
-});
+        var click = $(e.target);
+        var container = DDContainer.fromInner(click);
+        var col = click.children('.DDColumnInput').val();
 
-new function DDItems(items = {}) {
+        DDColumn.element().attribute().named('class')['col'] = 'col-md-' + col;
 
-    this.content = items;
-
-    this.toString = function () {
-
-        let array = [];
-
-        for(let k in this.content) {
-
-            if(k === 'column') {
-
-                continue;
-            }
-
-            array.push(this.content[k]);
-        }
-
-        return array.join('');
-    }
-
-}(DD.menu.new);
-
-
-DD.menu.new['column'] = function () {
-
-    let click = Object.assign(new DDElement(), new DDClick('DDNewColumn'));
-
-    click.attribute.list('class').push('pull-left');
-    click.content = 'Column';
-
-    click.setHandler(function(e) {
-
-        let click = $(e.target);
-        let col = click.siblings('.DDColumnInput').val();
-
-        DDColumn.attribute.named('class')['col'] = 'col-md-' + col;
-
-        let container = DDContainer.fromInner(click);
         container.append(DDColumn.toString());
-        DD.update.trigger();
 
+        DD.update.trigger();
     });
 
-    let input = `<input 
-                class="pull-left DDColumnInput" type="number" value="3" 
-                name="quantity" min="1" max="12" style="height: 20px; width: 40px; margin-left: 10px">`
 
-    return new DDItems({name:click, input:input});
+    new DDClick('DDColumnInput',function(e) {
+        e.stopPropagation();
+    });
+
+    click.element().attribute().list('class').push('ddMenu');
+    click.element().content = `
+    column
+    
+    <input class=" DDColumnInput" type="number" value="3"
+    name="quantity" min="1" max="12" style="height: 20px; width: 40px; margin-left: 10px">
+    `;
+
+    return click.element();
 }();
+
+
+//
+// const DDColumn = function() {
+//
+//     let panel = Object.assign(new DDElement(), new DDPanel());
+//     return Object.assign(new DDElement(), new DDContainer(new DDAttribute, panel));
+//
+// }();
+//
+// DDColumn.content.content = new DDItems({
+//     menu:DDMenu(DD.menu.new),
+//     show:DD.menu.show
+// });
+//
+// new function DDItems(items = {}) {
+//
+//     this.content = items;
+//
+//     this.toString = function () {
+//
+//         let array = [];
+//
+//         for(let k in this.content) {
+//
+//             if(k === 'column') {
+//
+//                 continue;
+//             }
+//
+//             array.push(this.content[k]);
+//         }
+//
+//         return array.join('');
+//     }
+//
+// }(DD.menu.new);
+//
+//
+// DD.menu.new['column'] = function () {
+//
+//     let click = Object.assign(new DDElement(), new DDClick('DDNewColumn'));
+//
+//     click.attribute.list('class').push('pull-left');
+//     click.content = 'Column';
+//
+//     click.setHandler(function(e) {
+//
+//         let click = $(e.target);
+//         let col = click.siblings('.DDColumnInput').val();
+//
+//         DDColumn.attribute.named('class')['col'] = 'col-md-' + col;
+//
+//         let container = DDContainer.fromInner(click);
+//         container.append(DDColumn.toString());
+//         DD.update.trigger();
+//
+//     });
+//
+//     let input = `<input
+//                 class="pull-left DDColumnInput" type="number" value="3"
+//                 name="quantity" min="1" max="12" style="height: 20px; width: 40px; margin-left: 10px">`
+//
+//     return new DDItems({name:click, input:input});
+// }();
+//
+//
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //
 // DDColumn.attribute('class').push('col-md-4');

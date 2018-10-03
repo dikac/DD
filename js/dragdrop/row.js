@@ -1,116 +1,28 @@
+const DDRow = new DDContainer('DDRow', new DDElement(), new DDPanel(DD.menu));
 
-
-
-const DDRow = function() {
-
-    let panel = Object.assign(new DDElement(), new DDPanel());
-    return Object.assign(new DDElement(), new DDContainer(new DDAttribute, panel));
-
-}();
-
-DDRow.content.content = new DDItems({
-    menu:DDMenu(DD.menu.new),
-    show:DD.menu.show
-});
-
-DDRow.attribute.named('class')['bootstrap-row'] = 'row';
-
+DDRow.element().attribute().list('class').push('row');
+DDRow.panel().name = '<div class="pull-left ddname">container</div>';
 
 DD.boot.handlers['row'] = function(selector) {
 
-    DDRow.setTo(selector);
+    DDRow.boot(selector);
     DD.update.trigger();
-
 };
 
-DD.menu.new['container'] = function () {
+DDRow.panel().menu('new').submenus['container'] = function () {
 
-    let attribute = new DDAttribute();
-    let click = new DDClick('DDNewContainer', null, attribute);
-
-
-    attribute.list('class').push();
-   // attribute.named('data-dismiss')['modal'] = 'modal';
-
-    click.setHandler(function(e) {
+    let click = new DDClick('DDNewContainer',function(e) {
 
         var click = $(e.target);
         var container = DDContainer.fromInner(click);
         container.append(DDRow.toString());
         DD.update.trigger();
-
     });
+    click.element().attribute().list('class').push('ddMenu');
+    click.element().attribute().list('class').push();
+    click.element().content = 'container';
 
-    return Object.assign(new DDElement('<div>Container</div>'), click);
+    return click.element();
 }();
-
-
-
-
-
-
-
-
-
-
-// DD.new.list['container'] = function () {
-//
-//     let attribute = new DDAttribute();
-//     let click = new DDClick('DDNewContainer', null, attribute);
-//
-//     attribute.list('class').push('btn btn-default btn-xl col-md-1 glyphicon glyphicon-unchecked');
-//     attribute.named('data-dismiss')['modal'] = 'modal';
-//
-//     click.setHandler(function(e) {
-//
-//         var click = $(DD.new.event.target);
-//         var container = DDContainer.fromInner(click);
-//         container.append(DDRow.toString());
-//         DD.update.trigger();
-//
-//     });
-//
-//     return Object.assign(new DDElement('<div>Container</div>'), click);
-// }();
-
-
-
-
-
-//DDRow.content.content.content
-
-
-
-
-//DDRow.content.content.content['add'] =
-
-
-
-// DDRow.content.content.content['add'] = function () {
-//
-//     let attribute = new DDAttribute();
-//     let modal = new DDModal('DDNew');
-//
-//     modal.header = 'new Item';
-//     modal.content = new DDItems(DD.new.list);
-//
-//     attribute.list('class').push(
-//         'glyphicon glyphicon-plus btn btn-default btn-xs pull-left'
-//     );
-//
-//     let click = new DDClick('DDAdd', null, attribute);
-//
-//     click.setHandler(function(e) {
-//
-//         DD.new.event = e;
-//         modal.show();
-//     });
-//
-//     return Object.assign(new DDElement(), click);
-//
-// }();
-
-
-
 
 
