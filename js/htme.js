@@ -229,10 +229,6 @@ function HtmeComponentContainer(bind = '', element = new HtmeComponentElement(),
     this.element = HtmeComponentElement.container(element);
     this.panel = HtmeComponentPanel.container(panel);
 
-
-
-
-
     this.toString = function () {
 
         let element = this.element();
@@ -318,7 +314,7 @@ HtmeComponentContainer.fromInner = function (jquery, bypass = false) {
 
 
 
-function HtmeComponentPanel(menus = {}, extras = {}, element = new HtmeComponentElement()) {
+function HtmeComponentPanel(menus = {}, element = new HtmeComponentElement()) {
 
     this.element = HtmeComponentElement.container(element);
     this.name;
@@ -326,7 +322,15 @@ function HtmeComponentPanel(menus = {}, extras = {}, element = new HtmeComponent
     this.constructor.bind(element.attribute());
     element.attribute().list('class').push('navbar navbar-default');
 
-    this.menu = function (name) {
+
+    this.menu = function (name, menu = null) {
+
+        if(menu !== null) {
+
+            console.assert(panel instanceof HtmeComponentMenu);
+            menus[name] = menu;
+        }
+
 
         if(!menus.hasOwnProperty(name)) {
 
@@ -358,13 +362,7 @@ function HtmeComponentPanel(menus = {}, extras = {}, element = new HtmeComponent
 
     this.toString = function () {
 
-        let merged = Object.assign({}, menus, extras);
-
-
-
-        element.content = this.name  + Object.values(merged).join(' ');
-
-
+        element.content = this.name  + Object.values(menus).join(' ');
         return element.toString();
     };
 
@@ -516,9 +514,7 @@ function HtmeComponentMenu(submenus = {}, content ='UNDEFINED', container = new 
    // menu.attribute().named('class')['DDMenuContent'] = 'DDMenuContent';
     menu.content = new HtmeComponentItems(this.submenus);
 
-
     container.content = new HtmeComponentItems({button:click, menu:menu});
-
 
     this.toString = function () {
 

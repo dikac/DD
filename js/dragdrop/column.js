@@ -9,7 +9,17 @@ HtmeColumn.panel().menu('new').submenus['column'] = function () {
 
         var click = $(e.target);
         var container = HtmeComponentContainer.fromInner(click);
-        var col = click.children('.HtmeColumnInput').val();
+        var input = click.children('.HtmeColumnInput');
+        var col = input.val();
+
+        if(col > 12) {
+
+            input.val(col = 12)
+
+        } else if(col < 1) {
+
+            input.val(col = 1)
+        }
 
         HtmeColumn.element().attribute().named('class')['col'] = 'col-md-' + col;
 
@@ -27,12 +37,13 @@ HtmeColumn.panel().menu('new').submenus['column'] = function () {
     click.element().content = `
     column
     
-    <input class=" HtmeColumnInput" type="number" value="3"
+    <input class="HtmeColumnInput pull-right" type="number" value="3"
     name="quantity" min="1" max="12" style="height: 20px; width: 40px; margin-left: 10px">
     `;
 
     return click.element();
 }();
+
 
 
 //

@@ -1,17 +1,15 @@
 
 
 
-const HtmeTinyMce = function() {
+const HtmeTinyMce =  new HtmeComponentContainer(
+    'HtmeTinyMce', new HtmeComponentElement(), new HtmeComponentPanel(Htme.menu)
+);
 
-    var extra = {
-        new : ''
-    };
-    let container = new HtmeComponentContainer('HtmeTinyMce', new HtmeComponentElement(), new HtmeComponentPanel(Htme.menu, extra));
-    container.menus = extra;
-    return container;
-}();
+HtmeTinyMce.panel.toString = function() {
 
-//HtmeTinyMce.element().attribute().list('class').push('row');
+
+};
+
 HtmeTinyMce.panel().name = '<div class="pull-left htmeName">text</div>';
 
 HtmeTinyMce.panel().menu('new').submenus['text'] = function () {
@@ -167,7 +165,6 @@ HtmeTinyMce.tinymce = new function () {
 
             HtmeTinyMce.modal.show();
             HtmeTinyMce.tinymce.boot();
-
 
         });
 
