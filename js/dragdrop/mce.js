@@ -1,31 +1,4 @@
-
-//
-//
-// const HtmeTinyMce =  new HtmeComponentBlock(
-//     '', new HtmeComponentElement(), new HtmeComponentPanel(Htme.menu)
-// );
-//
-//
-// HtmeTinyMce.panel().name = '<div class="pull-left htmeName">text</div>';
-//
-// HtmeTinyMce.panel().menu('new').submenus['text'] = function () {
-//
-//     let click = new HtmeComponentClick('HtmeNewMCE', function(e) {
-//
-//         var click = $(e.target);
-//         var container = HtmeComponentBlock.fromInner(click);
-//         container.append(HtmeTinyMce.toString());
-//         Htme.update.trigger();
-//     });
-//     click.element().attribute().list('class').push('htmeMenu');
-//     click.element().attribute().list('class').push();
-//     click.element().content = 'text';
-//
-//     return click.element();
-// }();
-
 const  HtmeTinyMce = {};
-
 
 HtmeTinyMce.modal = new function() {
 
@@ -48,7 +21,6 @@ HtmeTinyMce.modal = new function() {
         let click = new HtmeComponentClick(selector.cancel, function (e) {
 
             HtmeTinyMce.tinymce.shutdown();
-           // HtmeTinyMce.setPanel();
             Htme.update.trigger();
         });
 
@@ -88,16 +60,9 @@ HtmeTinyMce.modal = new function() {
 
 HtmeTinyMce.tinymce = new function () {
 
-   // var selector = 'DDTinyMCE';
-
     this.arguments = {};
 
     this.dom = null;
-
-    // this.HtmeComponentSelector = function($selector = false) {
-    //
-    //     return $selector ? '#' + selector : selector ;
-    // };
 
     this.save = function () {
 
@@ -118,7 +83,6 @@ HtmeTinyMce.tinymce = new function () {
         }
     };
 
-
     function contentSetter(editor) {
 
         editor.setContent(HtmeTinyMce.dom.html());
@@ -138,36 +102,14 @@ HtmeTinyMce.tinymce = new function () {
 
         let init = Object.assign(this.arguments, arguments);
 
-        //console.log(init);
 
         tinymce.init(init);
-
-        // setTimeout(function () {
-        //     $('.mce-notification').remove()
-        // },500)
     }
 };
 
-/**
- * Ad = Blocked
- */
-// (function () {
-//
-//     $('body').on('DOMNodeInserted', '.mce-notification', function () {
-//
-//         if($(this).hasClass('mce-notification')) {
-//
-//             $(this).remove();
-//
-//         }
-//
-//     });
-//
-// })();
 
 (function () {
 
-   // let panel = new HtmeComponentPanel(HtmeTinyMce.menus);
 
     HtmeContent.panel().menu('edit').submenus['text'] = function () {
 

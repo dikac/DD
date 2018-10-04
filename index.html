@@ -42,6 +42,7 @@
     <script defer="defer" src="js/dragdrop/copy.js"></script>
 
     <script defer="defer" src="js/dragdrop/mce.js"></script>
+    <script defer="defer" src="js/dragdrop/codemirror.js"></script>
     <!--<script defer="defer" src="js/dragdrop/attribute.js"></script>-->
 <!--
 
@@ -223,11 +224,18 @@
     <!--</div>-->
 
 
-
+<textarea class="zzz"></textarea>
 <script>
-    $(document).ready(function() {
-        Htme.boot.selector('.dragdrop');
+    $('.zzz').each(function(index, elem){
+        CodeMirror.fromTextArea(elem, {/*options*/});
     });
+
+
+   // myCodeMirror.
+    //
+    // $(document).ready(function() {
+    //     Htme.boot.selector('.dragdrop');
+    // });
 
     // $(document).ready(function() {
     //     tinymce.init({ selector:'textarea' });
