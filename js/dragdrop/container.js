@@ -49,8 +49,6 @@ HtmeColumn.panel().setMenus( HtmeContainer.panel().menus());
             var click = $(e.target);
             var container = HtmeComponentBlock.binding().selectFromChildren(click);
 
-          //  console.log(container);
-
             container.append(HtmeRow.toString());
 
             Htme.update.trigger();
@@ -95,26 +93,12 @@ HtmeColumn.panel().setMenus( HtmeContainer.panel().menus());
         let click = new HtmeComponentClick('HtmeNewColumn',function(e) {
 
             let input = new ColumValue(e);
-            // var click = $(e.target);
-            // var container = HtmeComponentBlock.binding().selectFromChildren(click);
-            // var input = click.children('.HtmeColumnInput');
-            // var col = input.val();
-            //
-            // if(col > 12) {
-            //
-            //     input.val(col = 12)
-            //
-            // } else if(col < 1) {
-            //
-            //     input.val(col = 1)
-            // }
 
             HtmeColumn.element().attribute().get('class').set('col', 'col-md-' + input.val);
             HtmeColumn.element().attribute().get('Htme-column').set('col',''+input.val);
 
             let menu = HtmeColumn.panel().menu('edit');
 
-           // console.log(menu);
             menu.submenus['columnEdit'] = columnEdit;
 
             input.container.append(HtmeColumn.toString());
