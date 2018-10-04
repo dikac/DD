@@ -30,6 +30,11 @@
 
         let data = copy.clone();
         HtmeComponentBlock.binding().selectFromChildren($(e.target)).append(data);
+
+        if(cut) {
+            copy = data;
+            cut.remove();
+        }
     });
 
     pasteClick.element().attribute().get('class').add('htmeMenu');

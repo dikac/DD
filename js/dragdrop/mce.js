@@ -184,7 +184,7 @@ HtmeTinyMce.tinymce = new function () {
 
 
         });
-
+        click.element().attribute().get('class').add('htmeMenu');
         click.element().content = 'text (tiny mce)';
 
         return click.element();

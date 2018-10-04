@@ -44,7 +44,7 @@ HtmeColumn.panel().setMenus( HtmeContainer.panel().menus());
         element.attribute().get('class').add('htmeMenu');
         element.content = 'row';
 
-        return new HtmeComponentClick('HtmeNewContainer',function(e) {
+        return new HtmeComponentClick('HtmeNewRow',function(e) {
 
             var click = $(e.target);
             var container = HtmeComponentBlock.binding().selectFromChildren(click);
