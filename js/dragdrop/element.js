@@ -24,12 +24,12 @@ function HtmeAttributeComponentEditor (attribute = '', value = '') {
         let click = new HtmeComponentClick('HtmeComponentElement',function(e) {
 
 
-            let container = HtmeComponentContainer.fromInner($(e.target));
+            let container = HtmeComponentBlock.fromInner($(e.target));
 
-            console.log(container);
+            //console.log(container);
 
             let attribute = container.attr('HtmeAttributeData');
-            console.log(attribute);
+            //console.log(attribute);
 
             if(attribute === undefined) {
 
@@ -135,8 +135,8 @@ function HtmeAttributeComponentEditor (attribute = '', value = '') {
 
     new HtmeComponentClick('HtmeAttributeAdd', function (e) {
 
-        console.log($(e.target).parents('.modal-content'));
-        console.log($(e.target).parents('.modal-content').children('.HtmeAttributeContent'));
+        //console.log($(e.target).parents('.modal-content'));
+       // console.log($(e.target).parents('.modal-content').children('.HtmeAttributeContent'));
 
         $(e.target).parents('.modal-content').children('.modal-body').append(HtmeAttributeComponentEditor());
 

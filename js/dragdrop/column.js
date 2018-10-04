@@ -1,6 +1,6 @@
 
 
-const HtmeColumn = new HtmeComponentContainer('HtmeRow', new HtmeComponentElement(), new HtmeComponentPanel(Htme.menu));
+const HtmeColumn = new HtmeComponentBlock('HtmeRow', new HtmeComponentElement(), new HtmeComponentPanel(Htme.menu));
 HtmeColumn.panel().name = '<div class="pull-left htmeName">column</div>';
 
 HtmeColumn.panel().menu('new').submenus['column'] = function () {
@@ -8,7 +8,7 @@ HtmeColumn.panel().menu('new').submenus['column'] = function () {
     let click = new HtmeComponentClick('HtmeNewColumn',function(e) {
 
         var click = $(e.target);
-        var container = HtmeComponentContainer.fromInner(click);
+        var container = HtmeComponentBlock.fromInner(click);
         var input = click.children('.HtmeColumnInput');
         var col = input.val();
 
@@ -50,7 +50,7 @@ HtmeColumn.panel().menu('new').submenus['column'] = function () {
 // const HtmeColumn = function() {
 //
 //     let panel = Object.assign(new HtmeComponentElement(), new HtmeComponentPanel());
-//     return Object.assign(new HtmeComponentElement(), new HtmeComponentContainer(new HtmeComponentAttribute, panel));
+//     return Object.assign(new HtmeComponentElement(), new HtmeComponentBlock(new HtmeComponentAttributes, panel));
 //
 // }();
 //
@@ -97,7 +97,7 @@ HtmeColumn.panel().menu('new').submenus['column'] = function () {
 //
 //         HtmeColumn.attribute.named('class')['col'] = 'col-md-' + col;
 //
-//         let container = HtmeComponentContainer.fromInner(click);
+//         let container = HtmeComponentBlock.fromInner(click);
 //         container.append(HtmeColumn.toString());
 //         Htme.update.trigger();
 //
@@ -194,7 +194,7 @@ HtmeColumn.panel().menu('new').submenus['column'] = function () {
 //     element.handler = function(jquery) {
 //
 //
-//         var container = HtmeComponentContainer.fromInner($(jquery.target));
+//         var container = HtmeComponentBlock.fromInner($(jquery.target));
 //
 //          var content = DDContent.fromOuter(container);
 //
@@ -240,7 +240,7 @@ HtmeColumn.panel().menu('new').submenus['column'] = function () {
 // HtmeColumn.item.handler = function(jquery) {
 //
 //
-//     var container = HtmeComponentContainer.fromInner($(jquery.target));
+//     var container = HtmeComponentBlock.fromInner($(jquery.target));
 //     console.log(container);
 //     var content = DDContent.fromOuter(container);
 //

@@ -53,128 +53,260 @@ Htme.hide = {
 };
 
 
-Htme.menu = {};
 
 
 
 
 
+function HtmlComponentSelects () {
+
+    return $(this.identifier(true));
+};
 
 
+function HtmlComponentSelectFromInner (jquery, bypass = false) {
 
+    if(!jquery.hasClass(this.identifier()) || bypass) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function HtmeComponentSelector(name, selector = false, label = '.') {
-
-    return selector ? label + name : name ;
-}
-
-
-function HtmeComponentAttribute ($list = {}, $named = {}) {
-
-    var named = {};
-    var list = {};
-
-    this.named = function (name) {
-
-        if(!named.hasOwnProperty(name)) {
-
-            named[name] = {};
-        }
-
-        return named[name];
-    };
-
-    this.list = function (name) {
-
-        if(!list.hasOwnProperty(name)) {
-
-            list[name] = [];
-        }
-
-        return list[name];
-    };
-
-    this.values = function (attribute) {
-
-        let array = [];
-        array.push(...this.list(attribute));
-        array.push(...Object.values(this.named('class')));
-        return array;
-    };
-
-    this.toString = function() {
-
-        let object = {};
-
-        for (let key in named) {
-
-            object[key] = Object.values(named[key]);
-        }
-
-        for(let key in list) {
-
-            if(!(key in object)) {
-
-                object[key] = [];
-            }
-
-            object[key].push(...list[key]);
-        }
-
-        var attributes = [];
-
-        for (let key in object) {
-
-            var value = Object.values(object[key]).join(' ');
-            value = value.trim();
-
-            if(value.length > 0) {
-
-                attributes.push(`${key}="${value}"`);
-            }
-        }
-
-        return attributes.join(' ');
-    };
-
-    for (let key in $list) {
-
-        this.list(key).push(...$list[key]);
+        jquery = jquery.parents(this.identifier(true)).first();
     }
 
-    for (let key in $named) {
+    return jquery;
+};
 
-        let obj = this.named(key);
-        obj = Object.assign(obj, $named[key]);
+
+function HtmeComponentBinding(
+    permanent = new HtmeComponentAttribute,
+    temporary = new HtmeComponentAttribute
+) {
+
+    this.setPermanent = function (permanent) {
+
+        console.assert(permanent instanceof HtmeComponentAttribute);
+    };
+    this.setPermanent(permanent);
+
+    this.setTemporary = function (temporary) {
+
+        console.assert(temporary instanceof HtmeComponentAttribute);
+    };
+    this.setTemporary(temporary);
+
+    this.permanent = function () {
+
+        return permanent;
+    };
+
+    this.temporary = function () {
+
+        return temporary;
+    };
+
+    this.bindTo = function(jquery) {
+
+        if(!jquery.length) {
+
+            throw new Error('Selector not exitst');
+        }
+
+        let classes = jquery.attr('Htme-Binding');
+
+        if(classes) {
+
+            jquery.removeClass(classes);
+        }
+
+        let str = temporary.toString();
+
+        if(str.length) {
+
+            jquery.attr('Htme-Binding', temporary.toString());
+        }
+
+        jquery.addClass(this.selector());
+    };
+
+    this.setTo = function (attribute) {
+
+        console.assert(attribute instanceof HtmeComponentAttributes);
+
+        let attr = attribute.get('class');
+
+        Object.assign(attr.all(), temporary.all(), permanent.all());
+    };
+
+    this.selects = function () {
+
+        return $(this.selector(true));
+    };
+
+    this.selectFromChildren = function (jquery, bypass = false) {
+
+        if(!jquery.hasClass(this.selector()) || bypass) {
+
+            jquery = jquery.parents(this.selector(true)).first();
+        }
+
+        return jquery;
+    };
+
+    this.selectFromParent = function (jquery) {
+
+        return jquery.children(this.selector(true)).first();
+    };
+
+
+    this.unsetFrom = function (attribute) {
+
+        console.assert(attribute instanceof HtmeComponentAttributes);
+
+        for(let k in temporary) {
+
+            let val = temporary[k];
+
+            delete attribute.named('class')[val];
+        }
+    };
+
+    this.selector = function (selector = false) {
+
+        let delimiter = selector ? '.' : ' ';
+
+        let  classes = [];
+        classes.push(...Object.values(permanent.all()));
+        classes.push(...Object.values(temporary.all()));
+
+        return (delimiter + classes.join(delimiter)).trim();
+    }
+}
+
+// function HtmeComponentAttributeBinding(attribute, extra = '') {
+//
+//     console.assert(typeof extra === "string");
+//
+//     console.assert(attribute instanceof HtmeComponentAttributes);
+//
+//     var binds = [];
+//
+//     binds.push(this.identifier());
+//
+//     if (extra.length > 0) {
+//
+//         binds.push(extra);
+//     }
+//
+//     for(let k in binds) {
+//
+//         let val = binds[k];
+//
+//         attribute.named('class')[val] = val;
+//     }
+//
+//     return binds;
+// }
+
+HtmeComponentBinding.container = function(binding = new HtmeComponentBinding) {
+
+    console.assert(binding instanceof HtmeComponentBinding);
+
+    return function () {
+
+        return binding;
     }
 };
 
 
-HtmeComponentAttribute.container = function(attribute = new HtmeComponentAttribute) {
+//
+//
+//
+//
+//
+// function HtmeComponentSelector(name, selector = false, label = '.') {
+//
+//     return selector ? label + name : name ;
+// }
 
-    console.assert(attribute instanceof HtmeComponentAttribute);
+function HtmeComponentAttribute(values = {}) {
+
+    this.set = function (name, value) {
+
+        values[name] = value;
+    };
+
+    this.add = function (...value) {
+
+        for(let k in value) {
+
+            while(values.hasOwnProperty(this.constructor.iteration)) {
+
+                console.log(this.constructor.iteration);
+                this.constructor.iteration++
+            }
+
+            values[this.constructor.iteration] = value[k];
+
+        }
+    };
+
+    this.all = function () {
+
+        return values;
+    };
+
+    this.toString = function() {
+
+        return Object.values(values).join(' ');
+    }
+};
+
+HtmeComponentAttribute.iteration = 1;
+
+function HtmeComponentAttributes (attributes = {}) {
+
+    for(let k in attributes) {
+
+        console.assert(attribute instanceof HtmeComponentAttribute);
+    }
+
+    this.get = function (name) {
+
+        if(!attributes.hasOwnProperty(name)) {
+
+            attributes[name] = new HtmeComponentAttribute;
+        }
+
+        return attributes[name];
+    };
+
+    this.all = function () {
+
+        return attributes;
+    };
+
+
+    this.toString = function() {
+
+        let buffer = [];
+
+        for (let key in attributes) {
+
+            let value = attributes[key].toString().trim();
+
+            if(value.length > 0) {
+
+                buffer.push(`${key}="${value}"`);
+            }
+        }
+
+        return buffer.join(' ');
+    };
+
+
+};
+
+HtmeComponentAttributes.container = function(attribute = new HtmeComponentAttributes) {
+
+    console.assert(attribute instanceof HtmeComponentAttributes);
 
     return function () {
 
@@ -183,7 +315,7 @@ HtmeComponentAttribute.container = function(attribute = new HtmeComponentAttribu
 };
 
 
-// function tag(tag = 'div') {
+// function HtmeComponentTag(tag = 'div') {
 //
 //     this.set  = function ($tag) {
 //
@@ -198,11 +330,20 @@ HtmeComponentAttribute.container = function(attribute = new HtmeComponentAttribu
 //         return tag;
 //     }
 // }
+HtmeComponentAttributes.container = function(attribute = new HtmeComponentAttributes) {
+
+    console.assert(attribute instanceof HtmeComponentAttributes);
+
+    return function () {
+
+        return attribute;
+    }
+};
 
 
-function HtmeComponentElement(content = '', tag = 'div', attribute = new HtmeComponentAttribute()) {
+function HtmeComponentElement(content = '', tag = 'div', attribute = new HtmeComponentAttributes()) {
 
-    this.attribute = HtmeComponentAttribute.container(attribute);
+    this.attribute = HtmeComponentAttributes.container(attribute);
 
     this.tag  = tag;
     this.content = content;
@@ -225,35 +366,10 @@ HtmeComponentElement.container = function (element = new HtmeComponentElement())
 };
 
 
-function HtmeComponentAttributeBinding(attribute, extra = '') {
 
-    console.assert(typeof extra === "string");
+function HtmeComponentBlock(bind, element = new HtmeComponentElement(), panel = new HtmeComponentPanel()) {
 
-    console.assert(attribute instanceof HtmeComponentAttribute);
-
-    var binds = [];
-
-    binds.push(this.identifier());
-
-    if (extra.length > 0) {
-
-        binds.push(extra);
-    }
-
-    for(let k in binds) {
-
-        let val = binds[k];
-
-        attribute.named('class')[val] = val;
-    }
-
-    return binds;
-}
-
-
-function HtmeComponentContainer(bind = '', element = new HtmeComponentElement(), panel = new HtmeComponentPanel(menus)) {
-
-    let binds = this.select = this.constructor.bind(element.attribute(), bind);
+    console.assert(bind instanceof HtmeComponentAttribute, bind);
 
     this.element = HtmeComponentElement.container(element);
     this.panel = HtmeComponentPanel.container(panel);
@@ -265,101 +381,78 @@ function HtmeComponentContainer(bind = '', element = new HtmeComponentElement(),
         return element.toString();
     };
 
-    this.identifier = function(selector = false, label = '.') {
+    this.binding = HtmeComponentBinding.container(
+        new HtmeComponentBinding(this.constructor.binding().permanent(), bind)
+    );
 
-        return selector ? label + binds.join(label) : binds.join(' ') ;
-    };
-
-    let self = this;
-
-    Htme.update.handlers[this.identifier(true)] = function () {
-
-        console.log(1);
-        self.update();
-    };
-
+    this.binding().setTo(element.attribute());
 
     this.setPanel = function () {
 
-      this.panel().set(this.select());
+      this.panel().set(this.binding().selects());
 
     };
 
     this.removePanel = function () {
 
-        this.panel().remove(this.select());
+        this.panel().remove(this.binding().selects());
     };
 
-    this.select = function() {
-
-        return $('.' + binds.join('.'))
-    };
-
-    this.fromInner = function (jquery, bypass = false) {
-
-        if (!jquery.hasClass(this.identifier()) || bypass) {
-
-            jquery = jquery.parents(this.identifier(true)).first();
-        }
-
-        return jquery;
-    };
 
     this.update = function () {
 
-        this.boot(this.select());
+        this.set(this.binding().selects());
     };
 
+    this.set = function(jquery) {
 
-    // this.boot = function(jquery) {
-    //
-    //     this.constructor.fromContainer(jquery).remove();
-    //     jquery.prepend(this.toString());
-    // }
+        this.binding().bindTo(jquery);
+        this.panel().set(jquery);
 
-    this.boot = function(jquery) {
+    };
 
-        jquery.addClass(this.element().attribute().values('class').join(' '));
-        this.setPanel();
+    let self = this;
+    Htme.update.handlers[this.binding().selector()] = function () {
+
+        self.update();
     };
 }
 
-HtmeComponentContainer.identifier = identifier = function (selector = false) {
-
-    return HtmeComponentSelector('Htme', selector);
-};;
-
-HtmeComponentContainer.bind = HtmeComponentAttributeBinding;
-
-HtmeComponentContainer.fromInner = function (jquery, bypass = false) {
-
-    if(!jquery.hasClass(this.identifier()) || bypass) {
-
-        jquery = jquery.parents(this.identifier(true)).first();
-    }
-
-    return jquery;
-};
+HtmeComponentBlock.binding = HtmeComponentBinding.container(
+    new HtmeComponentBinding(new HtmeComponentAttribute({'Htme':'Htme'}))
+);
 
 
 
-function HtmeComponentPanel(menus = {}, element = new HtmeComponentElement()) {
+
+
+function HtmeComponentPanel(name = new HtmeComponentElement(), menus = {}, element = new HtmeComponentElement()) {
+
+    console.assert(name instanceof HtmeComponentElement);
 
     this.element = HtmeComponentElement.container(element);
-    this.name;
 
-    this.constructor.bind(element.attribute());
-    element.attribute().list('class').push('navbar navbar-default');
+    this.name = function() {
+
+        return name;
+    };
 
 
-    this.menu = function (name, menu = null) {
+    element.attribute().get('class').add('navbar navbar-default');
 
-        if(menu !== null) {
+    this.binding = this.constructor.binding;
 
-            console.assert(panel instanceof HtmeComponentMenu);
-            menus[name] = menu;
+    this.constructor.binding().setTo(element.attribute());
+
+    this.setMenu = function (menus) {
+
+        for(let k in menus) {
+
+            console.assert(menus[k] instanceof HtmeComponentMenu);
         }
+    };
 
+    this.menu = function (name) {
 
         if(!menus.hasOwnProperty(name)) {
 
@@ -371,7 +464,7 @@ function HtmeComponentPanel(menus = {}, element = new HtmeComponentElement()) {
 
     this.set = function (jquery) {
 
-        let panel = jquery.children(this.constructor.identifier(true));
+        let panel = jquery.children(this.binding().selector(true));
 
         if(!panel.length) {
 
@@ -381,7 +474,9 @@ function HtmeComponentPanel(menus = {}, element = new HtmeComponentElement()) {
 
     this.remove = function (jquery) {
 
-        jquery.children(this.constructor.identifier(true)).remove();
+        console.log(jquery.children(this.binding().selector(true)));
+
+        jquery.children(this.binding().selector(true)).remove();
     };
 
     this.menus = function() {
@@ -391,11 +486,15 @@ function HtmeComponentPanel(menus = {}, element = new HtmeComponentElement()) {
 
     this.toString = function () {
 
-        element.content = this.name  + Object.values(menus).join(' ');
+        element.content = name  + Object.values(menus).join(' ');
         return element.toString();
     };
-
 }
+
+HtmeComponentPanel.binding = HtmeComponentBinding.container(
+    new HtmeComponentBinding(new HtmeComponentAttribute({'HtmePanel':'HtmePanel'}))
+);
+
 
 
 
@@ -425,17 +524,6 @@ function HtmeComponentItems(items = {}) {
     }
 }
 
-HtmeComponentPanel.bind = HtmeComponentAttributeBinding;
-HtmeComponentPanel.identifier = identifier = function (selector = false) {
-
-    return HtmeComponentSelector('HtmePanel', selector);
-};;
-
-HtmeComponentPanel.fromContainer = function (jquery) {
-
-    return jquery.children(this.identifier(true)).first();
-};
-
 
 
 
@@ -446,7 +534,7 @@ function HtmeComponentClick(click, handler = function () {}, element = new HtmeC
 
     this.element = HtmeComponentElement.container(element);
 
-    element.attribute().named('class')[click] = click;
+    element.attribute().get('class').set(click, click);
 
 
     function update() {
@@ -516,30 +604,36 @@ function HtmeComponentModal (bind, header = '', content = '', footer = '') {
     }
 }
 
-function HtmeComponentMenu(submenus = {}, content ='UNDEFINED', container = new HtmeComponentElement()) {
+function HtmeComponentMenu(submenus = {}, name ='UNDEFINED', container = new HtmeComponentElement()) {
 
 
-    container.attribute().list('class').push('dropdown');
+    container.attribute().get('class').add('dropdown');
 
     // style
-    container.attribute().list('class').push('htmeMenu');
+    container.attribute().get('class').add('htmeMenu');
 
 
     this.submenus = submenus;
     this.element = HtmeComponentElement.container(container);
     this.constructor.bind(container.attribute(), '');
 
-    container.attribute().named('class')['float'] = 'pull-left';
+    container.attribute().get('class').set('float', 'pull-left');
 
     let click = new HtmeComponentElement();
 
-    click.attribute().list('class').push('dropdown-toggle');
-    click.attribute().list('data-toggle').push('dropdown');
-    click.content = content;
+    click.attribute().get('class').add('dropdown-toggle');
+    click.attribute().get('data-toggle').add('dropdown');
+    click.content = name;
+
+    this.name = function() {
+
+        return name;
+
+    };
 
     let menu = new HtmeComponentElement();
 
-    menu.attribute().list('class').push('dropdown-menu');
+    menu.attribute().get('class').add('dropdown-menu');
    // menu.attribute().named('class')['DDMenuContent'] = 'DDMenuContent';
     menu.content = new HtmeComponentItems(this.submenus);
 
@@ -555,13 +649,10 @@ function HtmeComponentMenu(submenus = {}, content ='UNDEFINED', container = new 
         return '';
     }
 }
-HtmeComponentMenu.identifier = function (selector = false) {
 
-    return HtmeComponentSelector('HtmeMenu', selector);
-};
-
-HtmeComponentMenu.bind = HtmeComponentAttributeBinding;
-
+HtmeComponentMenu.binding = HtmeComponentBinding.container(
+    new HtmeComponentBinding(new HtmeComponentAttribute({'HtmeMenu':'HtmeMenu'}))
+);
 
 new HtmeComponentClick('HtmeMenuButton', function(e) {
 
@@ -572,28 +663,7 @@ new HtmeComponentClick('HtmeMenuButton', function(e) {
 
 
 
-(function () {
 
-    let panel = new HtmeComponentPanel(Htme.menu);
-    panel.menu('new').element().attribute().named('class')['float'] = 'pull-left';
-
-})();
-
-
-(function () {
-
-    let panel = new HtmeComponentPanel(Htme.menu);
-    panel.menu('edit').element().attribute().named('class')['float'] = 'pull-left';
-
-})();
-
-
-(function () {
-
-    let panel = new HtmeComponentPanel(Htme.menu);
-    panel.menu('window').element().attribute().named('class')['float'] = 'pull-right';
-
-})();
 
 
 (function () {
@@ -604,9 +674,9 @@ new HtmeComponentClick('HtmeMenuButton', function(e) {
         let click = new HtmeComponentClick('HtmeShowHide', function(e) {
 
             var click = $(e.target);
-            var container = HtmeComponentContainer.fromInner(click);
+            var container = HtmeComponentBlock.fromInner(click);
 
-            console.log(container);
+           // console.log(container);
             var children = container.children().not(HtmeComponentPanel.identifier(true));
 
             if(click.html() === 'Hide') {
@@ -624,7 +694,7 @@ new HtmeComponentClick('HtmeMenuButton', function(e) {
 
         element.content = 'Hide';
         // style
-        element.attribute().list('class').push('htmeMenu');
+        element.attribute().get('class').add('htmeMenu');
 
         return click.element();
 
@@ -632,51 +702,20 @@ new HtmeComponentClick('HtmeMenuButton', function(e) {
 
 })();
 
-(function () {
-
-    let panel = new HtmeComponentPanel(Htme.menu);
-
-    panel.menu('window').submenus['remove'] = function () {
-
-        let element = new HtmeComponentElement();
-        let click = new HtmeComponentClick('HtmeRemove', function(e) {
-
-            var click = $(e.target);
-            var container = HtmeComponentContainer.fromInner(click);
-
-            console.log(HtmeComponentContainer.fromInner(container).length);
-
-            if(HtmeComponentContainer.fromInner(container, true).length) {
-
-                container.remove();
-
-            } else {
-
-                container.empty();
-                Htme.update.trigger();
-            }
-
-        },element);
-
-        element.content = 'Remove';
-        element.attribute().list('class').push('htmeMenu');
-
-        return click.element();
-    }();
-})();
 
 
 
-Htme.update.handlers['sortable'] = function () {
 
-    $(HtmeComponentContainer.identifier(true)).sortable({
-        containment: "parent",
-        tolerance:'pointer',
-        items : HtmeComponentContainer.identifier(true)
-
-    }).disableSelection();
-
-};
+// Htme.update.handlers['sortable'] = function () {
+//
+//     HtmeComponentBlock.binding().select(true).sortable({
+//         containment: "parent",
+//         tolerance:'pointer',
+//         items : HtmeComponentBlock.identifier(true)
+//
+//     }).disableSelection();
+//
+// };
 
 
 $(document).click(function(e) {
@@ -696,4 +735,32 @@ Htme.update.handlers['bootstrapDropDown'] = function () {
     })
 
 };
+
+
+Htme.menu = {};
+
+Htme.menu.new = function () {
+
+    let menu = new HtmeComponentMenu({}, 'new');
+    menu.element().attribute().get('class').set('float', 'pull-left');
+    return menu;
+
+}();
+
+
+Htme.menu.edit = function () {
+
+    let menu = new HtmeComponentMenu({}, 'edit');
+    menu.element().attribute().get('class').set('float', 'pull-left');
+    return menu;
+}();
+
+
+Htme.menu.window = function () {
+
+    let menu = new HtmeComponentMenu({}, 'window');
+    menu.element().attribute().get('class').set('float', 'pull-right');
+    return menu;
+}();
+
 

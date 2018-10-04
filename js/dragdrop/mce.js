@@ -1,14 +1,11 @@
 
 
 
-const HtmeTinyMce =  new HtmeComponentContainer(
-    'HtmeTinyMce', new HtmeComponentElement(), new HtmeComponentPanel(Htme.menu)
+const HtmeTinyMce =  new HtmeComponentBlock(
+    '', new HtmeComponentElement(), new HtmeComponentPanel(Htme.menu)
 );
 
-HtmeTinyMce.panel.toString = function() {
 
-
-};
 
 HtmeTinyMce.panel().name = '<div class="pull-left htmeName">text</div>';
 
@@ -17,7 +14,7 @@ HtmeTinyMce.panel().menu('new').submenus['text'] = function () {
     let click = new HtmeComponentClick('HtmeNewMCE', function(e) {
 
         var click = $(e.target);
-        var container = HtmeComponentContainer.fromInner(click);
+        var container = HtmeComponentBlock.fromInner(click);
         container.append(HtmeTinyMce.toString());
         Htme.update.trigger();
     });
@@ -128,7 +125,6 @@ HtmeTinyMce.tinymce = new function () {
 
     this.boot = function() {
 
-
         let arguments = {
 
             init_instance_callback : function(editor) {
@@ -141,7 +137,7 @@ HtmeTinyMce.tinymce = new function () {
 
         let init = Object.assign(this.arguments, arguments);
 
-        console.log(init);
+        //console.log(init);
 
         tinymce.init(init);
 
@@ -154,14 +150,16 @@ HtmeTinyMce.tinymce = new function () {
 
 (function () {
 
-    let panel = new HtmeComponentPanel(HtmeTinyMce.menus);
+   // let panel = new HtmeComponentPanel(HtmeTinyMce.menus);
 
-    panel.menu('edit').submenus['text'] = function () {
+    HtmeTinyMce.panel().menu('edit').submenus['text'] = function () {
 
         let click = new HtmeComponentClick('HtmeMCEEdit',function(e) {
 
-            HtmeTinyMce.dom = HtmeTinyMce.fromInner($(e.target));
-            HtmeTinyMce.removePanel();
+            HtmeTinyMce.dom = HtmeContainer.fromInner($(e.target));
+
+
+            (new HtmeComponentBlock()).removePanel(); // todo fix
 
             HtmeTinyMce.modal.show();
             HtmeTinyMce.tinymce.boot();

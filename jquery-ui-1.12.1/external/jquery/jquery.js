@@ -659,11 +659,11 @@ var i,
 	// http://www.w3.org/TR/CSS21/syndata.html#value-def-identifier
 	identifier = "(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",
 
-	// HtmeComponentAttribute selectors: http://www.w3.org/TR/selectors/#attribute-selectors
+	// HtmeComponentAttributes selectors: http://www.w3.org/TR/selectors/#attribute-selectors
 	attributes = "\\[" + whitespace + "*(" + identifier + ")(?:" + whitespace +
 		// Operator (capture 2)
 		"*([*^$|!~]?=)" + whitespace +
-		// "HtmeComponentAttribute values must be CSS identifiers [capture 5] or strings [capture 3 or capture 4]"
+		// "HtmeComponentAttributes values must be CSS identifiers [capture 5] or strings [capture 3 or capture 4]"
 		"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|(" + identifier + "))|)" + whitespace +
 		"*\\]",
 
