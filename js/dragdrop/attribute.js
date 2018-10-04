@@ -38,7 +38,7 @@ function HtmeGetAttributes(jquery) {
 
     let editor = function () {
 
-        let click = new HtmeComponentClick('HtmeComponentElement',function(e) {
+        let click = new HtmeComponentClick('HtmeComponentAttribute',function(e) {
 
 
             let container = HtmeComponentBlock.binding().selectFromChildren($(e.target));
@@ -156,11 +156,13 @@ function HtmeGetAttributes(jquery) {
 
         });
 
-        click.element().content = 'element';
+        click.element().content = 'attribute';
+        click.element().attribute().get('class').add('htmeMenu');
 
         return click.element();
 
     }();
+
 
 
     HtmeContainer.panel().menu('edit').submenus['element'] = editor;
