@@ -76,63 +76,47 @@ function HtmlComponentSelectFromInner (jquery, bypass = false) {
 
 
 function HtmeComponentBinding(
-    permanent = new HtmeComponentAttribute,
-    temporary = new HtmeComponentAttribute
+    attribute = new HtmeComponentAttribute,
+    attributes = new HtmeComponentAttributes()
 ) {
 
-    this.setPermanent = function (permanent) {
+    this.setAttributes = function ($attributes) {
 
-        console.assert(permanent instanceof HtmeComponentAttribute);
+        console.assert($attributes instanceof HtmeComponentAttributes);
+
+        $attributes.get('class').sets(attribute.all());
+        attributes = $attributes;
     };
 
-    this.setTemporary = function (temporary) {
+    this.setAttributes(attributes);
 
-        console.assert(temporary instanceof HtmeComponentAttribute);
+
+    this.attribute = function () {
+
+        return attribute;
     };
 
 
-    this.permanent = function () {
+    this.add = function (...value) {
 
-        return permanent;
+        attribute.add(...value);
+        attributes.get('class').add(...value);
     };
 
-    this.temporary = function () {
 
-        return temporary;
+    this.set = function (name, value) {
+
+        attribute.set(name, value);
+        attributes.get('class').set(name, value);
     };
+
 
     this.bindTo = function(jquery) {
-
-        // if(!jquery.length) {
-        //
-        //     throw new Error('Selector not exitst');
-        // }
-
-        let classes = jquery.attr('Htme-Binding');
-
-        if(classes) {
-
-            jquery.removeClass(classes);
-        }
-
-        let str = temporary.toString();
-
-        if(str.length) {
-
-            jquery.attr('Htme-Binding', temporary.toString());
-        }
 
         jquery.addClass(this.selector());
     };
 
-    this.setTo = function (attribute) {
 
-        console.assert(attribute instanceof HtmeComponentAttributes);
-
-        let attr = attribute.get('class');
-
-        Object.assign(attr.all(), temporary.all(), permanent.all());
-    };
 
     this.selects = function () {
 
@@ -160,25 +144,23 @@ function HtmeComponentBinding(
     };
 
 
-    this.unsetFrom = function (attribute) {
-
-        console.assert(attribute instanceof HtmeComponentAttributes);
-
-        for(let k in temporary) {
-
-            let val = temporary[k];
-
-            delete attribute.named('class')[val];
-        }
-    };
+    // this.unsetFrom = function (attribute) {
+    //
+    //     console.assert(attribute instanceof HtmeComponentAttributes);
+    //
+    //     for(let k in temporary) {
+    //
+    //         let val = temporary[k];
+    //
+    //         delete attribute.named('class')[val];
+    //     }
+    // };
 
     this.selector = function (selector = false) {
 
         let delimiter = selector ? '.' : ' ';
 
-        let  classes = [];
-        classes.push(...Object.values(permanent.all()));
-        classes.push(...Object.values(temporary.all()));
+        let  classes = Object.values(attribute.all());
 
         return (delimiter + classes.join(delimiter)).trim();
     }
@@ -234,8 +216,20 @@ function HtmeComponentAttribute(values = {}) {
 
     this.set = function (name, value) {
 
+        console.assert(typeof value === "string", value);
+
         values[name] = value;
     };
+
+    this.sets = function (values) {
+
+        for(let k in values) {
+
+            this.set(k, values[k])
+        }
+    };
+
+    this.sets(values);
 
     this.copy = function () {
 
@@ -249,11 +243,11 @@ function HtmeComponentAttribute(values = {}) {
 
             while(values.hasOwnProperty(this.constructor.iteration)) {
 
-                console.log(this.constructor.iteration);
+               // console.log(this.constructor.iteration);
                 this.constructor.iteration++
             }
 
-            values[this.constructor.iteration] = value[k];
+            this.set(this.constructor.iteration, value[k]);
 
         }
     };
@@ -265,6 +259,8 @@ function HtmeComponentAttribute(values = {}) {
 
     this.toString = function() {
 
+       // console.log(Object.values(values));
+       // console.log(Object.values(values));
         return Object.values(values).join(' ');
     }
 };
@@ -277,6 +273,19 @@ function HtmeComponentAttributes (attributes = {}) {
 
         console.assert(attribute instanceof HtmeComponentAttribute);
     }
+
+    this.copy = function () {
+
+        let buffer = {};
+
+        for(let k in attributes) {
+
+            buffer[k] = attributes[k].copy();
+        }
+
+        return new HtmeComponentAttributes(buffer);
+
+    };
 
     this.get = function (name) {
 
@@ -377,27 +386,33 @@ HtmeComponentElement.container = function (element = new HtmeComponentElement())
 
 
 
-function HtmeComponentBlock(bind = new HtmeComponentAttribute(), element = new HtmeComponentElement(), panel = new HtmeComponentPanel()) {
+function HtmeComponentBlock(
+    bind = new HtmeComponentAttribute(),
+    element = new HtmeComponentElement(),
+    panel = new HtmeComponentPanel()
+) {
 
     console.assert(bind instanceof HtmeComponentAttribute, bind);
 
     this.element = HtmeComponentElement.container(element);
     this.panel = HtmeComponentPanel.container(panel);
 
-    this.toString = function () {
 
-        this.binding().setTo(this.element().attribute());
+    bind.sets(this.constructor.binding().attribute().all());
+
+   // console.log(bind.all());
+    this.binding = HtmeComponentBinding.container(
+        new HtmeComponentBinding(bind, this.element().attribute())
+    );
+  //  console.log(this.element().attribute().all());
+
+    this.toString = function () {
 
         let element = this.element();
         element.content = this.panel().toString();
         return element.toString();
     };
 
-    this.binding = HtmeComponentBinding.container(
-        new HtmeComponentBinding(this.constructor.binding().permanent().copy(), bind)
-    );
-
-   // this.binding().setTo(element.attribute());
 
     this.setPanel = function () {
 
@@ -450,11 +465,16 @@ function HtmeComponentPanel(name = new HtmeComponentElement(), menus = {}, eleme
     };
 
 
-    element.attribute().get('class').add('navbar navbar-default');
+    this.element().attribute().get('class').add('navbar navbar-default');
 
     this.binding = this.constructor.binding;
+    //
+    // bind.sets(this.constructor.binding().attribute().all());
+    // this.binding = HtmeComponentBinding.container(
+    //     new HtmeComponentBinding(bind, this.element().attribute())
+    // );
 
-    this.constructor.binding().setTo(element.attribute());
+    this.binding().setAttributes(this.element().attribute());
 
     this.setMenu = function (menu) {
 
@@ -462,6 +482,16 @@ function HtmeComponentPanel(name = new HtmeComponentElement(), menus = {}, eleme
 
         menus[menu.name()] = menu;
     };
+
+    this.setMenus = function (menus) {
+
+        for(let k in menus) {
+
+            this.setMenu(menus[k]);
+        }
+    };
+
+    this.setMenus(menus);
 
     this.menu = function (name) {
 
@@ -652,9 +682,19 @@ function HtmeComponentMenu(submenus = {}, name ='UNDEFINED', container = new Htm
     container.attribute().get('class').add('htmeMenu');
 
 
+
     this.submenus = submenus;
     this.element = HtmeComponentElement.container(container);
     this.constructor.bind(container.attribute(), '');
+
+    this.binding = this.constructor.binding;
+    //
+    // bind.sets(this.constructor.binding().attribute().all());
+    // this.binding = HtmeComponentBinding.container(
+    //     new HtmeComponentBinding(bind, this.element().attribute())
+    // );
+
+    this.binding().setAttributes(this.element().attribute());
 
     container.attribute().get('class').set('float', 'pull-left');
 
@@ -693,12 +733,39 @@ HtmeComponentMenu.binding = HtmeComponentBinding.container(
     new HtmeComponentBinding(new HtmeComponentAttribute({'HtmeMenu':'HtmeMenu'}))
 );
 
-new HtmeComponentClick('HtmeMenuButton', function(e) {
+HtmeComponentMenu.create = {};
+HtmeComponentMenu.create.new = function() {
 
-    $(e.target).siblings('.HtmeMenuContent').first().toggle();
+    let menu = new HtmeComponentMenu({}, 'new');
+    menu.element().attribute().get('class').set('float', 'pull-left');
+    return menu;
+};
 
-});
 
+HtmeComponentMenu.create.new = function() {
+
+    let edit = new HtmeComponentMenu({}, 'edit');
+    edit.element().attribute().get('class').set('float', 'pull-left');
+    return edit;
+
+};
+
+
+HtmeComponentMenu.create.new = function() {
+
+    let window = new HtmeComponentMenu({}, 'window');
+    window.element().attribute().get('class').set('float', 'pull-right');
+    return window;
+}
+
+
+
+// new HtmeComponentClick('HtmeMenuButton', function(e) {
+//
+//     $(e.target).siblings('.HtmeMenuContent').first().toggle();
+//
+// });
+//
 
 
 
@@ -741,25 +808,26 @@ Htme.update.handlers['bootstrapDropDown'] = function () {
 
 
 
-const HtmeContainer = new HtmeComponentBlock(
+const HtmeContainer = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeContainer':'HtmeContainer'})
    // new HtmeComponentAttribute({'HtmeContainer':'HtmeContainer'}),
    // new HtmeComponentElement(),
 );
-HtmeContainer.binding().permanent().add('HtmeContainer');
+//HtmeContainer.binding().permanent().add('HtmeContainer');
 
 
 
-HtmeContainer.panel().name().attribute().get('class').add('pull-left htmeName');
+HtmeContainer.panel().name().attribute().get('class').add('htmeName');
 
 
 
 const HtmeContent = new HtmeComponentBlock(
+    new HtmeComponentAttribute({'HtmeContent':'HtmeContent'})
    // new HtmeComponentAttribute({'HtmeContent':'HtmeContent'}),
     //new HtmeComponentElement(),
 );
-HtmeContent.binding().permanent().add('HtmeContent');
+//HtmeContent.binding().permanent().add('HtmeContent');
 
-HtmeContent.panel().name().attribute().get('class').add('pull-left htmeName');
+HtmeContent.panel().name().attribute().get('class').add('htmeName');
 
 
 
@@ -792,7 +860,6 @@ jQuery.each({a:HtmeContainer, b:HtmeContent}, function (k, v) {
 
 
 (function () {
-
 
 
     Htme.boot.handlers['container'] = function(selector) {
