@@ -151,18 +151,19 @@ HtmeTinyMce.tinymce = new function () {
 /**
  * Ad = Blocked
  */
-(function () {
-
-    $('body').on('DOMNodeInserted', '.mce-notification', function () {
-
-        if($(this).hasClass('mce-notification')) {
-
-            $(this).remove();
-        }
-
-    });
-
-})();
+// (function () {
+//
+//     $('body').on('DOMNodeInserted', '.mce-notification', function () {
+//
+//         if($(this).hasClass('mce-notification')) {
+//
+//             $(this).remove();
+//
+//         }
+//
+//     });
+//
+// })();
 
 (function () {
 

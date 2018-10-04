@@ -705,43 +705,6 @@ new HtmeComponentClick('HtmeMenuButton', function(e) {
 
 
 
-(function () {
-
-    new HtmeComponentPanel(Htme.menu).menu('window').submenus['show/hide'] = function () {
-
-        let element = new HtmeComponentElement();
-        let click = new HtmeComponentClick('HtmeShowHide', function(e) {
-
-            var click = $(e.target);
-            var container = HtmeComponentBlock.fromInner(click);
-
-           // console.log(container);
-            var children = container.children().not(HtmeComponentPanel.identifier(true));
-
-            if(click.html() === 'Hide') {
-
-                click.html('Show');
-                children.hide();
-
-            } else {
-
-                click.html('Hide');
-                children.show();
-            }
-
-        },element);
-
-        element.content = 'Hide';
-        // style
-        element.attribute().get('class').add('htmeMenu');
-
-        return click.element();
-
-    }();
-
-})();
-
-
 
 
 

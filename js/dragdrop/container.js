@@ -6,14 +6,11 @@
          HtmeContainer.binding().setTemporary(new HtmeComponentAttribute({'row':'row'}));
     }
 
-
     let f1 = Htme.boot.handlers['container'];
     Htme.boot.handlers['container'] = function() {
       prepare();
       f1();
     };
-
-
 
     let submenus = HtmeContainer.panel().menu('new').submenus;
 
@@ -24,8 +21,13 @@
         f2();
     };
 
-});
+})();
 
+HtmeContainer.panel().menu('edit').submenu['row'] = function () {
+
+
+
+}();
 
 // const HtmeContainer = new HtmeComponentBlock('HtmeContainer', new HtmeComponentElement(), new HtmeComponentPanel(Htme.menu));
 //
