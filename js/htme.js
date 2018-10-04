@@ -84,13 +84,12 @@ function HtmeComponentBinding(
 
         console.assert(permanent instanceof HtmeComponentAttribute);
     };
-    this.setPermanent(permanent);
 
     this.setTemporary = function (temporary) {
 
         console.assert(temporary instanceof HtmeComponentAttribute);
     };
-    this.setTemporary(temporary);
+
 
     this.permanent = function () {
 
@@ -104,10 +103,10 @@ function HtmeComponentBinding(
 
     this.bindTo = function(jquery) {
 
-        if(!jquery.length) {
-
-            throw new Error('Selector not exitst');
-        }
+        // if(!jquery.length) {
+        //
+        //     throw new Error('Selector not exitst');
+        // }
 
         let classes = jquery.attr('Htme-Binding');
 
@@ -145,7 +144,12 @@ function HtmeComponentBinding(
         if(!jquery.hasClass(this.selector()) || bypass) {
 
             jquery = jquery.parents(this.selector(true)).first();
+            //console.log(jquery);
+            //console.log(jquery.parents('.Htme.HtmeContent'));
+            //console.log(this.selector(true));
         }
+
+
 
         return jquery;
     };
@@ -231,6 +235,12 @@ function HtmeComponentAttribute(values = {}) {
     this.set = function (name, value) {
 
         values[name] = value;
+    };
+
+    this.copy = function () {
+
+      return new HtmeComponentAttribute(Object.assign({}, values));
+
     };
 
     this.add = function (...value) {
@@ -367,7 +377,7 @@ HtmeComponentElement.container = function (element = new HtmeComponentElement())
 
 
 
-function HtmeComponentBlock(bind, element = new HtmeComponentElement(), panel = new HtmeComponentPanel()) {
+function HtmeComponentBlock(bind = new HtmeComponentAttribute(), element = new HtmeComponentElement(), panel = new HtmeComponentPanel()) {
 
     console.assert(bind instanceof HtmeComponentAttribute, bind);
 
@@ -376,16 +386,18 @@ function HtmeComponentBlock(bind, element = new HtmeComponentElement(), panel = 
 
     this.toString = function () {
 
+        this.binding().setTo(this.element().attribute());
+
         let element = this.element();
         element.content = this.panel().toString();
         return element.toString();
     };
 
     this.binding = HtmeComponentBinding.container(
-        new HtmeComponentBinding(this.constructor.binding().permanent(), bind)
+        new HtmeComponentBinding(this.constructor.binding().permanent().copy(), bind)
     );
 
-    this.binding().setTo(element.attribute());
+   // this.binding().setTo(element.attribute());
 
     this.setPanel = function () {
 
@@ -411,11 +423,11 @@ function HtmeComponentBlock(bind, element = new HtmeComponentElement(), panel = 
 
     };
 
-    let self = this;
-    Htme.update.handlers[this.binding().selector()] = function () {
-
-        self.update();
-    };
+    // let self = this;
+    // Htme.update.handlers[this.binding().selector()] = function () {
+    //
+    //     self.update();
+    // };
 }
 
 HtmeComponentBlock.binding = HtmeComponentBinding.container(
@@ -444,12 +456,11 @@ function HtmeComponentPanel(name = new HtmeComponentElement(), menus = {}, eleme
 
     this.constructor.binding().setTo(element.attribute());
 
-    this.setMenu = function (menus) {
+    this.setMenu = function (menu) {
 
-        for(let k in menus) {
+        console.assert(menu instanceof HtmeComponentMenu);
 
-            console.assert(menus[k] instanceof HtmeComponentMenu);
-        }
+        menus[menu.name()] = menu;
     };
 
     this.menu = function (name) {
@@ -462,21 +473,30 @@ function HtmeComponentPanel(name = new HtmeComponentElement(), menus = {}, eleme
         return menus[name];
     };
 
+    /**
+     * Container selectors
+     * @param jquery
+     */
     this.set = function (jquery) {
 
-        let panel = jquery.children(this.binding().selector(true));
+        let self = this;
 
-        if(!panel.length) {
+        jquery.each(function (k, v) {
 
-            jquery.prepend(this.toString());
-        }
+            let panel = $(v).children(self.binding().selector(true));
+
+            if(!panel.length) {
+
+                jquery.prepend(self.toString());
+            }
+        });
+
     };
 
     this.remove = function (jquery) {
 
-        console.log(jquery.children(this.binding().selector(true)));
+            return jquery.children(this.binding().selector(true)).remove();
 
-        jquery.children(this.binding().selector(true)).remove();
     };
 
     this.menus = function() {
@@ -529,13 +549,31 @@ function HtmeComponentItems(items = {}) {
 
 function HtmeComponentClick(click, handler = function () {}, element = new HtmeComponentElement()) {
 
-    console.assert(typeof handler === "function");
+
     console.assert(typeof click === "string");
 
     this.element = HtmeComponentElement.container(element);
 
     element.attribute().get('class').set(click, click);
 
+    this.handler = function () {
+
+        return handler;
+
+    };
+
+    this.toString = function () {
+
+        return element.toString();
+    };
+
+    this.setHandler = function ($function) {
+
+        console.assert(typeof $function === "function");
+
+        handler = $function;
+
+    };
 
     function update() {
 
@@ -547,6 +585,7 @@ function HtmeComponentClick(click, handler = function () {}, element = new HtmeC
     }
 
     Htme.update.handlers['click' + click] = update;
+    this.setHandler(handler);
 }
 
 
@@ -706,16 +745,16 @@ new HtmeComponentClick('HtmeMenuButton', function(e) {
 
 
 
-// Htme.update.handlers['sortable'] = function () {
-//
-//     HtmeComponentBlock.binding().select(true).sortable({
-//         containment: "parent",
-//         tolerance:'pointer',
-//         items : HtmeComponentBlock.identifier(true)
-//
-//     }).disableSelection();
-//
-// };
+Htme.update.handlers['sortable'] = function () {
+
+    HtmeComponentBlock.binding().selects().sortable({
+        containment: "parent",
+        tolerance:'pointer',
+        items : HtmeComponentBlock.binding().selector(true)
+
+    }).disableSelection();
+
+};
 
 
 $(document).click(function(e) {
@@ -737,30 +776,107 @@ Htme.update.handlers['bootstrapDropDown'] = function () {
 };
 
 
-Htme.menu = {};
-
-Htme.menu.new = function () {
-
-    let menu = new HtmeComponentMenu({}, 'new');
-    menu.element().attribute().get('class').set('float', 'pull-left');
-    return menu;
-
-}();
 
 
-Htme.menu.edit = function () {
+const HtmeContainer = new HtmeComponentBlock(
+   // new HtmeComponentAttribute({'HtmeContainer':'HtmeContainer'}),
+   // new HtmeComponentElement(),
+);
+HtmeContainer.binding().permanent().add('HtmeContainer');
 
-    let menu = new HtmeComponentMenu({}, 'edit');
-    menu.element().attribute().get('class').set('float', 'pull-left');
-    return menu;
-}();
 
 
-Htme.menu.window = function () {
+HtmeContainer.panel().name().attribute().get('class').add('pull-left htmeName');
 
-    let menu = new HtmeComponentMenu({}, 'window');
-    menu.element().attribute().get('class').set('float', 'pull-right');
-    return menu;
-}();
+
+
+const HtmeContent = new HtmeComponentBlock(
+   // new HtmeComponentAttribute({'HtmeContent':'HtmeContent'}),
+    //new HtmeComponentElement(),
+);
+HtmeContent.binding().permanent().add('HtmeContent');
+
+HtmeContent.panel().name().attribute().get('class').add('pull-left htmeName');
+
+
+
+jQuery.each({a:HtmeContainer, b:HtmeContent}, function (k, v) {
+
+    let $new = new HtmeComponentMenu({}, 'new');
+    $new.element().attribute().get('class').set('float', 'pull-left');
+
+    v.panel().setMenu($new);
+
+
+    let edit = new HtmeComponentMenu({}, 'edit');
+    edit.element().attribute().get('class').set('float', 'pull-left');
+
+    v.panel().setMenu(edit);
+
+
+    let window = new HtmeComponentMenu({}, 'window');
+    window.element().attribute().get('class').set('float', 'pull-right');
+
+    v.panel().setMenu(window);
+
+});
+
+
+
+
+
+
+
+
+(function () {
+
+
+
+    Htme.boot.handlers['container'] = function(selector) {
+
+        HtmeContainer.panel().name().content = 'container';
+        HtmeContainer.set($(selector));
+
+    };
+
+    HtmeContainer.panel().menu('new').submenus['container'] = function () {
+
+        let element = new HtmeComponentElement();
+        element.attribute().get('class').add('htmeMenu');
+        element.content = 'container';
+
+        return new HtmeComponentClick('HtmeNewContainer',function(e) {
+
+            var click = $(e.target);
+            var container = HtmeComponentBlock.binding().selectFromChildren(click);
+
+            HtmeContainer.panel().name().content = 'container';
+            container.append(HtmeContainer.toString());
+
+            Htme.update.trigger();
+        }, element);
+    }();
+
+
+    HtmeContainer.panel().menu('new').submenus['content'] = function () {
+
+        let click = new HtmeComponentClick('HtmeNewContent',function(e) {
+
+            var click = $(e.target);
+            var container = HtmeComponentBlock.binding().selectFromChildren(click);
+
+            HtmeContent.panel().name().content = 'content';
+            container.append(HtmeContent.toString());
+
+            Htme.update.trigger();
+        });
+
+        click.element().attribute().get('class').add('htmeMenu');
+        click.element().content = 'content';
+
+        return click.element();
+    }();
+
+})();
 
 

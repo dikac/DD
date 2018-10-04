@@ -1,6 +1,6 @@
 (function () {
 
-    Htme.menu.window.submenus['remove'] = function () {
+    let remove = function () {
 
         let element = new HtmeComponentElement();
         let click = new HtmeComponentClick('HtmeRemove', function(e) {
@@ -26,5 +26,8 @@
 
         return click.element();
     }();
+
+    HtmeContainer.panel().menu('window').submenus['remove'] = remove;
+    HtmeContent.panel().menu('window').submenus['remove'] = remove;
 
 })();

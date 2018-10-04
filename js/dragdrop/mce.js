@@ -1,31 +1,30 @@
 
+//
+//
+// const HtmeTinyMce =  new HtmeComponentBlock(
+//     '', new HtmeComponentElement(), new HtmeComponentPanel(Htme.menu)
+// );
+//
+//
+// HtmeTinyMce.panel().name = '<div class="pull-left htmeName">text</div>';
+//
+// HtmeTinyMce.panel().menu('new').submenus['text'] = function () {
+//
+//     let click = new HtmeComponentClick('HtmeNewMCE', function(e) {
+//
+//         var click = $(e.target);
+//         var container = HtmeComponentBlock.fromInner(click);
+//         container.append(HtmeTinyMce.toString());
+//         Htme.update.trigger();
+//     });
+//     click.element().attribute().list('class').push('htmeMenu');
+//     click.element().attribute().list('class').push();
+//     click.element().content = 'text';
+//
+//     return click.element();
+// }();
 
-
-const HtmeTinyMce =  new HtmeComponentBlock(
-    '', new HtmeComponentElement(), new HtmeComponentPanel(Htme.menu)
-);
-
-
-
-HtmeTinyMce.panel().name = '<div class="pull-left htmeName">text</div>';
-
-HtmeTinyMce.panel().menu('new').submenus['text'] = function () {
-
-    let click = new HtmeComponentClick('HtmeNewMCE', function(e) {
-
-        var click = $(e.target);
-        var container = HtmeComponentBlock.fromInner(click);
-        container.append(HtmeTinyMce.toString());
-        Htme.update.trigger();
-    });
-    click.element().attribute().list('class').push('htmeMenu');
-    click.element().attribute().list('class').push();
-    click.element().content = 'text';
-
-    return click.element();
-}();
-
-
+const  HtmeTinyMce = {};
 
 
 HtmeTinyMce.modal = new function() {
@@ -46,16 +45,16 @@ HtmeTinyMce.modal = new function() {
 
     item.items['cancel'] = function () {
 
-        let click = new HtmeComponentClick(selector.save, function (e) {
+        let click = new HtmeComponentClick(selector.cancel, function (e) {
 
             HtmeTinyMce.tinymce.shutdown();
-            HtmeTinyMce.setPanel();
+           // HtmeTinyMce.setPanel();
             Htme.update.trigger();
         });
 
         click.element().content = 'Cancel';
-        click.element().attribute().list('class').push('btn btn-default');
-        click.element().attribute().list('data-dismiss').push('modal');
+        click.element().attribute().get('class').add('btn btn-default');
+        click.element().attribute().get('data-dismiss').add('modal');
 
         return click.element();
     }();
@@ -67,13 +66,15 @@ HtmeTinyMce.modal = new function() {
 
             HtmeTinyMce.tinymce.save();
             HtmeTinyMce.tinymce.shutdown();
-            HtmeTinyMce.setPanel();
+
+            HtmeContent.setPanel();
+
             Htme.update.trigger();
         });
 
         click.element().content = 'Save';
-        click.element().attribute().list('class').push('btn btn-default');
-        click.element().attribute().list('data-dismiss').push('modal');
+        click.element().attribute().get('class').add('btn btn-default');
+        click.element().attribute().get('data-dismiss').add('modal');
 
         return click.element();
     }();
@@ -141,32 +142,49 @@ HtmeTinyMce.tinymce = new function () {
 
         tinymce.init(init);
 
-        setTimeout(function () {
-            $('.mce-notification').remove()
-        },500)
+        // setTimeout(function () {
+        //     $('.mce-notification').remove()
+        // },500)
     }
 };
 
+/**
+ * Ad = Blocked
+ */
+(function () {
+
+    $('body').on('DOMNodeInserted', '.mce-notification', function () {
+
+        if($(this).hasClass('mce-notification')) {
+
+            $(this).remove();
+        }
+
+    });
+
+})();
 
 (function () {
 
    // let panel = new HtmeComponentPanel(HtmeTinyMce.menus);
 
-    HtmeTinyMce.panel().menu('edit').submenus['text'] = function () {
+    HtmeContent.panel().menu('edit').submenus['text'] = function () {
 
         let click = new HtmeComponentClick('HtmeMCEEdit',function(e) {
 
-            HtmeTinyMce.dom = HtmeContainer.fromInner($(e.target));
+            HtmeTinyMce.dom = HtmeContent.binding().selectFromChildren($(e.target));
+
+            console.log(HtmeTinyMce.dom);
 
 
-            (new HtmeComponentBlock()).removePanel(); // todo fix
-
+            HtmeContent.panel().remove(HtmeTinyMce.dom);
             HtmeTinyMce.modal.show();
             HtmeTinyMce.tinymce.boot();
 
+
         });
 
-        click.element().content = 'text';
+        click.element().content = 'text (tiny mce)';
 
         return click.element();
     }();
