@@ -1,0 +1,67 @@
+.Htme {
+    border: 1px solid #d0d0d0;
+    padding: 10px;
+    /*margin: 5px;*/
+    padding-top: 30px;
+   /* padding-top: 25px;*/
+    margin: 5px 0 5px 0;
+    position: relative;
+    cursor: all-scroll;
+/*    background-color: white;*/
+}
+
+.row {
+    margin:  0;
+}
+
+.dropdown-menu {
+    padding: 5px;
+}
+
+.HtmePanel {
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+}
+
+.navbar {
+    min-height: 0;
+}
+
+.htmeName {
+    color: #000000;
+    position: absolute;
+
+    padding: 2px;
+    width: 100px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.htmeMenu {
+    padding: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+
+    cursor: pointer;
+}
+
+.htmeMenu:hover {
+
+    background-color:#ebebeb;
+}
+
+.htmeMenu:active{
+
+    background-color: #b3b3b3;
+}
+
+
+.htmeHide {
+    display: none;
+}

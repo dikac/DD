@@ -16,15 +16,12 @@
     <script src="jquery-ui-1.12.1/jquery-3.3.1.min.js"></script>
     <script src="jquery-ui-1.12.1/jquery-ui.min.js"></script>
 
-    <link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css" media="all">
-    <link rel="stylesheet" href="css/bootstrap/css/bootstrap-theme.min.css" media="all">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" media="all">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css" media="all">
 
 
 
-
-
-
-    <script src="./css/bootstrap/js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
 
     <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
     <script src="codemirror-5.40.2/lib/codemirror.js"></script>
@@ -37,210 +34,27 @@
     <link rel="stylesheet" href="codemirror-5.40.2/lib/codemirror.css" media="all">
     <link rel="stylesheet" href="codemirror-5.40.2/theme/darcula.css" media="all">
 
-    <script  src="./js/htme.js"></script>
+    <script  src="src/htme.js"></script>
 
-    <link rel="stylesheet" href="css/dragdrop.css" media="all">
-    <!--<link rel="stylesheet" href="css/dragdrop/column.css" media="all">-->
-    <!--<script defer="defer" src="js/dragdrop/column.js"></script>-->
-    <script defer="defer" src="js/dragdrop/container.js"></script>
-    <script defer="defer" src="js/dragdrop/remove.js"></script>
-    <script defer="defer" src="js/dragdrop/showhide.js"></script>
-    <script defer="defer" src="js/dragdrop/attribute.js"></script>
-    <script defer="defer" src="js/dragdrop/copy.js"></script>
+    <link rel="stylesheet" href="css/htme.css" media="all">
 
-    <script defer="defer" src="js/dragdrop/mce.js"></script>
-    <script defer="defer" src="js/dragdrop/codemirror.js"></script>
-    <!--<script defer="defer" src="js/dragdrop/attribute.js"></script>-->
-<!--
+    <script defer="defer" src="src/plugin/container.js"></script>
+    <script defer="defer" src="src/plugin/remove.js"></script>
+    <script defer="defer" src="src/plugin/showhide.js"></script>
+    <script defer="defer" src="src/plugin/attribute.js"></script>
+    <script defer="defer" src="src/plugin/copy.js"></script>
 
-
-    <script defer="defer" src="js/dragdrop/raw.js"></script>
-    <link rel="stylesheet" href="css/dragdrop/raw.css" media="all">
-
-
-
-    <link rel="stylesheet" href="css/dragdrop/mce.css" media="all">
-
-
-    <script defer="defer" src="js/dragdrop/remove.js"></script>
-    <script defer="defer" src="js/dragdrop/render.js"></script>
-
-
-    <script defer="defer" src="js/dragdrop/attribute.js"></script>
-
-    <script defer="defer" src="js/dragdrop/show.js"></script>
-    <link rel="stylesheet" href="css/dragdrop/show.css" media="all">
-
-    <script defer="defer" src="js/dragdrop/container.js"></script>
-    <link rel="stylesheet" href="css/dragdrop/row.css" media="all">
-
-
-    <script defer="defer" src="js/dragdrop/column.js"></script>
-    <link rel="stylesheet" href="css/dragdrop/column.css" media="all">
-
--->
-
-
-    <!--<script defer="defer" src="js/dragdrop/delete.js"></script>-->
-    <!--<link rel="stylesheet" href="css/dragdrop/delete.css" media="all">-->
-
-    <style>
-        /*.marker {*/
-
-            /*padding: 5px;*/
-
-        /*}*/
-
-        /*.dd-main {*/
-            /*height: 38px;*/
-            /*width: 38px;*/
-        /*}*/
-
-        /*.ddhover {*/
-             /*background-color:#FCC*/
-        /*}*/
-        /*.panel {*/
-            /*clear: both;*/
-            /*padding: 15px;*/
-            /*margin: 5px; border:red solid 1px;*/
-        /*}*/
-
-        /*.marker2 {padding: 15px; margin: 5px; border:red solid 5px;;}*/
-        /*.panel-item {height: 50px; width: 50px}*/
-        /*.droppable:hover{*/
-            /*background-color:#FCC;*/
-        /*}*/
-
-    </style>
-
+    <script defer="defer" src="src/plugin/mce.js"></script>
+    <script defer="defer" src="src/plugin/codemirror.js"></script>
 
 </head>
 
 <body>
 
-
-
-
-<!--<div class="a">a</div>-->
-<!--<div class="b">b</div>-->
-
-<!--<script>-->
-
-    <!--$(document).click(function(event){-->
-
-        <!--$('.b').hide();-->
-
-        <!--if($(event.target).hasClass('a')) {-->
-
-            <!--$('.b').show();-->
-        <!--}-->
-    <!--})-->
-
-<!--</script>-->
-
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-
-
-<!--<div class="dropdown">-->
-
-    <!--<nav  class="dropdown-toggle" data-toggle="dropdown">-->
-        <!--Dropdown-->
-    <!--</nav>-->
-
-    <!--<div class="dropdown-menu">-->
-        <!--<div>Action</div>-->
-        <!--<div>Another action</div>-->
-    <!--</div>-->
-
-
-<!--</div>-->
-
-
-        <!--<div class="dropdown">-->
-
-            <!--<nav  class="dropdown-toggle" data-toggle="dropdown">Dropdown</nav>-->
-
-            <!--<div class="dropdown-menu">-->
-                <!--<div>Action</div>-->
-                <!--<div>Another action</div>-->
-
-                <!--<div class="dropdown-submenu">-->
-                    <!--<div tabindex="-1">More options</div>-->
-                    <!--<div class="dropdown-menu">-->
-                        <!--<div><a tabindex="-1" href="#">Second level</a></div>-->
-                        <!--<div class="dropdown-submenu">-->
-                            <!--<a href="#">More..</a>-->
-                            <!--<div class="dropdown-menu">-->
-                                <!--<div><a href="#">3rd level</a></div>-->
-                                <!--<div><a href="#">3rd level</a></div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div><a href="#">Second level</a></div>-->
-                        <!--<div><a href="#">Second level</a></div>-->
-                    <!--</div>-->
-                <!--</div>-->
-
-
-            <!--</div>-->
-
-
-        <!--</div>-->
-
-        <!--<div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display: block; position: static; margin-bottom: 5px; *width: 180px;">-->
-            <!--<div><a href="#">Action</a></div>-->
-            <!--<div><a href="#">Another action</a></div>-->
-            <!--<div><a href="#">Something else here</a></div>-->
-            <!--<div class="divider"></div>-->
-            <!--<div class="dropdown-submenu">-->
-                <!--<a tabindex="-1" href="#">More options</a>-->
-                <!--<div class="dropdown-menu">-->
-                    <!--<div><a tabindex="-1" href="#">Second level</a></div>-->
-                    <!--<div class="dropdown-submenu">-->
-                        <!--<a href="#">More..</a>-->
-                        <!--<div class="dropdown-menu">-->
-                            <!--<div><a href="#">3rd level</a></div>-->
-                            <!--<div><a href="#">3rd level</a></div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div><a href="#">Second level</a></div>-->
-                    <!--<div><a href="#">Second level</a></div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-
-
-
-
 <div class="dragdrop">
 
 </div>
 
-
-    <!--<div class="dropdown">-->
-        <!--<div class="dropdown-toggle" data-toggle="dropdown" role="button">-->
-            <!--Dropdown-->
-        <!--</div>-->
-        <!--<div class="dropdown-menu">-->
-            <!--<div>Action</div>-->
-            <!--<div>Another action</div>-->
-            <!--<div>Something else here</div>-->
-            <!--<div role="separator" class="divider"></div>-->
-            <!--<div>Separated link</div>-->
-        <!--</div>-->
-    <!--</div>-->
-
-<!--<div>-->
-    <!--<div>-->
-        <!--<div>-->
-
-            <!--<div id="HtmeCodeMirrorModalText" style="font-weight: bold">-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-
-
-</div>
 
 <script>
 
