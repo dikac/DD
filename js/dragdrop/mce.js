@@ -1,6 +1,4 @@
-const  HtmeTinyMce = {};
-
-HtmeTinyMce.modal = new function() {
+const  HtmeTinyMce = new function () {
 
     var selector = {
         modal   : 'HtmeMCEModal',
@@ -9,84 +7,78 @@ HtmeTinyMce.modal = new function() {
         text    : 'HtmeMCEModalText',
     };
 
-    let modal = new HtmeComponentModal(selector.modal);
-    modal.selector = selector;
-
-    let item = new HtmeComponentItems();
-    modal.footer = item;
-
-
-    item.items['cancel'] = function () {
-
-        let click = new HtmeComponentClick(selector.cancel, function (e) {
-
-            HtmeTinyMce.tinymce.shutdown();
-            Htme.update.trigger();
-        });
-
-        click.element().content = 'Cancel';
-        click.element().attribute().get('class').add('btn btn-default');
-        click.element().attribute().get('data-dismiss').add('modal');
-
-        return click.element();
-    }();
-
-
-    item.items['save'] = function () {
-
-        let click = new HtmeComponentClick(selector.save, function (e) {
-
-            HtmeTinyMce.tinymce.save();
-            HtmeTinyMce.tinymce.shutdown();
-
-            HtmeContent.setPanel();
-
-            Htme.update.trigger();
-        });
-
-        click.element().content = 'Save';
-        click.element().attribute().get('class').add('btn btn-default');
-        click.element().attribute().get('data-dismiss').add('modal');
-
-        return click.element();
-    }();
-
-
-    modal.content = `<textarea id="${selector.text}"></textarea>`;
-
-    return modal;
-
-}();
-
-HtmeTinyMce.tinymce = new function () {
-
     this.arguments = {};
 
-    this.dom = null;
+    var dom = null;
+
+    this.modal = function() {
+
+        let modal = new HtmeComponentModal(selector.modal);
+        modal.selector = selector;
+
+        let item = new HtmeComponentItems();
+        modal.footer = item;
+
+        item.items['cancel'] = function () {
+
+            let click = new HtmeComponentClick(selector.cancel, function (e) {
+
+                HtmeTinyMce.shutdown();
+                HtmeContent.setPanel();
+
+            });
+
+            click.element().content = 'Cancel';
+            click.element().attribute().get('class').add('btn btn-default');
+            click.element().attribute().get('data-dismiss').add('modal');
+
+            return click.element();
+        }();
+
+
+        item.items['save'] = function () {
+
+            let click = new HtmeComponentClick(selector.save, function (e) {
+
+                HtmeTinyMce.save();
+                HtmeTinyMce.shutdown();
+                HtmeContent.setPanel();
+
+            });
+
+            click.element().content = 'Save';
+            click.element().attribute().get('class').add('btn btn-default');
+            click.element().attribute().get('data-dismiss').add('modal');
+
+            return click.element();
+        }();
+
+
+        modal.content = `<textarea id="${selector.text}"></textarea>`;
+
+        return modal;
+
+    }();
+
 
     this.save = function () {
 
-        let input = tinymce.get(HtmeTinyMce.modal.selector.text);
+        let input = tinymce.get(selector.text);
         let content = input.getContent();
 
-        HtmeTinyMce.dom.html(content);
-        HtmeTinyMce.dom.removeAttr('style');
+        dom.html(content);
+        dom.removeAttr('style');
     };
 
     this.shutdown = function () {
 
         let self;
 
-        if(self = tinymce.get(HtmeTinyMce.modal.selector.text)) {
+        if(self = tinymce.get(selector.text)) {
 
             self.remove();
         }
     };
-
-    function contentSetter(editor) {
-
-        editor.setContent(HtmeTinyMce.dom.html());
-    }
 
     this.boot = function() {
 
@@ -94,45 +86,39 @@ HtmeTinyMce.tinymce = new function () {
 
             init_instance_callback : function(editor) {
 
-                editor.setContent(HtmeTinyMce.dom.html());
+                editor.setContent(dom.html());
             },
 
-            selector : '#' + HtmeTinyMce.modal.selector.text
+            selector : '#' + selector.text
         };
 
         let init = Object.assign(this.arguments, arguments);
 
 
         tinymce.init(init);
-    }
-};
-
-
-(function () {
+    };
 
 
     HtmeContent.panel().menu('edit').submenus['text'] = function () {
 
         let click = new HtmeComponentClick('HtmeMCEEdit',function(e) {
 
-            HtmeTinyMce.dom = HtmeContent.binding().selectFromChildren($(e.target));
+            dom = HtmeContent.binding().selectFromChildren($(e.target));
 
-            console.log(HtmeTinyMce.dom);
-
-
-            HtmeContent.panel().remove(HtmeTinyMce.dom);
+            HtmeContent.panel().remove(dom);
             HtmeTinyMce.modal.show();
-            HtmeTinyMce.tinymce.boot();
-
+            HtmeTinyMce.boot();
+            HtmeTinyMce.boot();
 
         });
+
         click.element().attribute().get('class').add('htmeMenu');
-        click.element().content = 'text (tiny mce)';
+        click.element().content = 'TinyMCE';
 
         return click.element();
     }();
+};
 
-})();
 
 
 

@@ -71,17 +71,6 @@ function HtmeGetAttributes(jquery) {
             modal.footer = function() {
 
                 let items = new HtmeComponentItems();
-//
-//                 items.items['saved'] = function () {
-//
-//                     let click = new HtmeComponentElement();
-// //<div class="alert alert-success" role="alert">...</div>
-//                     click.content = 'Saved';
-//                     click.attribute().get('class').add('alert alert-success pull-left');
-//                     click.attribute().get('role').add('alert');
-//
-//                     return click;
-//                 }();
 
                 items.items['close'] = function () {
 
@@ -129,15 +118,12 @@ function HtmeGetAttributes(jquery) {
                                 container.attr(k, attr[k]);
                             }
                         }
-
-                       // console.log(container);
-                       // console.log(attr);
                     });
 
 
                     click.element().content = 'Save';
+                    click.element().attribute().get('data-dismiss').add('modal');
                     click.element().attribute().get('class').add('btn btn-default');
-                   // click.element().attribute().get('data-dismiss').add('modal');
 
                     return click.element();
                 }();
@@ -150,7 +136,7 @@ function HtmeGetAttributes(jquery) {
 
         });
 
-        click.element().content = 'attribute';
+        click.element().content = 'Attribute';
         click.element().attribute().get('class').add('htmeMenu');
 
         return click.element();

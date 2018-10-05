@@ -2,7 +2,7 @@
 const HtmeRow = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeRow':'HtmeRow'}));
 HtmeRow.element().attribute().get('class').add('row');
 HtmeRow.panel().name().attribute().get('class').add('htmeName');
-HtmeRow.panel().name().content = 'row';
+HtmeRow.panel().name().content = 'Row';
 HtmeRow.panel().setMenu(HtmeContainer.panel().menu('window'));
 
 
@@ -12,7 +12,7 @@ const HtmeColumn = new HtmeComponentBlock(
 
 );
 HtmeColumn.panel().name().attribute().get('class').add('htmeName');
-HtmeColumn.panel().name().content = 'column';
+HtmeColumn.panel().name().content = 'Column';
 
 HtmeColumn.panel().setMenus( HtmeContainer.panel().menus());
 
@@ -58,7 +58,7 @@ Htme.render.handlers['row'] = function() {
 
         let element = new HtmeComponentElement();
         element.attribute().get('class').add('htmeMenu');
-        element.content = 'row';
+        element.content = 'Row';
 
         return new HtmeComponentClick('HtmeNewRow',function(e) {
 
@@ -135,106 +135,5 @@ Htme.render.handlers['row'] = function() {
         return click.element();
     }();
 
-
-
-
-//
-// HtmeRow.panel().menu('new').submenus['container'] = function () {
-//
-//     let element = new HtmeComponentElement();
-//     element.attribute().get('class').add('htmeMenu');
-//     element.content = 'column';
-//
-//     return new HtmeComponentClick('HtmeNewColumn',function(e) {
-//
-//         var click = $(e.target);
-//         var container = HtmeComponentBlock.binding().selectFromChildren(click);
-//
-//         HtmeColumn.panel().name().content = 'column';
-//         container.append(HtmeColumn.toString());
-//
-//         Htme.update.trigger();
-//     }, element);
-// }();
-
-
-
-
-
-
 })();
-
-//
-// (function () {
-//
-//     function prepare () {
-//
-//          HtmeContainer.binding().setTemporary(new HtmeComponentAttribute({'row':'row'}));
-//     }
-//
-//     let f1 = Htme.boot.handlers['container'];
-//     console.log(f1);
-//     Htme.boot.handlers['container'] = function(arg) {
-//       prepare();
-//       f1(arg);
-//     };
-//
-//
-//
-//     let submenus = HtmeContainer.panel().menu('new').submenus['container'];
-//     let f2 = submenus.handler();
-//     submenus.setHandler(function(e) {
-//
-//         prepare();
-//         f2(e);
-//     });
-//
-//     console.log(1111111111);
-// })();
-//
-// HtmeContainer.panel().menu('edit').submenus['row'] = function () {
-//
-//     let click = new HtmeComponentClick('HtmeRow');
-//     click.element().attribute().get('class').add('htmeMenu');
-//     click.element().content = 'row';
-//
-//     click.setHandler(function (e) {
-//
-//         let target = $(e.target);
-//         let container = HtmeContainer.binding().selectFromChildren(target);
-//
-//         console.log(container);
-//     });
-//
-//     return click;
-//
-// }();
-
-// const HtmeContainer = new HtmeComponentBlock('HtmeContainer', new HtmeComponentElement(), new HtmeComponentPanel(Htme.menu));
-//
-// HtmeContainer.element().attribute().list('class').push('row');
-// HtmeContainer.panel().name = '<div class="pull-left htmeName">container</div>';
-//
-// Htme.boot.handlers['row'] = function(selector) {
-//
-//     HtmeContainer.boot(selector);
-//     Htme.update.trigger();
-// };
-//
-// HtmeContainer.panel().menu('new').submenus['container'] = function () {
-//
-//     let click = new HtmeComponentClick('HtmeNewContainer',function(e) {
-//
-//         var click = $(e.target);
-//         var container = HtmeComponentBlock.fromInner(click);
-//         container.append(HtmeContainer.toString());
-//         Htme.update.trigger();
-//     });
-//     click.element().attribute().list('class').push('htmeMenu');
-//     click.element().attribute().list('class').push();
-//     click.element().content = 'container';
-//
-//     return click.element();
-// }();
-//
 

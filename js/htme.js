@@ -1,65 +1,5 @@
 'use strict';
 
-/*import {AW} from "./c/ucing";*/
-
-// function R() {
-//
-//     this.c = function () {
-//
-//         return 'a';
-//     };
-// }
-//
-// R.c = function () {
-//
-//     return 'c';
-// };
-
-/*console.log('MODULE');*/
-const Htme = {};
-
-
-
-
-
-Htme.boot = {
-
-    handlers : {},
-
-    selector : function (selector) {
-
-        selector = $(selector);
-
-        for(let k in Htme.boot.handlers) {
-
-            this.handlers[k](selector);
-        }
-
-        Htme.update.trigger();
-    }
-
-
-};
-
-
-Htme.component = {};
-Htme.component.events = function() {
-
-    this.handlers = {};
-
-    this.trigger  = function (...argument) {
-
-        for(let k in Htme.update.handlers) {
-
-            Htme.update.handlers[k](...argument);
-        }
-    }
-};
-
-
-Htme.update = new Htme.component.events();
-Htme.edit = new Htme.component.events();
-Htme.render = new Htme.component.events();
 
 
 function HtmlComponentSelects () {
@@ -121,7 +61,6 @@ function HtmeComponentBinding(
     };
 
 
-
     this.selects = function () {
 
         return $(this.selector(true));
@@ -132,12 +71,7 @@ function HtmeComponentBinding(
         if(!jquery.hasClass(this.selector()) || bypass) {
 
             jquery = jquery.parents(this.selector(true)).first();
-            //console.log(jquery);
-            //console.log(jquery.parents('.Htme.HtmeContent'));
-            //console.log(this.selector(true));
         }
-
-
 
         return jquery;
     };
@@ -147,18 +81,6 @@ function HtmeComponentBinding(
         return jquery.children(this.selector(true)).first();
     };
 
-
-    // this.unsetFrom = function (attribute) {
-    //
-    //     console.assert(attribute instanceof HtmeComponentAttributes);
-    //
-    //     for(let k in temporary) {
-    //
-    //         let val = temporary[k];
-    //
-    //         delete attribute.named('class')[val];
-    //     }
-    // };
 
     this.selector = function (selector = false) {
 
@@ -170,31 +92,6 @@ function HtmeComponentBinding(
     }
 }
 
-// function HtmeComponentAttributeBinding(attribute, extra = '') {
-//
-//     console.assert(typeof extra === "string");
-//
-//     console.assert(attribute instanceof HtmeComponentAttributes);
-//
-//     var binds = [];
-//
-//     binds.push(this.identifier());
-//
-//     if (extra.length > 0) {
-//
-//         binds.push(extra);
-//     }
-//
-//     for(let k in binds) {
-//
-//         let val = binds[k];
-//
-//         attribute.named('class')[val] = val;
-//     }
-//
-//     return binds;
-// }
-
 HtmeComponentBinding.container = function(binding = new HtmeComponentBinding) {
 
     console.assert(binding instanceof HtmeComponentBinding);
@@ -205,16 +102,6 @@ HtmeComponentBinding.container = function(binding = new HtmeComponentBinding) {
     }
 };
 
-
-//
-//
-//
-//
-//
-// function HtmeComponentSelector(name, selector = false, label = '.') {
-//
-//     return selector ? label + name : name ;
-// }
 
 function HtmeComponentAttribute(values = {}) {
 
@@ -247,12 +134,10 @@ function HtmeComponentAttribute(values = {}) {
 
             while(values.hasOwnProperty(this.constructor.iteration)) {
 
-               // console.log(this.constructor.iteration);
                 this.constructor.iteration++
             }
 
             this.set(this.constructor.iteration, value[k]);
-
         }
     };
 
@@ -263,8 +148,6 @@ function HtmeComponentAttribute(values = {}) {
 
     this.toString = function() {
 
-       // console.log(Object.values(values));
-       // console.log(Object.values(values));
         return Object.values(values).join(' ');
     }
 };
@@ -337,22 +220,6 @@ HtmeComponentAttributes.container = function(attribute = new HtmeComponentAttrib
     }
 };
 
-
-// function HtmeComponentTag(tag = 'div') {
-//
-//     this.set  = function ($tag) {
-//
-//         console.assert(typeof $tag === "string");
-//         console.assert($tag.length > 0);
-//
-//         tag = $tag;
-//     };
-//
-//     this.toString = function () {
-//
-//         return tag;
-//     }
-// }
 HtmeComponentAttributes.container = function(attribute = new HtmeComponentAttributes) {
 
     console.assert(attribute instanceof HtmeComponentAttributes);
@@ -441,12 +308,6 @@ function HtmeComponentBlock(
         this.panel().set(jquery);
 
     };
-
-    // let self = this;
-    // Htme.update.handlers[this.binding().selector()] = function () {
-    //
-    //     self.update();
-    // };
 }
 
 HtmeComponentBlock.binding = HtmeComponentBinding.container(
@@ -472,11 +333,6 @@ function HtmeComponentPanel(name = new HtmeComponentElement(), menus = {}, eleme
     this.element().attribute().get('class').add('navbar navbar-default ');
 
     this.binding = this.constructor.binding;
-    //
-    // bind.sets(this.constructor.binding().attribute().all());
-    // this.binding = HtmeComponentBinding.container(
-    //     new HtmeComponentBinding(bind, this.element().attribute())
-    // );
 
     this.binding().setAttributes(this.element().attribute());
 
@@ -692,11 +548,6 @@ function HtmeComponentMenu(submenus = {}, name ='UNDEFINED', container = new Htm
     this.constructor.bind(container.attribute(), '');
 
     this.binding = this.constructor.binding;
-    //
-    // bind.sets(this.constructor.binding().attribute().all());
-    // this.binding = HtmeComponentBinding.container(
-    //     new HtmeComponentBinding(bind, this.element().attribute())
-    // );
 
     this.binding().setAttributes(this.element().attribute());
 
@@ -764,12 +615,6 @@ HtmeComponentMenu.create.new = function() {
 
 
 
-// new HtmeComponentClick('HtmeMenuButton', function(e) {
-//
-//     $(e.target).siblings('.HtmeMenuContent').first().toggle();
-//
-// });
-//
 
 
 
@@ -777,6 +622,79 @@ HtmeComponentMenu.create.new = function() {
 
 
 
+
+
+
+
+
+
+
+
+const Htme = {};
+
+
+Htme.boot = {
+
+    handlers : {},
+
+    selector : function (selector) {
+
+        selector = $(selector);
+
+        for(let k in this.handlers) {
+
+            this.handlers[k](selector);
+        }
+
+        Htme.update.trigger();
+    }
+};
+
+Htme.content = {};
+Htme.content.get = function(selector) {
+
+    Htme.render.trigger();
+
+    let content = $(selector).html();
+
+    Htme.edit.trigger();
+
+    return content;
+};
+
+Htme.content.set = function(selector, content) {
+
+    Htme.render.trigger();
+
+    Htme.boot(selector);
+
+    $(selector).html(content);
+
+    Htme.edit.trigger();
+
+    return content;
+};
+
+
+Htme.component = {};
+Htme.component.events = function() {
+
+    this.handlers = {};
+
+    this.trigger  = function (...argument) {
+
+        for(let k in Htme.update.handlers) {
+
+            Htme.update.handlers[k](...argument);
+        }
+    }
+};
+
+
+
+Htme.update = new Htme.component.events();
+Htme.edit = new Htme.component.events();
+Htme.render = new Htme.component.events();
 
 
 Htme.update.handlers['sortable'] = function () {
@@ -791,14 +709,6 @@ Htme.update.handlers['sortable'] = function () {
 
 };
 
-
-$(document).click(function(e) {
-
-    for(let k in Htme.hide.handlers) {
-
-        Htme.hide.handlers[k](e);
-    }
-});
 
 
 
@@ -815,38 +725,24 @@ Htme.update.handlers['bootstrapDropDown'] = function () {
 
 const HtmeContainer = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeContainer':'HtmeContainer'}));
 
+HtmeContainer.panel().name().attribute().get('class').add('htmeName');
+
+
+const HtmeContent = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeContent':'HtmeContent'}));
+
+HtmeContent.panel().name().attribute().get('class').add('htmeName');
+
+
+
 Htme.render.handlers['container'] = function() {
 
+    HtmeContent.removePanel();
     HtmeContainer.removePanel();
 };
 
 Htme.render.handlers['container'] = function() {
 
     HtmeContainer.setPanel();
-};
-
-
-HtmeContainer.panel().name().attribute().get('class').add('htmeName');
-//HtmeContainer.panel().element().attribute().get('class').add('bg-primary');
-
-
-
-const HtmeContent = new HtmeComponentBlock(
-    new HtmeComponentAttribute({'HtmeContent':'HtmeContent'})
-   // new HtmeComponentAttribute({'HtmeContent':'HtmeContent'}),
-    //new HtmeComponentElement(),
-);
-//HtmeContent.binding().permanent().add('HtmeContent');
-
-HtmeContent.panel().name().attribute().get('class').add('htmeName');
-
-Htme.render.handlers['content'] = function() {
-
-    HtmeContent.removePanel();
-};
-
-Htme.render.handlers['content'] = function() {
-
     HtmeContent.setPanel();
 };
 
@@ -875,12 +771,7 @@ jQuery.each({a:HtmeContainer, b:HtmeContent}, function (k, v) {
 
 
 
-
-
-
-
 (function () {
-
 
     Htme.boot.handlers['container'] = function(selector) {
 
@@ -893,7 +784,7 @@ jQuery.each({a:HtmeContainer, b:HtmeContent}, function (k, v) {
 
         let element = new HtmeComponentElement();
         element.attribute().get('class').add('htmeMenu');
-        element.content = 'container';
+        element.content = 'Container';
 
         return new HtmeComponentClick('HtmeNewContainer',function(e) {
 
@@ -922,7 +813,7 @@ jQuery.each({a:HtmeContainer, b:HtmeContent}, function (k, v) {
         });
 
         click.element().attribute().get('class').add('htmeMenu');
-        click.element().content = 'content';
+        click.element().content = 'Content';
 
         return click.element();
     }();

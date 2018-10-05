@@ -3,15 +3,14 @@
     let copy;
     let cut;
 
-   let copyClick = new HtmeComponentClick('HtmeCopy', function (e) {
+    let copyClick = new HtmeComponentClick('HtmeCopy', function (e) {
 
         copy = HtmeComponentBlock.binding().selectFromChildren($(e.target));
-       $('.HtmePaste').show();
-
+        $('.HtmePaste').show();
     });
 
     copyClick.element().attribute().get('class').add('htmeMenu');
-    copyClick.element().content = 'copy';
+    copyClick.element().content = 'Copy';
     HtmeContainer.panel().menu('edit').submenus['copy'] = copyClick;
 
 
@@ -25,7 +24,7 @@
     });
 
     cutClick.element().attribute().get('class').add('htmeMenu');
-    cutClick.element().content = 'cut';
+    cutClick.element().content = 'Cut';
     HtmeContainer.panel().menu('edit').submenus['cut'] = cutClick;
 
 
@@ -44,7 +43,7 @@
 
     pasteClick.element().attribute().get('class').add('htmeMenu');
     pasteClick.element().attribute().get('class').add('htmeHide');
-    pasteClick.element().content = 'paste';
+    pasteClick.element().content = 'Paste';
     HtmeContainer.panel().menu('edit').submenus['paste'] = pasteClick;
 
 })();

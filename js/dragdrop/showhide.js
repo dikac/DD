@@ -7,7 +7,6 @@
         let click = $(e.target);
         let container = HtmeComponentBlock.binding().selectFromChildren(click);
 
-        // console.log(container);
         let children = container.children().not(HtmeComponentPanel.binding().selector(true));
 
         if(click.html() === 'Hide') {

@@ -1,8 +1,6 @@
-
-
 const HtmeCodeMirror = new function() {
 
-    this.argument = {};
+    this.arguments = {};
 
     var dom = null;
     var codeMirror = null;
@@ -70,10 +68,7 @@ const HtmeCodeMirror = new function() {
     this.save = function () {
 
          let input = codeMirror.getValue();
-        // let content = input.getContent();
-        //
          dom.html(input);
-        // HtmeCodeMirror.dom.removeAttr('style');
     };
 
     this.shutdown = function () {
@@ -81,10 +76,6 @@ const HtmeCodeMirror = new function() {
         $(`#${selector.text}`).empty();
     };
 
-    function contentSetter(editor) {
-
-        editor.setContent(HtmeCodeMirror.dom.html());
-    }
 
     this.boot = function() {
 
@@ -114,31 +105,19 @@ const HtmeCodeMirror = new function() {
 
                 dom = HtmeContent.binding().selectFromChildren($(e.target));
 
-                console.log(dom);
-
-
                 HtmeContent.panel().remove(dom);
                 HtmeCodeMirror.modal.show();
                 HtmeCodeMirror.boot();
             });
 
             click.element().attribute().get('class').add('htmeMenu');
-            click.element().content = 'source (Code Mirror)';
+            click.element().content = 'CodeMirror';
 
             return click.element();
         }();
 
     })();
 };
-
-
-//
-//
-//
-// HtmeCodeMirror.codeMirror = new function () {
-//
-//
-// };
 
 
 
