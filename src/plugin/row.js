@@ -1,4 +1,3 @@
-
 const HtmeRow = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeRow':'HtmeRow'}));
 
 HtmeRow.element().attribute().get('class').add('row');
@@ -16,7 +15,6 @@ HtmeColumn.panel().name().attribute().get('class').add('htmeName');
 HtmeColumn.panel().name().content = 'Column';
 
 HtmeColumn.panel().setMenus( HtmeContainer.panel().menus());
-
 
 
 Htme.render.handlers['row'] = function() {

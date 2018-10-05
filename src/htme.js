@@ -681,9 +681,9 @@ Htme.component.events = function() {
 
     this.trigger  = function (...argument) {
 
-        for(let k in Htme.update.handlers) {
+        for(let k in this.handlers) {
 
-            Htme.update.handlers[k](...argument);
+            this.handlers[k](...argument);
         }
     }
 };
@@ -701,7 +701,6 @@ Htme.update.handlers['sortable'] = function () {
         containment: "parent",
         tolerance:'pointer',
         items : '> '  + HtmeComponentBlock.binding().selector(true),
-       // delay: 500,
         cancel: HtmeComponentMenu.binding().selector(true)
     }).disableSelection();
 
@@ -746,23 +745,13 @@ HtmeContent.panel().name().attribute().get('class').add('htmeName');
             $default[k].removePanel();
         };
 
-        Htme.render.handlers[k] = function() {
+        Htme.edit.handlers[k] = function() {
 
             $default[k].setPanel();
         };
     }
 
-
-
-
 })();
-
-
-
-// jQuery.each({a:HtmeContainer, b:HtmeContent}, function (k, v) {
-//
-//
-// });
 
 
 
