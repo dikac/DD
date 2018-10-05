@@ -1,43 +1,45 @@
-const HtmeRow = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeRow':'HtmeRow'}));
-
-HtmeRow.element().attribute().get('class').add('row');
-HtmeRow.panel().name().attribute().get('class').add('htmeName');
-HtmeRow.panel().name().content = 'Row';
-HtmeRow.panel().setMenu(HtmeContainer.panel().menu('window'));
-
-
-const HtmeColumn = new HtmeComponentBlock(
-    new HtmeComponentAttribute({'HtmeColumn':'HtmeColumn'}),
-        new HtmeComponentElement(),
-
-);
-HtmeColumn.panel().name().attribute().get('class').add('htmeName');
-HtmeColumn.panel().name().content = 'Column';
-
-HtmeColumn.panel().setMenus( HtmeContainer.panel().menus());
-
-
-Htme.edit.handlers['row'] = function() {
-
-    HtmeRow.removePanel();
-    HtmeColumn.removePanel();
-};
-
-Htme.render.handlers['row'] = function() {
-
-    HtmeRow.setPanel();
-    HtmeColumn.setPanel();
-};
-
-
 (function () {
+
+    let HtmeRow = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeRow':'HtmeRow'}));
+    HtmeRow.element().attribute().get('class').add('row');
+    HtmeRow.panel().name().attribute().get('class').add('htmeName');
+    HtmeRow.panel().name().content = 'Row';
+    HtmeRow.panel().setMenu(HtmeContainer.panel().menu('window'));
+
+
+    let HtmeColumn = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeColumn':'HtmeColumn'}));
+    HtmeColumn.panel().name().attribute().get('class').add('htmeName');
+    HtmeColumn.panel().name().content = 'Column';
+
+
+    HtmeColumn.panel().setMenus(HtmeContainer.panel().menus());
+
+
+    Htme.edit.handlers['row'] = function() {
+
+        HtmeRow.setPanel();
+
+        let menu = HtmeColumn.panel().menu('edit');
+
+        menu.submenus['columnEdit'] = columnEdit;
+
+        HtmeColumn.setPanel();
+
+        delete menu.submenus['columnEdit'];
+    };
+
+    Htme.render.handlers['row'] = function() {
+
+        HtmeRow.removePanel();
+        HtmeColumn.removePanel();
+
+    };
+
 
     function ColumValue(event) {
 
         this.click = $(event.target);
         this.container = HtmeComponentBlock.binding().selectFromChildren(this.click);
-
-        console.log((this.click));
 
         this.input = this.click.children('.HtmeColumnInput').first();
 
@@ -73,7 +75,7 @@ Htme.render.handlers['row'] = function() {
 
 
     var columnItem = `
-    column
+    Column
     <input class="HtmeColumnInput pull-right" type="number" value="3"
     name="quantity" min="1" max="12" style="height: 20px; width: 40px; margin-left: 10px">
     `;
@@ -100,7 +102,6 @@ Htme.render.handlers['row'] = function() {
 
         return click;
     }();
-
 
 
     HtmeRow.panel().menu('new').submenus['column'] = function () {

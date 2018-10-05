@@ -1,6 +1,5 @@
 'use strict';
 
-
 function HtmlComponentSelects () {
 
     return $(this.identifier(true));
@@ -270,11 +269,9 @@ function HtmeComponentBlock(
 
     bind.sets(this.constructor.binding().attribute().all());
 
-   // console.log(bind.all());
     this.binding = HtmeComponentBinding.container(
         new HtmeComponentBinding(bind, this.element().attribute())
     );
-  //  console.log(this.element().attribute().all());
 
     this.toString = function () {
 
@@ -328,7 +325,6 @@ function HtmeComponentPanel(name = new HtmeComponentElement(), menus = {}, eleme
         return name;
     };
 
-
     this.element().attribute().get('class').add('navbar navbar-default ');
 
     this.binding = this.constructor.binding;
@@ -379,13 +375,11 @@ function HtmeComponentPanel(name = new HtmeComponentElement(), menus = {}, eleme
                 jquery.prepend(self.toString());
             }
         });
-
     };
 
     this.remove = function (jquery) {
 
-            return jquery.children(this.binding().selector(true)).remove();
-
+        return jquery.children(this.binding().selector(true)).remove();
     };
 
     this.menus = function() {
@@ -778,7 +772,7 @@ HtmeContent.panel().name().attribute().get('class').add('htmeName');
             var click = $(e.target);
             var container = HtmeComponentBlock.binding().selectFromChildren(click);
 
-            HtmeContainer.panel().name().content = 'container';
+            HtmeContainer.panel().name().content = 'Container';
             container.append(HtmeContainer.toString());
 
             Htme.update.trigger();

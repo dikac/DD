@@ -85,7 +85,6 @@ const HtmeCodeMirror = new function() {
 
             $(`#${selector.text}`).each(function(index, elem){
 
-                console.log(argument);
                 codeMirror = new CodeMirror(elem, argument);
 
                 codeMirror.setValue(dom.html());

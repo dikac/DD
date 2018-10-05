@@ -48,7 +48,7 @@
 
             let click = new HtmeComponentClick('HtmeAttributeClose', function (e) {
 
-                console.log('close');
+
             });
 
             click.element().content = 'Close';
