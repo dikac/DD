@@ -1,7 +1,6 @@
-/**
- * Unified wrapper for Jquery drag & drop
- *
- */
+'use strict';
+
+/*import {AW} from "./c/ucing";*/
 
 // function R() {
 //
@@ -16,6 +15,7 @@
 //     return 'c';
 // };
 
+/*console.log('MODULE');*/
 const Htme = {};
 
 Htme.update = {
