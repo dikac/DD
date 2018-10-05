@@ -656,6 +656,7 @@ Htme.content.get = function(selector) {
     let content = $(selector).html();
 
     Htme.edit.trigger();
+    Htme.update.trigger();
 
     return content;
 };
@@ -664,11 +665,12 @@ Htme.content.set = function(selector, content) {
 
     Htme.render.trigger();
 
-    Htme.boot(selector);
+    Htme.boot.selector(selector);
 
     $(selector).html(content);
 
     Htme.edit.trigger();
+    Htme.update.trigger();
 
     return content;
 };

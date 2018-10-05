@@ -17,7 +17,7 @@ HtmeColumn.panel().name().content = 'Column';
 HtmeColumn.panel().setMenus( HtmeContainer.panel().menus());
 
 
-Htme.render.handlers['row'] = function() {
+Htme.edit.handlers['row'] = function() {
 
     HtmeRow.removePanel();
     HtmeColumn.removePanel();
