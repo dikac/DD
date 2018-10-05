@@ -22,7 +22,7 @@
         }, element);
 
         element.content = 'Remove';
-        element.attribute().get('class').add('htmeMenu');
+        element.attribute().get('class').add('htmeItem');
 
         return click.element();
     }();

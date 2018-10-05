@@ -79,7 +79,7 @@ const HtmeCodeMirror = new function() {
 
     this.boot = function() {
 
-        var argument = this.argument;
+        var argument = this.arguments;
 
         setTimeout(function () {
 
@@ -110,7 +110,7 @@ const HtmeCodeMirror = new function() {
                 HtmeCodeMirror.boot();
             });
 
-            click.element().attribute().get('class').add('htmeMenu');
+            click.element().attribute().get('class').add('htmeItem');
             click.element().content = 'CodeMirror';
 
             return click.element();

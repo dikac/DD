@@ -538,8 +538,7 @@ function HtmeComponentMenu(submenus = {}, name ='UNDEFINED', container = new Htm
     container.attribute().get('class').add('dropdown');
 
     // style
-    container.attribute().get('class').add('htmeMenu');
-
+   // container.attribute().get('class').add('htmeMenu');
 
 
     this.submenus = submenus;
@@ -554,7 +553,7 @@ function HtmeComponentMenu(submenus = {}, name ='UNDEFINED', container = new Htm
 
     let click = new HtmeComponentElement();
 
-    click.attribute().get('class').add('dropdown-toggle');
+    click.attribute().get('class').add('dropdown-toggle htmeItem');
     click.attribute().get('data-toggle').add('dropdown');
     click.content = name;
 
@@ -596,7 +595,7 @@ HtmeComponentMenu.create.new = function() {
 };
 
 
-HtmeComponentMenu.create.new = function() {
+HtmeComponentMenu.create.edit = function() {
 
     let edit = new HtmeComponentMenu({}, 'edit');
     edit.element().attribute().get('class').set('float', 'pull-left');
@@ -605,7 +604,7 @@ HtmeComponentMenu.create.new = function() {
 };
 
 
-HtmeComponentMenu.create.new = function() {
+HtmeComponentMenu.create.window = function() {
 
     let window = new HtmeComponentMenu({}, 'window');
     window.element().attribute().get('class').set('float', 'pull-right');
@@ -732,40 +731,38 @@ const HtmeContent = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeCont
 HtmeContent.panel().name().attribute().get('class').add('htmeName');
 
 
+(function () {
 
-Htme.render.handlers['container'] = function() {
+    let $default = {container:HtmeContainer, content:HtmeContent};
 
-    HtmeContent.removePanel();
-    HtmeContainer.removePanel();
-};
+    for(let k in $default) {
 
-Htme.render.handlers['container'] = function() {
+        $default[k].panel().setMenu(HtmeComponentMenu.create.new());
+        $default[k].panel().setMenu(HtmeComponentMenu.create.window());
+        $default[k].panel().setMenu(HtmeComponentMenu.create.edit());
 
-    HtmeContainer.setPanel();
-    HtmeContent.setPanel();
-};
+        Htme.render.handlers[k] = function() {
 
+            $default[k].removePanel();
+        };
 
-jQuery.each({a:HtmeContainer, b:HtmeContent}, function (k, v) {
+        Htme.render.handlers[k] = function() {
 
-    let $new = new HtmeComponentMenu({}, 'new');
-    $new.element().attribute().get('class').set('float', 'pull-left');
-
-    v.panel().setMenu($new);
-
-
-    let edit = new HtmeComponentMenu({}, 'edit');
-    edit.element().attribute().get('class').set('float', 'pull-left');
-
-    v.panel().setMenu(edit);
+            $default[k].setPanel();
+        };
+    }
 
 
-    let window = new HtmeComponentMenu({}, 'window');
-    window.element().attribute().get('class').set('float', 'pull-right');
 
-    v.panel().setMenu(window);
 
-});
+})();
+
+
+
+// jQuery.each({a:HtmeContainer, b:HtmeContent}, function (k, v) {
+//
+//
+// });
 
 
 
@@ -782,7 +779,7 @@ jQuery.each({a:HtmeContainer, b:HtmeContent}, function (k, v) {
     HtmeContainer.panel().menu('new').submenus['container'] = function () {
 
         let element = new HtmeComponentElement();
-        element.attribute().get('class').add('htmeMenu');
+        element.attribute().get('class').add('htmeItem');
         element.content = 'Container';
 
         return new HtmeComponentClick('HtmeNewContainer',function(e) {
@@ -811,7 +808,7 @@ jQuery.each({a:HtmeContainer, b:HtmeContent}, function (k, v) {
             Htme.update.trigger();
         });
 
-        click.element().attribute().get('class').add('htmeMenu');
+        click.element().attribute().get('class').add('htmeItem');
         click.element().content = 'Content';
 
         return click.element();

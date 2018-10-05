@@ -43,7 +43,7 @@
     margin-right: auto;
 }
 
-.htmeMenu {
+.htmeItem {
     padding: 2px;
     padding-left: 4px;
     padding-right: 4px;
@@ -51,12 +51,12 @@
     cursor: pointer;
 }
 
-.htmeMenu:hover {
+.htmeItem:hover {
 
     background-color:#ebebeb;
 }
 
-.htmeMenu:active{
+.htmeItem:active{
 
     background-color: #b3b3b3;
 }

@@ -1,5 +1,6 @@
 
 const HtmeRow = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeRow':'HtmeRow'}));
+
 HtmeRow.element().attribute().get('class').add('row');
 HtmeRow.panel().name().attribute().get('class').add('htmeName');
 HtmeRow.panel().name().content = 'Row';
@@ -57,7 +58,7 @@ Htme.render.handlers['row'] = function() {
     HtmeContainer.panel().menu('new').submenus['row'] = function () {
 
         let element = new HtmeComponentElement();
-        element.attribute().get('class').add('htmeMenu');
+        element.attribute().get('class').add('htmeItem');
         element.content = 'Row';
 
         return new HtmeComponentClick('HtmeNewRow',function(e) {
@@ -96,7 +97,7 @@ Htme.render.handlers['row'] = function() {
             input.container.attr('Htme-column', ''+input.val)
         });
 
-        click.element().attribute().get('class').add('htmeMenu');
+        click.element().attribute().get('class').add('htmeItem');
         click.element().content = columnItem;
 
         return click;
@@ -129,7 +130,7 @@ Htme.render.handlers['row'] = function() {
             e.stopPropagation();
         });
 
-        click.element().attribute().get('class').add('htmeMenu');
+        click.element().attribute().get('class').add('htmeItem');
         click.element().content = columnItem;
 
         return click.element();

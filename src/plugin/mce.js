@@ -112,7 +112,7 @@ const  HtmeTinyMce = new function () {
 
         });
 
-        click.element().attribute().get('class').add('htmeMenu');
+        click.element().attribute().get('class').add('htmeItem');
         click.element().content = 'TinyMCE';
 
         return click.element();

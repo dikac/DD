@@ -38,7 +38,7 @@
 
     <link rel="stylesheet" href="css/htme.css" media="all">
 
-    <script defer="defer" src="src/plugin/container.js"></script>
+    <script defer="defer" src="src/plugin/row.js"></script>
     <script defer="defer" src="src/plugin/remove.js"></script>
     <script defer="defer" src="src/plugin/showhide.js"></script>
     <script defer="defer" src="src/plugin/attribute.js"></script>
@@ -58,27 +58,6 @@
 
 <script>
 
-    // var HtmeCodeMirrored;
-    //
-    // $('.Htme').each(function(index, elem){
-    //     HtmeCodeMirrored = new CodeMirror(elem, {
-    //         lineNumbers: true,
-    //         mode: "htmlmixed",
-    //        // theme: 'darcula',
-    //        //  scriptTypes: [{matches: /\/x-handlebars-template|\/x-mustache/i,
-    //        //      mode: null},
-    //        //      {matches: /(text|application)\/(x-)?vb(a|script)/i,
-    //        //          mode: "vbscript"}]
-    //         //styleActiveLine: true,
-    //        // matchBrackets: true
-    //     });
-    // });
-
-
-   // myCodeMirror.
-
-
-
     $(document).ready(function() {
 
         HtmeCodeMirror.argument = {
@@ -86,13 +65,12 @@
             mode: "htmlmixed",
         };
 
+        HtmeTinyMce.arguments = {plugins : 'advlist autolink link image lists charmap print preview'};
+
 
         Htme.boot.selector('.dragdrop');
     });
 
-    // $(document).ready(function() {
-    //     tinymce.init({ selector:'textarea' });
-    // });
 </script>
 
 </body>

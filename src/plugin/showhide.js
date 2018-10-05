@@ -24,7 +24,7 @@
 
     element.content = 'Hide';
     // style
-    element.attribute().get('class').add('htmeMenu');
+    element.attribute().get('class').add('htmeItem');
 
     HtmeContainer.panel().menu('window').submenus['show/hide'] = click;
     HtmeContent.panel().menu('window').submenus['show/hide'] = click;

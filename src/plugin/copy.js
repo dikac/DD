@@ -9,7 +9,7 @@
         $('.HtmePaste').show();
     });
 
-    copyClick.element().attribute().get('class').add('htmeMenu');
+    copyClick.element().attribute().get('class').add('htmeItem');
     copyClick.element().content = 'Copy';
     HtmeContainer.panel().menu('edit').submenus['copy'] = copyClick;
 
@@ -23,7 +23,7 @@
 
     });
 
-    cutClick.element().attribute().get('class').add('htmeMenu');
+    cutClick.element().attribute().get('class').add('htmeItem');
     cutClick.element().content = 'Cut';
     HtmeContainer.panel().menu('edit').submenus['cut'] = cutClick;
 
@@ -41,7 +41,7 @@
         Htme.update.trigger();
     });
 
-    pasteClick.element().attribute().get('class').add('htmeMenu');
+    pasteClick.element().attribute().get('class').add('htmeItem');
     pasteClick.element().attribute().get('class').add('htmeHide');
     pasteClick.element().content = 'Paste';
     HtmeContainer.panel().menu('edit').submenus['paste'] = pasteClick;

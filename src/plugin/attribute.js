@@ -137,7 +137,7 @@ function HtmeGetAttributes(jquery) {
         });
 
         click.element().content = 'Attribute';
-        click.element().attribute().get('class').add('htmeMenu');
+        click.element().attribute().get('class').add('htmeItem');
 
         return click.element();
 
