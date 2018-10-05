@@ -32,16 +32,18 @@ Htme.boot = {
 
         for(let k in Htme.boot.handlers) {
 
-            Htme.boot.handlers[k](selector);
+            this.handlers[k](selector);
         }
 
         Htme.update.trigger();
     }
+
+
 };
 
 
-
-function HtmeComponentEvents() {
+Htme.component = {};
+Htme.component.events = function() {
 
     this.handlers = {};
 
@@ -52,12 +54,12 @@ function HtmeComponentEvents() {
             Htme.update.handlers[k](...argument);
         }
     }
-}
+};
 
 
-Htme.update = new HtmeComponentEvents();
-Htme.edit = new HtmeComponentEvents();
-Htme.render = new HtmeComponentEvents();
+Htme.update = new Htme.component.events();
+Htme.edit = new Htme.component.events();
+Htme.render = new Htme.component.events();
 
 
 function HtmlComponentSelects () {
