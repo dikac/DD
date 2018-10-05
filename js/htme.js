@@ -713,7 +713,7 @@ function HtmeComponentMenu(submenus = {}, name ='UNDEFINED', container = new Htm
     let menu = new HtmeComponentElement();
 
     menu.attribute().get('class').add('dropdown-menu');
-   // menu.attribute().named('class')['DDMenuContent'] = 'DDMenuContent';
+
     menu.content = new HtmeComponentItems(this.submenus);
 
     container.content = new HtmeComponentItems({button:click, menu:menu});
