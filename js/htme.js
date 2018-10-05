@@ -465,7 +465,7 @@ function HtmeComponentPanel(name = new HtmeComponentElement(), menus = {}, eleme
     };
 
 
-    this.element().attribute().get('class').add('navbar navbar-default');
+    this.element().attribute().get('class').add('navbar navbar-default ');
 
     this.binding = this.constructor.binding;
     //
@@ -756,7 +756,7 @@ HtmeComponentMenu.create.new = function() {
     let window = new HtmeComponentMenu({}, 'window');
     window.element().attribute().get('class').set('float', 'pull-right');
     return window;
-}
+};
 
 
 
@@ -780,8 +780,9 @@ Htme.update.handlers['sortable'] = function () {
     HtmeComponentBlock.binding().selects().sortable({
         containment: "parent",
         tolerance:'pointer',
-        items : '> '  + HtmeComponentBlock.binding().selector(true)
-
+        items : '> '  + HtmeComponentBlock.binding().selector(true),
+       // delay: 500,
+        cancel: HtmeComponentMenu.binding().selector(true)
     }).disableSelection();
 
 };
@@ -817,6 +818,7 @@ const HtmeContainer = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeCo
 
 
 HtmeContainer.panel().name().attribute().get('class').add('htmeName');
+//HtmeContainer.panel().element().attribute().get('class').add('bg-primary');
 
 
 

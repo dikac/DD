@@ -3,6 +3,7 @@ const HtmeRow = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeRow':'Ht
 HtmeRow.element().attribute().get('class').add('row');
 HtmeRow.panel().name().attribute().get('class').add('htmeName');
 HtmeRow.panel().name().content = 'row';
+HtmeRow.panel().setMenu(HtmeContainer.panel().menu('window'));
 
 
 const HtmeColumn = new HtmeComponentBlock(
