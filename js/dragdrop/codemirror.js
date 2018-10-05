@@ -1,6 +1,11 @@
-const  HtmeCodeMirror = {};
 
-HtmeCodeMirror.modal = new function() {
+
+const HtmeCodeMirror = new function() {
+
+    this.argument = {};
+
+    var dom = null;
+    var codeMirror = null;
 
     var selector = {
         modal   : 'HtmeCodeMirrorModal',
@@ -9,80 +14,71 @@ HtmeCodeMirror.modal = new function() {
         text    : 'HtmeCodeMirrorModalText',
     };
 
-    let modal = new HtmeComponentModal(selector.modal);
-    modal.selector = selector;
+    this.modal = new function() {
 
-    let item = new HtmeComponentItems();
-    modal.footer = item;
+        let modal = new HtmeComponentModal(selector.modal);
+        modal.selector = selector;
+
+        let item = new HtmeComponentItems();
+        modal.footer = item;
 
 
-    item.items['cancel'] = function () {
+        item.items['cancel'] = function () {
 
-        let click = new HtmeComponentClick(selector.cancel, function (e) {
+            let click = new HtmeComponentClick(selector.cancel, function (e) {
 
-            HtmeCodeMirror.codeMirror.shutdown();
-            Htme.update.trigger();
-        });
+                HtmeCodeMirror.shutdown();
+                Htme.update.trigger();
+            });
 
-        click.element().content = 'Cancel';
-        click.element().attribute().get('class').add('btn btn-default');
-        click.element().attribute().get('data-dismiss').add('modal');
+            click.element().content = 'Cancel';
+            click.element().attribute().get('class').add('btn btn-default');
+            click.element().attribute().get('data-dismiss').add('modal');
 
-        return click.element();
+            return click.element();
+        }();
+
+
+        item.items['save'] = function () {
+
+            let click = new HtmeComponentClick(selector.save, function (e) {
+
+                HtmeCodeMirror.save();
+                HtmeCodeMirror.shutdown();
+
+                HtmeContent.setPanel();
+
+                Htme.update.trigger();
+            });
+
+            click.element().content = 'Save';
+            click.element().attribute().get('class').add('btn btn-default');
+            click.element().attribute().get('data-dismiss').add('modal');
+
+            return click.element();
+        }();
+
+
+        modal.content = `<div id="${selector.text}"></div>`;
+
+        return modal;
+
     }();
 
 
-    item.items['save'] = function () {
-
-        let click = new HtmeComponentClick(selector.save, function (e) {
-
-            HtmeCodeMirror.codeMirror.save();
-            HtmeCodeMirror.codeMirror.shutdown();
-
-            HtmeContent.setPanel();
-
-            Htme.update.trigger();
-        });
-
-        click.element().content = 'Save';
-        click.element().attribute().get('class').add('btn btn-default');
-        click.element().attribute().get('data-dismiss').add('modal');
-
-        return click.element();
-    }();
-
-
-    modal.content = `<textarea id="${selector.text}"></textarea>`;
-
-    return modal;
-
-}();
-
-
-
-HtmeCodeMirror.codeMirror = new function () {
-
-    this.arguments = {};
-
-    this.dom = null;
 
     this.save = function () {
 
-        let input = codeMirror.get(HtmeCodeMirror.modal.selector.text);
-        let content = input.getContent();
-
-        HtmeCodeMirror.dom.html(content);
-        HtmeCodeMirror.dom.removeAttr('style');
+         let input = codeMirror.getValue();
+        // let content = input.getContent();
+        //
+         dom.html(input);
+        // HtmeCodeMirror.dom.removeAttr('style');
     };
 
     this.shutdown = function () {
 
-        let self;
-
-        if(self = codeMirror.get(HtmeCodeMirror.modal.selector.text)) {
-
-            self.remove();
-        }
+        $(`#${selector.text}`).empty();
     };
 
     function contentSetter(editor) {
@@ -92,59 +88,58 @@ HtmeCodeMirror.codeMirror = new function () {
 
     this.boot = function() {
 
+        var argument = this.argument;
 
-        var myCodeMirror = CodeMirror(document.body, {
-            value: "function myScript(){return 100;}\n",
-            mode:  "javascript"
-        });
+        setTimeout(function () {
 
-        // let arguments = {
-        //
-        //     init_instance_callback : function(editor) {
-        //
-        //         editor.setContent(HtmeCodeMirror.dom.html());
-        //     },
-        //
-        //     selector : '#' + HtmeCodeMirror.modal.selector.text
-        // };
-        //
-        // let init = Object.assign(this.arguments, arguments);
-        //
-        //
-        // codeMirror.init(init);
-    }
+            $(`#${selector.text}`).each(function(index, elem){
+
+                console.log(argument);
+                codeMirror = new CodeMirror(elem, argument);
+
+                codeMirror.setValue(dom.html());
+
+                return false;
+            });
+
+        },1000);
+
+    };
+
+    (function () {
+
+        HtmeContent.panel().menu('edit').submenus['codemirror'] = function () {
+
+            let click = new HtmeComponentClick('HtmeCodeMirrorEdit',function(e) {
+
+                dom = HtmeContent.binding().selectFromChildren($(e.target));
+
+                console.log(dom);
+
+
+                HtmeContent.panel().remove(dom);
+                HtmeCodeMirror.modal.show();
+                HtmeCodeMirror.boot();
+            });
+
+            click.element().attribute().get('class').add('htmeMenu');
+            click.element().content = 'source (Code Mirror)';
+
+            return click.element();
+        }();
+
+    })();
 };
 
 
+//
+//
+//
+// HtmeCodeMirror.codeMirror = new function () {
+//
+//
+// };
 
 
 
 
-
-
-
-(function () {
-
-
-    HtmeContent.panel().menu('edit').submenus['codemirror'] = function () {
-
-        let click = new HtmeComponentClick('HtmeCodeMirrorEdit',function(e) {
-
-            HtmeCodeMirror.dom = HtmeContent.binding().selectFromChildren($(e.target));
-
-            console.log(HtmeCodeMirror.dom);
-
-
-            HtmeContent.panel().remove(HtmeCodeMirror.dom);
-            HtmeCodeMirror.modal.show();
-            HtmeCodeMirror.codeMirror.boot();
-
-
-        });
-        click.element().attribute().get('class').add('htmeMenu');
-        click.element().content = 'source (Code Mirror)';
-
-        return click.element();
-    }();
-
-})();

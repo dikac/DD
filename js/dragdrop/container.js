@@ -16,6 +16,21 @@ HtmeColumn.panel().name().content = 'column';
 
 HtmeColumn.panel().setMenus( HtmeContainer.panel().menus());
 
+
+
+Htme.render.handlers['row'] = function() {
+
+    HtmeRow.removePanel();
+    HtmeColumn.removePanel();
+};
+
+Htme.render.handlers['row'] = function() {
+
+    HtmeRow.setPanel();
+    HtmeColumn.setPanel();
+};
+
+
 (function () {
 
     function ColumValue(event) {

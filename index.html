@@ -28,7 +28,14 @@
 
     <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
     <script src="codemirror-5.40.2/lib/codemirror.js"></script>
+    <script src="codemirror-5.40.2/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="codemirror-5.40.2/mode/css/css.js"></script>
+    <script src="codemirror-5.40.2/mode/javascript/javascript.js"></script>
+    <script src="codemirror-5.40.2/mode/xml/xml.js"></script>
+
+
     <link rel="stylesheet" href="codemirror-5.40.2/lib/codemirror.css" media="all">
+    <link rel="stylesheet" href="codemirror-5.40.2/theme/darcula.css" media="all">
 
     <script  src="./js/htme.js"></script>
 
@@ -223,17 +230,49 @@
         <!--</div>-->
     <!--</div>-->
 
+<!--<div>-->
+    <!--<div>-->
+        <!--<div>-->
 
-<!--<textarea class="zzz"></textarea>-->
+            <!--<div id="HtmeCodeMirrorModalText" style="font-weight: bold">-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+
+</div>
+
 <script>
-    // $('.zzz').each(function(index, elem){
-    //     CodeMirror.fromTextArea(elem, {/*options*/});
+
+    // var HtmeCodeMirrored;
+    //
+    // $('.Htme').each(function(index, elem){
+    //     HtmeCodeMirrored = new CodeMirror(elem, {
+    //         lineNumbers: true,
+    //         mode: "htmlmixed",
+    //        // theme: 'darcula',
+    //        //  scriptTypes: [{matches: /\/x-handlebars-template|\/x-mustache/i,
+    //        //      mode: null},
+    //        //      {matches: /(text|application)\/(x-)?vb(a|script)/i,
+    //        //          mode: "vbscript"}]
+    //         //styleActiveLine: true,
+    //        // matchBrackets: true
+    //     });
     // });
 
 
    // myCodeMirror.
 
+
+
     $(document).ready(function() {
+
+        HtmeCodeMirror.argument = {
+            lineNumbers: true,
+            mode: "htmlmixed",
+        };
+
+
         Htme.boot.selector('.dragdrop');
     });
 

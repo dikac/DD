@@ -18,18 +18,9 @@
 /*console.log('MODULE');*/
 const Htme = {};
 
-Htme.update = {
 
-    handlers: {},
 
-    trigger : function () {
 
-        for(let k in Htme.update.handlers) {
-
-            Htme.update.handlers[k]();
-        }
-    }
-};
 
 Htme.boot = {
 
@@ -48,14 +39,25 @@ Htme.boot = {
     }
 };
 
-Htme.hide = {
-    handlers : {}
-};
 
 
+function HtmeComponentEvents() {
+
+    this.handlers = {};
+
+    this.trigger  = function (...argument) {
+
+        for(let k in Htme.update.handlers) {
+
+            Htme.update.handlers[k](...argument);
+        }
+    }
+}
 
 
-
+Htme.update = new HtmeComponentEvents();
+Htme.edit = new HtmeComponentEvents();
+Htme.render = new HtmeComponentEvents();
 
 
 function HtmlComponentSelects () {
@@ -659,7 +661,7 @@ function HtmeComponentModal (bind, header = '', content = '', footer = '') {
         return `
         <!-- Modal -->
           <div class="modal fade ${this.bind}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document" style="width: 80%;">
+            <div class="modal-dialog" role="document" style="padding: 2.5%; width: 100%">
                 <div class="modal-content">
 
                     <div class="modal-header">${this.header}</div>
@@ -809,12 +811,17 @@ Htme.update.handlers['bootstrapDropDown'] = function () {
 
 
 
-const HtmeContainer = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeContainer':'HtmeContainer'})
-   // new HtmeComponentAttribute({'HtmeContainer':'HtmeContainer'}),
-   // new HtmeComponentElement(),
-);
-//HtmeContainer.binding().permanent().add('HtmeContainer');
+const HtmeContainer = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeContainer':'HtmeContainer'}));
 
+Htme.render.handlers['container'] = function() {
+
+    HtmeContainer.removePanel();
+};
+
+Htme.render.handlers['container'] = function() {
+
+    HtmeContainer.setPanel();
+};
 
 
 HtmeContainer.panel().name().attribute().get('class').add('htmeName');
@@ -831,6 +838,15 @@ const HtmeContent = new HtmeComponentBlock(
 
 HtmeContent.panel().name().attribute().get('class').add('htmeName');
 
+Htme.render.handlers['content'] = function() {
+
+    HtmeContent.removePanel();
+};
+
+Htme.render.handlers['content'] = function() {
+
+    HtmeContent.setPanel();
+};
 
 
 jQuery.each({a:HtmeContainer, b:HtmeContent}, function (k, v) {
