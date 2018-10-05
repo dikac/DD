@@ -35,6 +35,8 @@
             copy = data;
             cut.remove();
         }
+
+        Htme.update.trigger();
     });
 
     pasteClick.element().attribute().get('class').add('htmeMenu');

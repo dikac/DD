@@ -780,7 +780,7 @@ Htme.update.handlers['sortable'] = function () {
     HtmeComponentBlock.binding().selects().sortable({
         containment: "parent",
         tolerance:'pointer',
-        items : HtmeComponentBlock.binding().selector(true)
+        items : '> '  + HtmeComponentBlock.binding().selector(true)
 
     }).disableSelection();
 
