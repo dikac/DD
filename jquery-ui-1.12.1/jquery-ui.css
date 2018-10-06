@@ -1,6 +1,6 @@
 /*! jQuery UI - v1.12.1 - 2018-09-05
 * http://jqueryui.com
-* Includes: draggable.css, core.css, resizable.css, selectable.css, sortable.css, accordion.css, autocomplete.css, menu.css, main.css, controlgroup.css, checkboxradio.css, datepicker.css, dialog.css, progressbar.css, selectmenu.css, slider.css, spinner.css, tabs.css, tooltip.css
+* Includes: draggable.css, core.css, resizable.css, selectable.css, sortable.css, accordion.css, autocomplete.css, menu.css, button.css, controlgroup.css, checkboxradio.css, datepicker.css, dialog.css, progressbar.css, selectmenu.css, slider.css, spinner.css, tabs.css, tooltip.css
 * Copyright jQuery Foundation and other contributors; Licensed MIT */
 
 .ui-draggable-handle {
@@ -288,7 +288,7 @@ input.ui-button.ui-button-icon-only {
 	text-indent: 0;
 }
 
-/* main icon element(s) */
+/* button icon element(s) */
 .ui-button-icon-only .ui-icon {
 	position: absolute;
 	top: 50%;
