@@ -1,0 +1,34 @@
+.ddRawPanel::after {
+    content: "raw";
+    display: block;
+}
+
+.ddRawContainer::before {
+    content: "raw: double click to edit";
+    color: #c2c2c2;
+}
+
+.ddRawContainerRaw::before {
+
+    content: "render";
+    color: #c2c2c2;
+    display: block;
+}
+
+.ddRawContainerEncoded::before {
+    content: "text";
+    color: #c2c2c2;
+    display: block;
+}
+
+.ddRawContainer {
+    background-color: #fff;
+    border:  2px dotted #ddd;
+}
+
+/**
+resolve conflict between Jquery vs Bootstrap
+ */
+.ddNoConflict {
+
+}
