@@ -487,7 +487,6 @@ function HtmeComponentModal (bind, header = '', content = '', footer = '') {
 
         let dom = $(`.${this.bind}`);
 
-
         if(!dom.length) {
 
             $('body').append(this.toString());

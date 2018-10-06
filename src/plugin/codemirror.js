@@ -75,7 +75,9 @@ const HtmeCodeMirror = new function() {
     };
 
 
-    this.boot = function() {
+    this.boot = function($dom) {
+
+        dom = $dom;
 
         var argument = this.arguments;
 
@@ -93,29 +95,29 @@ const HtmeCodeMirror = new function() {
         },1000);
 
     };
-
-    (function () {
-
-        HtmeContent.panel().menu('edit').submenus['codemirror'] = function () {
-
-            let click = new HtmeComponentClick('HtmeCodeMirrorEdit',function(e) {
-
-                dom = HtmeContent.binding().selectFromChildren($(e.target));
-
-                HtmeContent.panel().remove(dom);
-                HtmeCodeMirror.modal.show();
-                HtmeCodeMirror.boot();
-            });
-
-            click.element().attribute().get('class').add('htmeItem');
-            click.element().content = 'CodeMirror';
-
-            return click.element();
-        }();
-
-    })();
 };
 
+
+(function () {
+
+    HtmeContent.panel().menu('edit').submenus['codemirror'] = function () {
+
+        let click = new HtmeComponentClick('HtmeCodeMirrorEdit',function(e) {
+
+            let dom = HtmeContent.binding().selectFromChildren($(e.target));
+
+            HtmeContent.panel().remove(dom);
+            HtmeCodeMirror.modal.show();
+            HtmeCodeMirror.boot(dom);
+        });
+
+        click.element().attribute().get('class').add('htmeItem');
+        click.element().content = 'CodeMirror';
+
+        return click.element();
+    }();
+
+})();
 
 
 
