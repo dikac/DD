@@ -1,6 +1,14 @@
 (function () {
 
+    /**
+     *
+     * @type {null|number}
+     */
     let copy;
+
+    /**
+     * @type {null|number}
+     */
     let cut;
 
     let copyClick = new HtmeComponentClick('HtmeCopy', function (e) {

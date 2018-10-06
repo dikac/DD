@@ -11,7 +11,6 @@
     HtmeColumn.panel().name().attribute().get('class').add('htmeName');
     HtmeColumn.panel().name().content = 'Column';
 
-
     HtmeColumn.panel().setMenus(HtmeContainer.panel().menus());
 
 

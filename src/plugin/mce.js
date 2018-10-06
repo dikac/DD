@@ -98,7 +98,6 @@ const  HtmeTinyMce = new function () {
         tinymce.init(init);
     };
 
-
     HtmeContent.panel().menu('edit').submenus['text'] = function () {
 
         let click = new HtmeComponentClick('HtmeMCEEdit',function(e) {

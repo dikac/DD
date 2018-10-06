@@ -684,8 +684,6 @@ Htme.component.events = function() {
     }
 };
 
-
-
 Htme.update = new Htme.component.events();
 Htme.edit = new Htme.component.events();
 Htme.render = new Htme.component.events();
@@ -701,7 +699,6 @@ Htme.update.handlers['sortable'] = function () {
     }).disableSelection();
 
 };
-
 
 
 

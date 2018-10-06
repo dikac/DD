@@ -63,8 +63,6 @@ const HtmeCodeMirror = new function() {
 
     }();
 
-
-
     this.save = function () {
 
          let input = codeMirror.getValue();

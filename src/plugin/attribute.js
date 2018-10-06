@@ -10,7 +10,6 @@
         </div>`;
     }
 
-
     function HtmeGetAttributes(jquery) {
 
         let attribute = {};
@@ -28,7 +27,6 @@
 
         return attribute;
     }
-
 
 
     let modal = new HtmeComponentModal('HtmeAttributeModal');

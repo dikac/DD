@@ -1,4 +1,3 @@
-
 (function () {
 
     let element = new HtmeComponentElement();
