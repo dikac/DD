@@ -493,7 +493,7 @@ function HtmeComponentModal (bind, header = '', content = '', footer = '') {
             dom = $(`.${this.bind}`);
         }
 
-        dom.modal('show');
+        dom.modal({backdrop: 'static', keyboard: false, show:true});
 
         Htme.update.trigger();
     };

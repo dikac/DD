@@ -25,6 +25,7 @@ const  HtmeTinyMce = new function () {
 
                 HtmeTinyMce.shutdown();
                 HtmeContent.setPanel();
+                Htme.update.trigger();
 
             });
 
@@ -43,6 +44,7 @@ const  HtmeTinyMce = new function () {
                 HtmeTinyMce.save();
                 HtmeTinyMce.shutdown();
                 HtmeContent.setPanel();
+                Htme.update.trigger();
 
             });
 
@@ -107,7 +109,12 @@ const  HtmeTinyMce = new function () {
             HtmeContent.panel().remove(dom);
             HtmeTinyMce.modal.show();
             HtmeTinyMce.boot();
-            HtmeTinyMce.boot();
+
+
+
+            setTimeout(function () {
+                $('.mce-notification').remove();
+            }, 1500);
 
         });
 

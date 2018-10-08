@@ -26,6 +26,7 @@ const HtmeCodeMirror = new function() {
             let click = new HtmeComponentClick(selector.cancel, function (e) {
 
                 HtmeCodeMirror.shutdown();
+                HtmeContent.setPanel();
                 Htme.update.trigger();
             });
 
@@ -45,7 +46,6 @@ const HtmeCodeMirror = new function() {
                 HtmeCodeMirror.shutdown();
 
                 HtmeContent.setPanel();
-
                 Htme.update.trigger();
             });
 
