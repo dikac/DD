@@ -110,8 +110,6 @@ const  HtmeTinyMce = new function () {
             HtmeTinyMce.modal.show();
             HtmeTinyMce.boot();
 
-
-
             setTimeout(function () {
                 $('.mce-notification').remove();
             }, 1500);

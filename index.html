@@ -58,11 +58,19 @@
 
     $(document).ready(function() {
 
+        /**
+         * Code mirror argument
+         * @type {{lineNumbers: boolean, mode: string}}
+         */
         HtmeCodeMirror.arguments = {
             lineNumbers: true,
             mode: "htmlmixed",
         };
 
+        /**
+         * Tiny mce arguments
+         * @type {{plugins: string}}
+         */
         HtmeTinyMce.arguments = {
             plugins : 'advlist autolink link image lists charmap print preview'
         };
