@@ -308,7 +308,14 @@ HtmeComponentElement.container = function (element = new HtmeComponentElement())
 };
 
 
-
+/**
+ * assist block building
+ *
+ * @param bind
+ * @param element
+ * @param panel
+ * @constructor
+ */
 function HtmeComponentBlock(
     bind = new HtmeComponentAttribute(),
     element = new HtmeComponentElement(),
@@ -833,7 +840,7 @@ HtmeContent.panel().name().attribute().get('class').add('htmeName');
 
     Htme.boot.handlers['container'] = function(selector) {
 
-        HtmeContainer.panel().name().content = 'container';
+        HtmeContainer.panel().name().content = 'Container';
         HtmeContainer.set($(selector));
 
     };
