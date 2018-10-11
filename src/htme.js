@@ -781,7 +781,7 @@ Htme.update.handlers['sortable'] = function () {
 
 
 /**
- * prevent drop down menu closed when clicked other than itself
+ * prevent drop down menu closed when click not from itself
  */
 Htme.update.handlers['bootstrapDropDown'] = function () {
 
