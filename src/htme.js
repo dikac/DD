@@ -838,6 +838,11 @@ HtmeContent.panel().name().attribute().get('class').add('htmeName');
 
 (function () {
 
+    /**
+     * Boot handler
+     *
+     * @param selector
+     */
     Htme.boot.handlers['container'] = function(selector) {
 
         HtmeContainer.panel().name().content = 'Container';
@@ -845,6 +850,11 @@ HtmeContent.panel().name().attribute().get('class').add('htmeName');
 
     };
 
+    /**
+     * register container menu
+     *
+     * @type {HtmeComponentClick}
+     */
     HtmeContainer.panel().menu('new').submenus['container'] = function () {
 
         let element = new HtmeComponentElement();
@@ -863,7 +873,9 @@ HtmeContent.panel().name().attribute().get('class').add('htmeName');
         }, element);
     }();
 
-
+    /**
+     * register content menu
+     */
     HtmeContainer.panel().menu('new').submenus['content'] = function () {
 
         let click = new HtmeComponentClick('HtmeNewContent',function(e) {
