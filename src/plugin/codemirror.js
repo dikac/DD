@@ -69,18 +69,27 @@ const HtmeCodeMirror = new function() {
          dom.html(input);
     };
 
+
     this.shutdown = function () {
 
         $(`#${selector.text}`).empty();
     };
 
-
+    /**
+     * boot codemirror to specified dom
+     *
+     * @param {jQuery} $dom
+     */
     this.boot = function($dom) {
 
         dom = $dom;
 
         var argument = this.arguments;
 
+        /**
+         * set data to codemirror
+         * delayed execution required
+         */
         setTimeout(function () {
 
             $(`#${selector.text}`).each(function(index, elem){

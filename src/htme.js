@@ -1,22 +1,29 @@
 'use strict';
 
-function HtmlComponentSelects () {
+// function HtmlComponentSelects () {
+//
+//     return $(this.identifier(true));
+// };
+//
+//
+// function HtmlComponentSelectFromInner (jquery, bypass = false) {
+//
+//     if(!jquery.hasClass(this.identifier()) || bypass) {
+//
+//         jquery = jquery.parents(this.identifier(true)).first();
+//     }
+//
+//     return jquery;
+// };
 
-    return $(this.identifier(true));
-};
 
-
-function HtmlComponentSelectFromInner (jquery, bypass = false) {
-
-    if(!jquery.hasClass(this.identifier()) || bypass) {
-
-        jquery = jquery.parents(this.identifier(true)).first();
-    }
-
-    return jquery;
-};
-
-
+/**
+ * Manage dom class binding with attributes object
+ *
+ * @param {HtmeComponentAttribute} attribute
+ * @param {HtmeComponentAttributes} attributes
+ * @constructor
+ */
 function HtmeComponentBinding(
     attribute = new HtmeComponentAttribute,
     attributes = new HtmeComponentAttributes()
@@ -52,12 +59,10 @@ function HtmeComponentBinding(
         attributes.get('class').set(name, value);
     };
 
-
     this.bindTo = function(jquery) {
 
         jquery.addClass(this.selector());
     };
-
 
     this.selects = function () {
 
@@ -90,6 +95,12 @@ function HtmeComponentBinding(
     }
 }
 
+/**
+ * factory
+ *
+ * @param binding
+ * @returns {function(): HtmeComponentBinding}
+ */
 HtmeComponentBinding.container = function(binding = new HtmeComponentBinding) {
 
     console.assert(binding instanceof HtmeComponentBinding);
@@ -100,9 +111,20 @@ HtmeComponentBinding.container = function(binding = new HtmeComponentBinding) {
     }
 };
 
-
+/**
+ * Attribute builder
+ *
+ * @param values
+ * @constructor
+ */
 function HtmeComponentAttribute(values = {}) {
 
+    /**
+     * set an associative value
+     *
+     * @param name
+     * @param {string} value
+     */
     this.set = function (name, value) {
 
         console.assert(typeof value === "string", value);
@@ -110,6 +132,11 @@ function HtmeComponentAttribute(values = {}) {
         values[name] = value;
     };
 
+    /**
+     * sets value
+     *
+     * @param {object} values
+     */
     this.sets = function (values) {
 
         for(let k in values) {
@@ -120,12 +147,22 @@ function HtmeComponentAttribute(values = {}) {
 
     this.sets(values);
 
+    /**
+     * clone this object
+     *
+     * @returns {HtmeComponentAttribute}
+     */
     this.copy = function () {
 
       return new HtmeComponentAttribute(Object.assign({}, values));
 
     };
 
+    /**
+     * insert value
+     *
+     * @param {string} value
+     */
     this.add = function (...value) {
 
         for(let k in value) {
@@ -150,8 +187,19 @@ function HtmeComponentAttribute(values = {}) {
     }
 };
 
+/**
+ * used for insertion, to provide unique index
+ * @type {number}
+ */
 HtmeComponentAttribute.iteration = 1;
 
+
+/**
+ * Attributes builder
+ *
+ * @param {{attributes}} attributes
+ * @constructor
+ */
 function HtmeComponentAttributes (attributes = {}) {
 
     for(let k in attributes) {
@@ -188,6 +236,14 @@ function HtmeComponentAttributes (attributes = {}) {
     };
 
 
+    /**
+     * Convert to string
+     *
+     * example result :
+     * class="value1 value2"
+     *
+     * @returns {string}
+     */
     this.toString = function() {
 
         let buffer = [];
@@ -204,8 +260,6 @@ function HtmeComponentAttributes (attributes = {}) {
 
         return buffer.join(' ');
     };
-
-
 };
 
 HtmeComponentAttributes.container = function(attribute = new HtmeComponentAttributes) {
@@ -683,11 +737,38 @@ Htme.component.events = function() {
     }
 };
 
+/**
+ * update event
+ *
+ * this should be triggered when new element created
+ *
+ * @type {Htme.component.events}
+ */
 Htme.update = new Htme.component.events();
+
+/**
+ * edit state
+ *
+ * this must be triggered when content state change from render to edit (with panel)
+ *
+ * @type {Htme.component.events}
+ */
 Htme.edit = new Htme.component.events();
+
+/**
+ * render state
+ *
+ * must be triggered when content state change from edit to render (content only)
+ *
+ * @type {Htme.component.events}
+ */
 Htme.render = new Htme.component.events();
 
 
+
+/**
+ * Sorting handle
+ */
 Htme.update.handlers['sortable'] = function () {
 
     HtmeComponentBlock.binding().selects().sortable({
@@ -696,17 +777,17 @@ Htme.update.handlers['sortable'] = function () {
         items : '> '  + HtmeComponentBlock.binding().selector(true),
         cancel: HtmeComponentMenu.binding().selector(true)
     }).disableSelection();
-
 };
 
 
-
+/**
+ * prevent drop down menu closed when clicked other than itself
+ */
 Htme.update.handlers['bootstrapDropDown'] = function () {
 
     new HtmeComponentClick('dropdown-menu', function(e) {
         e.stopPropagation();
     })
-
 };
 
 
