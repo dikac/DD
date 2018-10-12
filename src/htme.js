@@ -573,9 +573,6 @@ function HtmeComponentMenu(submenus = {}, name ='UNDEFINED', container = new Htm
 
     container.attribute().get('class').add('dropdown');
 
-    // style
-   // container.attribute().get('class').add('htmeMenu');
-
 
     this.submenus = submenus;
     this.element = HtmeComponentElement.container(container);
@@ -630,15 +627,12 @@ HtmeComponentMenu.create.new = function() {
     return menu;
 };
 
-
 HtmeComponentMenu.create.edit = function() {
 
     let edit = new HtmeComponentMenu({}, 'edit');
     edit.element().attribute().get('class').set('float', 'pull-left');
     return edit;
-
 };
-
 
 HtmeComponentMenu.create.window = function() {
 
