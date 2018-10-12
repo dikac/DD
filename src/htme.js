@@ -1,21 +1,5 @@
 'use strict';
 
-// function HtmlComponentSelects () {
-//
-//     return $(this.identifier(true));
-// };
-//
-//
-// function HtmlComponentSelectFromInner (jquery, bypass = false) {
-//
-//     if(!jquery.hasClass(this.identifier()) || bypass) {
-//
-//         jquery = jquery.parents(this.identifier(true)).first();
-//     }
-//
-//     return jquery;
-// };
-
 
 /**
  * Manage dom class binding with attributes object
@@ -45,13 +29,11 @@ function HtmeComponentBinding(
         return attribute;
     };
 
-
     this.add = function (...value) {
 
         attribute.add(...value);
         attributes.get('class').add(...value);
     };
-
 
     this.set = function (name, value) {
 
