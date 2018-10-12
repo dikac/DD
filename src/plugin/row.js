@@ -31,7 +31,6 @@
 
         HtmeRow.removePanel();
         HtmeColumn.removePanel();
-
     };
 
 
