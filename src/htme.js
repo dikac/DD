@@ -443,8 +443,6 @@ HtmeComponentPanel.binding = HtmeComponentBinding.container(
 
 
 
-
-
 /**
  * @param panel
  * @returns {function(): HtmeComponentPanel}
@@ -516,7 +514,6 @@ function HtmeComponentClick(click, handler = function () {}, element = new HtmeC
 
 
 
-
 function HtmeComponentModal (bind, header = '', content = '', footer = '') {
 
     console.assert(typeof bind === "string");
@@ -553,18 +550,18 @@ function HtmeComponentModal (bind, header = '', content = '', footer = '') {
 
         return `
         <!-- Modal -->
-          <div class="modal fade ${this.bind}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade ${this.bind}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document" style="padding: 2.5%; width: 100%">
                 <div class="modal-content">
-
+        
                     <div class="modal-header">${this.header}</div>
                     <div class="modal-body row">${this.content}</div>
                     <div class="modal-footer">${this.footer}</div>
-
+        
                 </div>
             </div>
-            </div>
-        `
+        </div>
+        `;
     }
 }
 
@@ -852,24 +849,24 @@ HtmeContent.panel().name().attribute().get('class').add('htmeName');
     /**
      * register content menu
      */
-    HtmeContainer.panel().menu('new').submenus['content'] = function () {
-
-        let click = new HtmeComponentClick('HtmeNewContent',function(e) {
-
-            var click = $(e.target);
-            var container = HtmeComponentBlock.binding().selectFromChildren(click);
-
-            HtmeContent.panel().name().content = 'content';
-            container.append(HtmeContent.toString());
-
-            Htme.update.trigger();
-        });
-
-        click.element().attribute().get('class').add('htmeItem');
-        click.element().content = 'Content';
-
-        return click.element();
-    }();
+    // HtmeContainer.panel().menu('new').submenus['content'] = function () {
+    //
+    //     let click = new HtmeComponentClick('HtmeNewContent',function(e) {
+    //
+    //         var click = $(e.target);
+    //         var container = HtmeComponentBlock.binding().selectFromChildren(click);
+    //
+    //         HtmeContent.panel().name().content = 'content';
+    //         container.append(HtmeContent.toString());
+    //
+    //         Htme.update.trigger();
+    //     });
+    //
+    //     click.element().attribute().get('class').add('htmeItem');
+    //     click.element().content = 'Content';
+    //
+    //     return click.element();
+    // }();
 
 })();
 

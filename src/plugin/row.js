@@ -69,6 +69,7 @@
             Htme.update.trigger();
 
         }, element);
+
     }();
 
 

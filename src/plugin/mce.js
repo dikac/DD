@@ -1,4 +1,36 @@
-const  HtmeTinyMce = new function () {
+//
+// const HtmeMCEContent = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeTinyMce':'HtmeTinyMce'}));
+//
+//
+// let array = ['attribute','copy','cut'];
+// for (let k in array) {
+//
+//     HtmeMCEContent.panel().menu('edit').submenu[array[k]] = HtmeContainer.panel().menu('edit').submenu[array[k]];
+// }
+//
+//
+//
+// HtmeContainer.panel().menu('new').submenus['tinyMCE'] = function () {
+//
+//     let click = new HtmeComponentClick('tinyMCE',function(e) {
+//
+//         let dom = HtmeContainer.binding().selectFromChildren($(e.target));
+//
+//         console.log(dom);
+//         dom.append(HtmeMCEContent.toString());
+//     });
+//
+//     click.element().attribute().get('class').add('htmeItem');
+//     click.element().content = 'TinyMCE';
+//
+//     return click.element();
+// }();
+
+
+
+HtmeContent.panel().name().attribute().get('class').add('htmeName');
+
+const HtmeTinyMce = new function () {
 
     var selector = {
         modal   : 'HtmeMCEModal',
@@ -55,7 +87,6 @@ const  HtmeTinyMce = new function () {
             return click.element();
         }();
 
-
         modal.content = `<textarea id="${selector.text}"></textarea>`;
 
         return modal;
@@ -95,7 +126,6 @@ const  HtmeTinyMce = new function () {
         };
 
         let init = Object.assign(this.arguments, arguments);
-
 
         tinymce.init(init);
     };

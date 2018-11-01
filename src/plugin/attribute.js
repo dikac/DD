@@ -30,7 +30,6 @@
         return attribute;
     }
 
-
     let modal = new HtmeComponentModal('HtmeAttributeModal');
 
     modal.header = `
@@ -77,14 +76,6 @@
 
                     attr[$(buffer[i]).val()] = $(buffer[++i]).val();
                 }
-
-
-               // console.log(attr);
-
-                // for(let k in attr) {
-                //
-                //     container.removeAttr(k);
-                // }
 
                 for(let k in attr) {
 
