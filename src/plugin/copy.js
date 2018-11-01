@@ -20,6 +20,7 @@
     copyClick.element().attribute().get('class').add('htmeItem');
     copyClick.element().content = 'Copy';
     HtmeContainer.panel().menu('edit').submenus['copy'] = copyClick;
+    HtmeContent.panel().menu('edit').submenus['copy'] = copyClick;
 
 
     let cutClick = new HtmeComponentClick('HtmeCut', function (e) {
@@ -34,6 +35,7 @@
     cutClick.element().attribute().get('class').add('htmeItem');
     cutClick.element().content = 'Cut';
     HtmeContainer.panel().menu('edit').submenus['cut'] = cutClick;
+    HtmeContent.panel().menu('edit').submenus['cut'] = cutClick;
 
 
     let pasteClick = new HtmeComponentClick('HtmePaste', function (e) {

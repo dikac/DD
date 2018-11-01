@@ -755,21 +755,12 @@ Htme.render = new Htme.component.events();
 Htme.update.handlers['sortable'] = function () {
 
 
-    // HtmeComponentBlock.binding().selects().off('mouseenter').mouseenter(function (e) {
-    //
-    //     console.log(e);
-    // });
-
     HtmeComponentBlock.binding().selects().sortable({
         containment: "parent",
         tolerance:'pointer',
         helper : 'clone',
         items : '> '  + HtmeComponentBlock.binding().selector(true),
         cancel: HtmeComponentMenu.binding().selector(true),
-        activate : function (event, ui) {
-
-           // console.log(event);
-        },
         stop : function (event, ui) {
 
             $(event.target).children().each(function (k, v) {
@@ -921,27 +912,27 @@ Htme.edit.handlers.content = function() {
         }, element);
     }();
 
-    /**
-     * register content menu
-     */
-    HtmeContainer.panel().menu('new').submenus['content'] = function () {
-
-        let click = new HtmeComponentClick('HtmeNewContent',function(e) {
-
-            var click = $(e.target);
-            var container = HtmeComponentBlock.binding().selectFromChildren(click);
-
-            HtmeContent.panel().name().content = 'content';
-            container.append(HtmeContent.toString());
-
-            Htme.update.trigger();
-        });
-
-        click.element().attribute().get('class').add('htmeItem');
-        click.element().content = 'Content';
-
-        return click.element();
-    }();
+    // /**
+    //  * register content menu
+    //  */
+    // HtmeContainer.panel().menu('new').submenus['content'] = function () {
+    //
+    //     let click = new HtmeComponentClick('HtmeNewContent',function(e) {
+    //
+    //         var click = $(e.target);
+    //         var container = HtmeComponentBlock.binding().selectFromChildren(click);
+    //
+    //         HtmeContent.panel().name().content = 'content';
+    //         container.append(HtmeContent.toString());
+    //
+    //         Htme.update.trigger();
+    //     });
+    //
+    //     click.element().attribute().get('class').add('htmeItem');
+    //     click.element().content = 'Content';
+    //
+    //     return click.element();
+    // }();
 
 })();
 

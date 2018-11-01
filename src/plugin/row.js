@@ -5,6 +5,8 @@
     HtmeRow.panel().name().attribute().get('class').add('htmeName');
     HtmeRow.panel().name().content = 'Row';
     HtmeRow.panel().setMenu(HtmeContainer.panel().menu('window'));
+    HtmeRow.panel().menu('new');
+    HtmeRow.panel().setMenu(HtmeContainer.panel().menu('edit'));
 
 
     let HtmeColumn = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeColumn':'HtmeColumn'}));
@@ -16,9 +18,9 @@
 
     Htme.edit.handlers['row'] = function() {
 
-        HtmeRow.setPanel();
-
         let menu = HtmeColumn.panel().menu('edit');
+
+        HtmeRow.setPanel();
 
         menu.submenus['columnEdit'] = columnEdit;
 

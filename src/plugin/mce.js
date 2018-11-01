@@ -100,27 +100,49 @@ const  HtmeTinyMce = new function () {
         tinymce.init(init);
     };
 
-    HtmeContent.panel().menu('edit').submenus['text'] = function () {
+    /**
+     * register content menu
+     */
+    HtmeContainer.panel().menu('new').submenus['Tiny MCE'] = function () {
 
-        let click = new HtmeComponentClick('HtmeMCEEdit',function(e) {
+        let click = new HtmeComponentClick('TinyMceNew',function(e) {
 
-            dom = HtmeContent.binding().selectFromChildren($(e.target));
+            var click = $(e.target);
+            var container = HtmeComponentBlock.binding().selectFromChildren(click);
 
-            HtmeContent.panel().remove(dom);
-            HtmeTinyMce.modal.show();
-            HtmeTinyMce.boot();
+            HtmeContent.panel().name().content = 'Tiny MCE';
+            container.append(HtmeContent.toString());
 
-            setTimeout(function () {
-                $('.mce-notification').remove();
-            }, 1500);
-
+            Htme.update.trigger();
         });
 
         click.element().attribute().get('class').add('htmeItem');
-        click.element().content = 'TinyMCE';
+        click.element().content = 'Tiny MCE';
 
         return click.element();
     }();
+
+    // HtmeContent.panel().menu('edit').submenus['text'] = function () {
+    //
+    //     let click = new HtmeComponentClick('HtmeMCEEdit',function(e) {
+    //
+    //         dom = HtmeContent.binding().selectFromChildren($(e.target));
+    //
+    //         HtmeContent.panel().remove(dom);
+    //         HtmeTinyMce.modal.show();
+    //         HtmeTinyMce.boot();
+    //
+    //         setTimeout(function () {
+    //             $('.mce-notification').remove();
+    //         }, 1500);
+    //
+    //     });
+    //
+    //     click.element().attribute().get('class').add('htmeItem');
+    //     click.element().content = 'TinyMCE';
+    //
+    //     return click.element();
+    // }();
 };
 
 
