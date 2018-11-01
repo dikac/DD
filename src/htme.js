@@ -758,7 +758,15 @@ Htme.update.handlers['sortable'] = function () {
         containment: "parent",
         tolerance:'pointer',
         items : '> '  + HtmeComponentBlock.binding().selector(true),
-        cancel: HtmeComponentMenu.binding().selector(true)
+        cancel: HtmeComponentMenu.binding().selector(true),
+        activate : function (event, ui) {
+
+            console.log(event);
+        },
+        stop : function (event, ui) {
+
+            console.log(event);
+        }
     }).disableSelection();
 };
 

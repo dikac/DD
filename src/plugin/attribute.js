@@ -1,5 +1,7 @@
 (function () {
 
+    var dom;
+
     function HtmeAttributeComponentEditor (attribute = '', value = '') {
 
         return `
@@ -76,16 +78,16 @@
                     attr[$(buffer[i]).val()] = $(buffer[++i]).val();
                 }
 
-                for(let k in attribute) {
-
-                    container.removeAttr(k);
-                }
+                // for(let k in attribute) {
+                //
+                //     container.removeAttr(k);
+                // }
 
                 for(let k in attr) {
 
                     if(attr[k].length) {
 
-                        container.attr(k, attr[k]);
+                        dom.attr(k, attr[k]);
                     }
                 }
             });
@@ -106,10 +108,9 @@
 
         let click = new HtmeComponentClick('HtmeComponentAttribute',function(e) {
 
-            let container = HtmeComponentBlock.binding().selectFromChildren($(e.target));
+            dom = HtmeComponentBlock.binding().selectFromChildren($(e.target));
 
-
-            let attribute = HtmeGetAttributes(container);
+            let attribute = HtmeGetAttributes(dom);
 
             modal.show();
 
