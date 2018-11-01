@@ -763,15 +763,25 @@ Htme.update.handlers['sortable'] = function () {
     HtmeComponentBlock.binding().selects().sortable({
         containment: "parent",
         tolerance:'pointer',
+        helper : 'clone',
         items : '> '  + HtmeComponentBlock.binding().selector(true),
         cancel: HtmeComponentMenu.binding().selector(true),
         activate : function (event, ui) {
 
-            console.log(event);
+           // console.log(event);
         },
         stop : function (event, ui) {
 
-            console.log(event);
+            $(event.target).children().each(function (k, v) {
+
+                let dom = $(v);
+                let style = dom.attr('style');
+                if(style === undefined || style.length === 0) {
+
+                    dom.removeAttr('style')
+
+                }
+            })
         }
 
     }).disableSelection();
