@@ -754,6 +754,12 @@ Htme.render = new Htme.component.events();
  */
 Htme.update.handlers['sortable'] = function () {
 
+
+    // HtmeComponentBlock.binding().selects().off('mouseenter').mouseenter(function (e) {
+    //
+    //     console.log(e);
+    // });
+
     HtmeComponentBlock.binding().selects().sortable({
         containment: "parent",
         tolerance:'pointer',
@@ -767,7 +773,9 @@ Htme.update.handlers['sortable'] = function () {
 
             console.log(event);
         }
+
     }).disableSelection();
+
 };
 
 
@@ -785,37 +793,83 @@ Htme.update.handlers['bootstrapDropDown'] = function () {
 
 
 const HtmeContainer = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeContainer':'HtmeContainer'}));
-
 HtmeContainer.panel().name().attribute().get('class').add('htmeName');
 
 
+HtmeContainer.panel().setMenu(HtmeComponentMenu.create.new());
+HtmeContainer.panel().setMenu(HtmeComponentMenu.create.window());
+HtmeContainer.panel().setMenu(HtmeComponentMenu.create.edit());
+
+Htme.render.handlers.container = function() {
+
+    HtmeContainer.removePanel();
+};
+
+Htme.edit.handlers.container = function() {
+
+    HtmeContainer.setPanel();
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * content only for  menu container
+ * @type {HtmeComponentBlock}
+ */
 const HtmeContent = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeContent':'HtmeContent'}));
 
 HtmeContent.panel().name().attribute().get('class').add('htmeName');
 
+HtmeContent.panel().setMenu(HtmeComponentMenu.create.window());
+HtmeContent.panel().setMenu(HtmeComponentMenu.create.edit());
 
-(function () {
+Htme.render.handlers.content = function() {
 
-    let $default = {container:HtmeContainer, content:HtmeContent};
+    HtmeContent.removePanel();
+};
 
-    for(let k in $default) {
+Htme.edit.handlers.content = function() {
 
-        $default[k].panel().setMenu(HtmeComponentMenu.create.new());
-        $default[k].panel().setMenu(HtmeComponentMenu.create.window());
-        $default[k].panel().setMenu(HtmeComponentMenu.create.edit());
+    HtmeContent.setPanel();
+};
 
-        Htme.render.handlers[k] = function() {
 
-            $default[k].removePanel();
-        };
 
-        Htme.edit.handlers[k] = function() {
-
-            $default[k].setPanel();
-        };
-    }
-
-})();
+//
+//
+// (function () {
+//
+//     let $default = {container:HtmeContainer, content:HtmeContent};
+//
+//     for(let k in $default) {
+//
+//         $default[k].panel().setMenu(HtmeComponentMenu.create.new());
+//         $default[k].panel().setMenu(HtmeComponentMenu.create.window());
+//         $default[k].panel().setMenu(HtmeComponentMenu.create.edit());
+//
+//         Htme.render.handlers[k] = function() {
+//
+//             $default[k].removePanel();
+//         };
+//
+//         Htme.edit.handlers[k] = function() {
+//
+//             $default[k].setPanel();
+//         };
+//     }
+//
+// })();
 
 
 
