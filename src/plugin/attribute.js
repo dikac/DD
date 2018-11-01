@@ -1,5 +1,7 @@
 (function () {
 
+    var container;
+
     function HtmeAttributeComponentEditor (attribute = '', value = '') {
 
         return `
@@ -76,10 +78,13 @@
                     attr[$(buffer[i]).val()] = $(buffer[++i]).val();
                 }
 
-                for(let k in attribute) {
 
-                    container.removeAttr(k);
-                }
+               // console.log(attr);
+
+                // for(let k in attr) {
+                //
+                //     container.removeAttr(k);
+                // }
 
                 for(let k in attr) {
 
@@ -106,13 +111,11 @@
 
         let click = new HtmeComponentClick('HtmeComponentAttribute',function(e) {
 
-            let container = HtmeComponentBlock.binding().selectFromChildren($(e.target));
-
+            container = HtmeComponentBlock.binding().selectFromChildren($(e.target));
 
             let attribute = HtmeGetAttributes(container);
 
             modal.show();
-
 
             let body = $('.HtmeAttributeModal').find('.modal-body');
             body.empty();
