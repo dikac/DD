@@ -60,9 +60,9 @@ HtmeTinyMce.setTemporaryMenu = function() {
             let click = new HtmeComponentClick(selector.cancel, function (e) {
 
                 HtmeTinyMce.shutdown();
-                HtmeCodeMirror.setTemporaryMenu();
+                HtmeTinyMce.setTemporaryMenu();
                 HtmeTinyMce.setPanel();
-                HtmeCodeMirror.removeTemporaryMenu();
+                HtmeTinyMce.removeTemporaryMenu();
                 Htme.update.trigger();
 
             });
@@ -81,9 +81,9 @@ HtmeTinyMce.setTemporaryMenu = function() {
 
                 HtmeTinyMce.save();
                 HtmeTinyMce.shutdown();
-                HtmeCodeMirror.setTemporaryMenu();
+                HtmeTinyMce.setTemporaryMenu();
                 HtmeTinyMce.setPanel();
-                HtmeCodeMirror.removeTemporaryMenu();
+                HtmeTinyMce.removeTemporaryMenu();
                 Htme.update.trigger();
 
             });
