@@ -34,7 +34,9 @@
     let modal = new HtmeComponentModal('HtmeAttributeModal');
 
     modal.header = `
-                <div class="alert alert-warning" role="alert">Insert Warning Here</div>
+                <div class="alert alert-warning" role="alert">
+                Class with HTME prefix is reserved, editing might cause unintended behavior            
+                </div>
                 <div class="col-md-2">Attribute</div>
                 <div class="col-md-9">Value</div>
                 <div class="col-md-1"><button class="btn btn-default HtmeAttributeAdd">Add</button></div>
