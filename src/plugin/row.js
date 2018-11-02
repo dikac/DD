@@ -16,6 +16,17 @@
     HtmeColumn.panel().setMenus(HtmeContainer.panel().menus());
 
 
+    Htme.transfer.handlers['Column Row'] = function(source, target) {
+
+        if(!source.hasClass(HtmeColumn.binding().selector())) {
+
+            if(target.hasClass(HtmeRow.binding().selector())) {
+
+                return 'Row only accept Column';
+            }
+        }
+    };
+
     Htme.transfer.handlers['Row Column'] = function(source, target) {
 
         if(source.hasClass(HtmeColumn.binding().selector())) {
