@@ -16,6 +16,17 @@
     HtmeColumn.panel().setMenus(HtmeContainer.panel().menus());
 
 
+    Htme.transfer.handlers['Row Column'] = function(source, target) {
+
+        if(source.hasClass(HtmeColumn.binding().selector())) {
+
+            if(!target.hasClass(HtmeRow.binding().selector())) {
+
+                return 'Column can only be transfered to Row';
+            }
+        }
+    };
+
     Htme.edit.handlers['row'] = function() {
 
         let menu = HtmeColumn.panel().menu('edit');

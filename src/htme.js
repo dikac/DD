@@ -713,10 +713,19 @@ Htme.component.events = function() {
 
     this.trigger  = function (...argument) {
 
+        let returns = {};
+
         for(let k in this.handlers) {
 
-            this.handlers[k](...argument);
+            let $return = this.handlers[k](...argument);
+
+            if($return !== undefined) {
+
+                returns[k] = $return;
+            }
         }
+
+        return returns;
     }
 };
 
@@ -748,6 +757,14 @@ Htme.edit = new Htme.component.events();
 Htme.render = new Htme.component.events();
 
 
+/**
+ * triggered when content transfered to other content
+ *
+ * @type {Htme.component.events}
+ *
+ * function(source, target) : string|void
+ */
+Htme.transfer = new Htme.component.events();
 
 /**
  * Sorting handle

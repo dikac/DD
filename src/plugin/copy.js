@@ -37,18 +37,33 @@
     HtmeContainer.panel().menu('edit').submenus['cut'] = cutClick;
     HtmeContent.panel().menu('edit').submenus['cut'] = cutClick;
 
-
     let pasteClick = new HtmeComponentClick('HtmePaste', function (e) {
 
-        let data = copy.clone();
-        HtmeComponentBlock.binding().selectFromChildren($(e.target)).append(data);
+        let target = HtmeComponentBlock.binding().selectFromChildren($(e.target));
 
-        if(cut) {
-            copy = data;
-            cut.remove();
+        let message = Htme.transfer.trigger(copy, target);
+
+        if(!jQuery.isEmptyObject(message)) {
+
+            alert(new HtmeComponentItems(message));
+
+        } else {
+
+            let data = copy.clone();
+
+            target.append(data);
+
+            if(cut) {
+                copy = data;
+                cut.remove();
+            }
+
+          //  Htme.render.trigger();
+          //  Htme.edit.trigger();
+            Htme.update.trigger();
         }
 
-        Htme.update.trigger();
+
     });
 
     pasteClick.element().attribute().get('class').add('htmeItem');
