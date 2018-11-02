@@ -85,7 +85,9 @@ HtmeContainer.panel().menu('new').submenus['code mirror'] = function () {
             let click = new HtmeComponentClick(selector.cancel, function (e) {
 
                 HtmeCodeMirror.shutdown();
+                HtmeCodeMirror.setTemporaryMenu();
                 HtmeCodeMirror.setPanel();
+                HtmeCodeMirror.removeTemporaryMenu();
                 Htme.update.trigger();
             });
 
@@ -103,8 +105,9 @@ HtmeContainer.panel().menu('new').submenus['code mirror'] = function () {
 
                 HtmeCodeMirror.save();
                 HtmeCodeMirror.shutdown();
-
+                HtmeCodeMirror.setTemporaryMenu();
                 HtmeCodeMirror.setPanel();
+                HtmeCodeMirror.removeTemporaryMenu();
                 Htme.update.trigger();
             });
 
