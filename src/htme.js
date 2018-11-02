@@ -679,6 +679,13 @@ Htme.boot = {
 };
 
 Htme.content = {};
+
+Htme.content.setToInput = function(workingAreaSelector, inputSelector) {
+
+    $(inputSelector).val(Htme.content.get(workingAreaSelector));
+};
+
+
 Htme.content.get = function(selector) {
 
     Htme.render.trigger();
@@ -689,6 +696,11 @@ Htme.content.get = function(selector) {
     Htme.update.trigger();
 
     return content;
+};
+
+Htme.content.setFromInput = function(workingAreaSelector, inputSelector) {
+
+    Htme.content.set(workingAreaSelector, $(inputSelector).val());
 };
 
 Htme.content.set = function(selector, content) {
