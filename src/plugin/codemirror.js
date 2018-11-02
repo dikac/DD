@@ -1,6 +1,65 @@
-const HtmeCodeMirror = new function() {
+const HtmeCodeMirror = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeCodeMirror':'HtmeCodeMirror'}));
 
-    this.arguments = {};
+HtmeCodeMirror.panel().menu('edit').submenus['content'] = HtmeCodeMirror.editMenu;
+HtmeCodeMirror.panel().name().attribute().get('class').add('htmeName');
+
+
+HtmeCodeMirror.panel().setMenu(HtmeContent.panel().menu('edit'));
+HtmeCodeMirror.panel().setMenu(HtmeContent.panel().menu('window'));
+
+Htme.render.handlers.content = function() {
+
+    HtmeCodeMirror.removePanel();
+};
+
+Htme.edit.handlers.content = function() {
+
+    HtmeCodeMirror.setTemporaryMenu();
+
+    HtmeCodeMirror.setPanel();
+
+    HtmeCodeMirror.removeTemporaryMenu();
+};
+
+HtmeCodeMirror.removeTemporaryMenu = function() {
+
+    delete HtmeCodeMirror.panel().menu('edit').submenus['content'];
+};
+
+HtmeCodeMirror.setTemporaryMenu = function() {
+
+    HtmeCodeMirror.panel().menu('edit').submenus['content'] = HtmeCodeMirror.editMenu;
+};
+
+/**
+ * register content menu
+ */
+HtmeContainer.panel().menu('new').submenus['code mirror'] = function () {
+
+    let click = new HtmeComponentClick('HtmeCodeMirrorNew',function(e) {
+
+        var click = $(e.target);
+        var container = HtmeComponentBlock.binding().selectFromChildren(click);
+
+        HtmeCodeMirror.setTemporaryMenu();
+
+        HtmeCodeMirror.panel().name().content = 'Code Mirror';
+        container.append(HtmeCodeMirror.toString());
+
+        HtmeCodeMirror.removeTemporaryMenu();
+
+        Htme.update.trigger();
+    });
+
+    click.element().attribute().get('class').add('htmeItem');
+    click.element().content = 'Code Mirror';
+
+    return click.element();
+}();
+
+(function() {
+
+    HtmeCodeMirror.arguments = {};
 
     var dom = null;
     var codeMirror = null;
@@ -12,7 +71,7 @@ const HtmeCodeMirror = new function() {
         text    : 'HtmeCodeMirrorModalText',
     };
 
-    this.modal = new function() {
+    HtmeCodeMirror.modal = new function() {
 
         let modal = new HtmeComponentModal(selector.modal);
         modal.selector = selector;
@@ -26,7 +85,7 @@ const HtmeCodeMirror = new function() {
             let click = new HtmeComponentClick(selector.cancel, function (e) {
 
                 HtmeCodeMirror.shutdown();
-                HtmeContent.setPanel();
+                HtmeCodeMirror.setPanel();
                 Htme.update.trigger();
             });
 
@@ -45,7 +104,7 @@ const HtmeCodeMirror = new function() {
                 HtmeCodeMirror.save();
                 HtmeCodeMirror.shutdown();
 
-                HtmeContent.setPanel();
+                HtmeCodeMirror.setPanel();
                 Htme.update.trigger();
             });
 
@@ -63,14 +122,14 @@ const HtmeCodeMirror = new function() {
 
     }();
 
-    this.save = function () {
+    HtmeCodeMirror.save = function () {
 
          let input = codeMirror.getValue();
          dom.html(input);
     };
 
 
-    this.shutdown = function () {
+    HtmeCodeMirror.shutdown = function () {
 
         $(`#${selector.text}`).empty();
     };
@@ -80,7 +139,7 @@ const HtmeCodeMirror = new function() {
      *
      * @param {jQuery} $dom
      */
-    this.boot = function($dom) {
+    HtmeCodeMirror.boot = function($dom) {
 
         dom = $dom;
 
@@ -92,36 +151,39 @@ const HtmeCodeMirror = new function() {
          */
         setTimeout(function () {
 
+            console.log($(`#${selector.text}`));
+
+
             $(`#${selector.text}`).each(function(index, elem){
 
                 codeMirror = new CodeMirror(elem, argument);
 
                 codeMirror.setValue(dom.html());
-
+                console.log(dom);
                 return false;
             });
 
         },1000);
 
     };
-};
+})();
 
 
 (function () {
 
-    HtmeContent.panel().menu('edit').submenus['codemirror'] = function () {
+    HtmeCodeMirror.editMenu = /*panel().menu('edit').submenus['content'] =*/ function () {
 
         let click = new HtmeComponentClick('HtmeCodeMirrorEdit',function(e) {
 
-            let dom = HtmeContent.binding().selectFromChildren($(e.target));
+            let dom = HtmeCodeMirror.binding().selectFromChildren($(e.target));
 
-            HtmeContent.panel().remove(dom);
+            HtmeCodeMirror.panel().remove(dom);
             HtmeCodeMirror.modal.show();
             HtmeCodeMirror.boot(dom);
         });
 
         click.element().attribute().get('class').add('htmeItem');
-        click.element().content = 'CodeMirror';
+        click.element().content = 'Content';
 
         return click.element();
     }();

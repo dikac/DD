@@ -8,7 +8,6 @@
             var click = $(e.target);
             var container = HtmeComponentBlock.binding().selectFromChildren(click);
 
-
             if(HtmeComponentBlock.binding().selectFromChildren(container, true).length) {
 
                 container.remove();
@@ -16,6 +15,7 @@
             } else {
 
                 container.empty();
+                Htme.edit.trigger();
                 Htme.update.trigger();
             }
 

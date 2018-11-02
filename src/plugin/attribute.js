@@ -137,6 +137,8 @@
     }();
 
 
+
+
     HtmeContainer.panel().menu('edit').submenus['element'] = editor;
     HtmeContent.panel().menu('edit').submenus['element'] = editor;
 

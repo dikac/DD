@@ -1,4 +1,40 @@
-const  HtmeTinyMce = new function () {
+
+const HtmeTinyMce = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeTinyMce':'HtmeTinyMce'}));
+//HtmeTinyMce.panel().menu('edit').submenus['content'] = HtmeTinyMce.editMenu;
+HtmeTinyMce.panel().name().attribute().get('class').add('htmeName');
+
+HtmeTinyMce.panel().setMenu(HtmeContent.panel().menu('edit'));
+HtmeTinyMce.panel().setMenu(HtmeContent.panel().menu('window'));
+
+Htme.render.handlers.content = function() {
+
+    HtmeTinyMce.removePanel();
+};
+
+Htme.edit.handlers.content = function() {
+
+    HtmeTinyMce.setTemporaryMenu();
+
+    HtmeTinyMce.setPanel();
+
+    HtmeTinyMce.removeTemporaryMenu();
+};
+
+HtmeTinyMce.removeTemporaryMenu = function() {
+
+    delete HtmeTinyMce.panel().menu('edit').submenus['content'];
+};
+
+HtmeTinyMce.setTemporaryMenu = function() {
+
+    HtmeTinyMce.panel().menu('edit').submenus['content'] = HtmeTinyMce.editMenu;
+};
+
+
+
+
+
+(function () {
 
     var selector = {
         modal   : 'HtmeMCEModal',
@@ -11,7 +47,7 @@ const  HtmeTinyMce = new function () {
 
     var dom = null;
 
-    this.modal = function() {
+    HtmeTinyMce.modal = function() {
 
         let modal = new HtmeComponentModal(selector.modal);
         modal.selector = selector;
@@ -24,7 +60,7 @@ const  HtmeTinyMce = new function () {
             let click = new HtmeComponentClick(selector.cancel, function (e) {
 
                 HtmeTinyMce.shutdown();
-                HtmeContent.setPanel();
+                HtmeTinyMce.setPanel();
                 Htme.update.trigger();
 
             });
@@ -43,7 +79,7 @@ const  HtmeTinyMce = new function () {
 
                 HtmeTinyMce.save();
                 HtmeTinyMce.shutdown();
-                HtmeContent.setPanel();
+                HtmeTinyMce.setPanel();
                 Htme.update.trigger();
 
             });
@@ -63,7 +99,7 @@ const  HtmeTinyMce = new function () {
     }();
 
 
-    this.save = function () {
+    HtmeTinyMce.save = function () {
 
         let input = tinymce.get(selector.text);
         let content = input.getContent();
@@ -72,7 +108,7 @@ const  HtmeTinyMce = new function () {
         dom.removeAttr('style');
     };
 
-    this.shutdown = function () {
+    HtmeTinyMce.shutdown = function () {
 
         let self;
 
@@ -82,7 +118,7 @@ const  HtmeTinyMce = new function () {
         }
     };
 
-    this.boot = function() {
+    HtmeTinyMce.boot = function() {
 
         let arguments = {
 
@@ -94,7 +130,7 @@ const  HtmeTinyMce = new function () {
             selector : '#' + selector.text
         };
 
-        let init = Object.assign(this.arguments, arguments);
+        let init = Object.assign(HtmeTinyMce.arguments, arguments);
 
 
         tinymce.init(init);
@@ -110,8 +146,13 @@ const  HtmeTinyMce = new function () {
             var click = $(e.target);
             var container = HtmeComponentBlock.binding().selectFromChildren(click);
 
-            HtmeContent.panel().name().content = 'Tiny MCE';
-            container.append(HtmeContent.toString());
+            HtmeTinyMce.setTemporaryMenu();
+
+            HtmeTinyMce.panel().name().content = '' +
+                '<img src="https://about.tiny.cloud/wp-content/uploads/2015/11/tinymce-logo@2x.png" height="19px" width="19px">Tiny MCE';
+            container.append(HtmeTinyMce.toString());
+
+            HtmeTinyMce.removeTemporaryMenu();
 
             Htme.update.trigger();
         });
@@ -122,28 +163,31 @@ const  HtmeTinyMce = new function () {
         return click.element();
     }();
 
-    // HtmeContent.panel().menu('edit').submenus['text'] = function () {
-    //
-    //     let click = new HtmeComponentClick('HtmeMCEEdit',function(e) {
-    //
-    //         dom = HtmeContent.binding().selectFromChildren($(e.target));
-    //
-    //         HtmeContent.panel().remove(dom);
-    //         HtmeTinyMce.modal.show();
-    //         HtmeTinyMce.boot();
-    //
-    //         setTimeout(function () {
-    //             $('.mce-notification').remove();
-    //         }, 1500);
-    //
-    //     });
-    //
-    //     click.element().attribute().get('class').add('htmeItem');
-    //     click.element().content = 'TinyMCE';
-    //
-    //     return click.element();
-    // }();
-};
+
+
+    HtmeTinyMce.editMenu = function () {
+
+        let click = new HtmeComponentClick('HtmeMCEEdit', function(e) {
+
+            dom = HtmeTinyMce.binding().selectFromChildren($(e.target));
+
+            HtmeTinyMce.panel().remove(dom);
+            HtmeTinyMce.modal.show();
+            HtmeTinyMce.boot();
+
+            setTimeout(function () {
+                $('.mce-notification').remove();
+            }, 1500);
+
+        });
+
+        click.element().attribute().get('class').add('htmeItem');
+        click.element().content = 'Content';
+
+        return click.element();
+    }();
+
+})();
 
 
 
