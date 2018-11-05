@@ -114,6 +114,11 @@ function HtmeComponentAttribute(values = {}) {
         values[name] = value;
     };
 
+    this.delete = function (name) {
+
+        delete values[name];
+    };
+
     /**
      * sets value
      *
@@ -553,7 +558,7 @@ function HtmeComponentModal (bind, header = '', content = '', footer = '') {
 
         return `
         <!-- Modal -->
-          <div class="modal fade ${this.bind}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal fade ${this.bind}" tabindex="" role="dialog" aria-labelledby="myModalLabel" style="z-index: 9999">
             <div class="modal-dialog" role="document" style="padding: 2.5%; width: 100%">
                 <div class="modal-content">
 

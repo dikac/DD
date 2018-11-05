@@ -7,12 +7,12 @@ HtmeCodeMirror.panel().name().attribute().get('class').add('htmeName');
 HtmeCodeMirror.panel().setMenu(HtmeContent.panel().menu('edit'));
 HtmeCodeMirror.panel().setMenu(HtmeContent.panel().menu('window'));
 
-Htme.render.handlers.content = function() {
+Htme.render.handlers['CodeMirror'] = function() {
 
     HtmeCodeMirror.removePanel();
 };
 
-Htme.edit.handlers.content = function() {
+Htme.edit.handlers['CodeMirror'] = function() {
 
     HtmeCodeMirror.setTemporaryMenu();
 

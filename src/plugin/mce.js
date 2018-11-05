@@ -1,17 +1,23 @@
 
 const HtmeTinyMce = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeTinyMce':'HtmeTinyMce'}));
-//HtmeTinyMce.panel().menu('edit').submenus['content'] = HtmeTinyMce.editMenu;
+
+/**
+ * Argument for initialize Tiny mce
+ * @type {{}}
+ */
+HtmeTinyMce.arguments = {};
+
 HtmeTinyMce.panel().name().attribute().get('class').add('htmeName');
 
 HtmeTinyMce.panel().setMenu(HtmeContent.panel().menu('edit'));
 HtmeTinyMce.panel().setMenu(HtmeContent.panel().menu('window'));
 
-Htme.render.handlers.content = function() {
+Htme.render.handlers['tinyMCE'] = function() {
 
     HtmeTinyMce.removePanel();
 };
 
-Htme.edit.handlers.content = function() {
+Htme.edit.handlers['tinyMCE'] = function() {
 
     HtmeTinyMce.setTemporaryMenu();
 
@@ -43,7 +49,7 @@ HtmeTinyMce.setTemporaryMenu = function() {
         text    : 'HtmeMCEModalText',
     };
 
-    this.arguments = {};
+    //this.arguments = {};
 
     var dom = null;
 

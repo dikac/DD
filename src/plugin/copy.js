@@ -4,71 +4,96 @@
      *
      * @type {null|number}
      */
-    let copy;
+    let copyBuffer;
 
     /**
      * @type {null|number}
      */
-    let cut;
-
-    let copyClick = new HtmeComponentClick('HtmeCopy', function (e) {
-
-        copy = HtmeComponentBlock.binding().selectFromChildren($(e.target));
-        $('.HtmePaste').show();
-    });
-
-    copyClick.element().attribute().get('class').add('htmeItem');
-    copyClick.element().content = 'Copy';
-    HtmeContainer.panel().menu('edit').submenus['copy'] = copyClick;
-    HtmeContent.panel().menu('edit').submenus['copy'] = copyClick;
+    let cutBuffer;
 
 
-    let cutClick = new HtmeComponentClick('HtmeCut', function (e) {
+    let paste = (function () {
 
-        cut = HtmeComponentBlock.binding().selectFromChildren($(e.target));
-        copy = cut;
+        let click = new HtmeComponentClick('HtmePaste', function (e) {
 
-        $('.HtmePaste').show();
+            let target = HtmeComponentBlock.binding().selectFromChildren($(e.target));
 
-    });
+            let message = Htme.transfer.trigger(copyBuffer, target);
 
-    cutClick.element().attribute().get('class').add('htmeItem');
-    cutClick.element().content = 'Cut';
-    HtmeContainer.panel().menu('edit').submenus['cut'] = cutClick;
-    HtmeContent.panel().menu('edit').submenus['cut'] = cutClick;
+            if(!jQuery.isEmptyObject(message)) {
 
-    let pasteClick = new HtmeComponentClick('HtmePaste', function (e) {
+                alert(new HtmeComponentItems(message));
 
-        let target = HtmeComponentBlock.binding().selectFromChildren($(e.target));
+            } else {
 
-        let message = Htme.transfer.trigger(copy, target);
+                let data = copyBuffer.clone();
 
-        if(!jQuery.isEmptyObject(message)) {
+                target.append(data);
 
-            alert(new HtmeComponentItems(message));
+                if(cutBuffer) {
 
-        } else {
+                    copyBuffer = data;
+                    cutBuffer.remove();
+                }
 
-            let data = copy.clone();
-
-            target.append(data);
-
-            if(cut) {
-                copy = data;
-                cut.remove();
+                Htme.update.trigger();
             }
+        });
 
-          //  Htme.render.trigger();
-          //  Htme.edit.trigger();
-            Htme.update.trigger();
-        }
+        click.element().attribute().get('class').add('htmeItem');
+        click.element().attribute().get('class').set('hide', 'htmeCPHide');
+        click.element().content = 'Paste';
+        HtmeContainer.panel().menu('edit').submenus['paste'] = click;
 
 
-    });
+        click.show = function () {
 
-    pasteClick.element().attribute().get('class').add('htmeItem');
-    pasteClick.element().attribute().get('class').add('htmeHide');
-    pasteClick.element().content = 'Paste';
-    HtmeContainer.panel().menu('edit').submenus['paste'] = pasteClick;
+            click.element().attribute().get('class').delete('hide');
+            $('.HtmePaste').removeClass('htmeCPHide');
+        };
+
+        return click;
+    })();
+
+
+
+
+    let copy = (function () {
+
+        let click = new HtmeComponentClick('HtmeCopy', function (e) {
+
+            copyBuffer = HtmeComponentBlock.binding().selectFromChildren($(e.target));
+            paste.show();
+        });
+
+        click.element().attribute().get('class').add('htmeItem');
+        click.element().content = 'Copy';
+        HtmeContainer.panel().menu('edit').submenus['copy'] = click;
+        HtmeContent.panel().menu('edit').submenus['copy'] = click;
+
+        return click;
+    })();
+
+    let cut = (function() {
+
+        let click = new HtmeComponentClick('HtmeCut', function (e) {
+
+            cutBuffer = HtmeComponentBlock.binding().selectFromChildren($(e.target));
+            copyBuffer = cutBuffer;
+            paste.show();
+
+        });
+
+        click.element().attribute().get('class').add('htmeItem');
+        click.element().content = 'Cut';
+        HtmeContainer.panel().menu('edit').submenus['cut'] = click;
+        HtmeContent.panel().menu('edit').submenus['cut'] = click;
+
+        return click;
+    })();
+
+
+
+
 
 })();
