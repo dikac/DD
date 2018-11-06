@@ -81,7 +81,6 @@
             cutBuffer = HtmeComponentBlock.binding().selectFromChildren($(e.target));
             copyBuffer = cutBuffer;
             paste.show();
-
         });
 
         click.element().attribute().get('class').add('htmeItem');
@@ -92,8 +91,40 @@
         return click;
     })();
 
+    let copyInner = (function () {
+
+        let click = new HtmeComponentClick('HtmeCopyContent', function (e) {
+
+            let c = HtmeComponentBlock.binding().selectFromChildren($(e.target)).children().not(HtmeComponentPanel.binding().selector(true));
+
+            copyBuffer = c;
+            paste.show();
+        });
+
+        click.element().attribute().get('class').add('htmeItem');
+        click.element().content = 'Copy Inner';
+        HtmeContainer.panel().menu('edit').submenus['copy content'] = click;
+
+        return click;
+    })();
 
 
+    let cutInner = (function () {
 
+        let click = new HtmeComponentClick('HtmeCutContent', function (e) {
 
+            let c = HtmeComponentBlock.binding().selectFromChildren($(e.target)).children().not(HtmeComponentPanel.binding().selector(true));
+
+            copyBuffer = c;
+            cutBuffer = c;
+
+            paste.show();
+        });
+
+        click.element().attribute().get('class').add('htmeItem');
+        click.element().content = 'Cut Inner';
+        HtmeContainer.panel().menu('edit').submenus['cut content'] = click;
+
+        return click;
+    })();
 })();
