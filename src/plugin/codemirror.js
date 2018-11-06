@@ -154,15 +154,11 @@ HtmeContainer.panel().menu('new').submenus['code mirror'] = function () {
          */
         setTimeout(function () {
 
-            console.log($(`#${selector.text}`));
-
-
             $(`#${selector.text}`).each(function(index, elem){
 
                 codeMirror = new CodeMirror(elem, argument);
-
                 codeMirror.setValue(dom.html());
-                console.log(dom);
+
                 return false;
             });
 
