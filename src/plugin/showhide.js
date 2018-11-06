@@ -1,4 +1,4 @@
-const ShowHide = {};
+// const ShowHide = {};
 
 (function () {
 
@@ -6,10 +6,10 @@ const ShowHide = {};
     var hidden = {};
 
 
-    ShowHide.a = function() {
-
-        console.log(hidden);
-    };
+    // ShowHide.a = function() {
+    //
+    //     console.log(hidden);
+    // };
 
 
     let element = new HtmeComponentElement();
