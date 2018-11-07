@@ -11,7 +11,6 @@
 
     let HtmeColumn = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeColumn':'HtmeColumn'}));
     HtmeColumn.panel().name().attribute().get('class').add('htmeName HtmeRowName');
-   // HtmeColumn.panel().name().content = 'Column';
 
     HtmeColumn.panel().setMenus(HtmeContainer.panel().menus());
 

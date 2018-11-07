@@ -881,33 +881,6 @@ Htme.edit.handlers.content = function() {
 
 
 
-//
-//
-// (function () {
-//
-//     let $default = {container:HtmeContainer, content:HtmeContent};
-//
-//     for(let k in $default) {
-//
-//         $default[k].panel().setMenu(HtmeComponentMenu.create.new());
-//         $default[k].panel().setMenu(HtmeComponentMenu.create.window());
-//         $default[k].panel().setMenu(HtmeComponentMenu.create.edit());
-//
-//         Htme.render.handlers[k] = function() {
-//
-//             $default[k].removePanel();
-//         };
-//
-//         Htme.edit.handlers[k] = function() {
-//
-//             $default[k].setPanel();
-//         };
-//     }
-//
-// })();
-
-
-
 
 (function () {
 
@@ -945,28 +918,6 @@ Htme.edit.handlers.content = function() {
             Htme.update.trigger();
         }, element);
     }();
-
-    // /**
-    //  * register content menu
-    //  */
-    // HtmeContainer.panel().menu('new').submenus['content'] = function () {
-    //
-    //     let click = new HtmeComponentClick('HtmeNewContent',function(e) {
-    //
-    //         var click = $(e.target);
-    //         var container = HtmeComponentBlock.binding().selectFromChildren(click);
-    //
-    //         HtmeContent.panel().name().content = 'content';
-    //         container.append(HtmeContent.toString());
-    //
-    //         Htme.update.trigger();
-    //     });
-    //
-    //     click.element().attribute().get('class').add('htmeItem');
-    //     click.element().content = 'Content';
-    //
-    //     return click.element();
-    // }();
 
 })();
 

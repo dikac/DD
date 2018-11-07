@@ -170,7 +170,7 @@ HtmeContainer.panel().menu('new').submenus['code mirror'] = function () {
 
 (function () {
 
-    HtmeCodeMirror.editMenu = /*panel().menu('edit').submenus['content'] =*/ function () {
+    HtmeCodeMirror.editMenu = function () {
 
         let click = new HtmeComponentClick('HtmeCodeMirrorEdit',function(e) {
 

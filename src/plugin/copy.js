@@ -55,9 +55,6 @@
         return click;
     })();
 
-
-
-
     let copy = (function () {
 
         let click = new HtmeComponentClick('HtmeCopy', function (e) {

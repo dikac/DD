@@ -1,16 +1,7 @@
-// const ShowHide = {};
-
 (function () {
 
     var increment = 0;
     var hidden = {};
-
-
-    // ShowHide.a = function() {
-    //
-    //     console.log(hidden);
-    // };
-
 
     let element = new HtmeComponentElement();
 
@@ -24,7 +15,6 @@
         if(click.html() === 'Show') {
 
             click.html('Hide');
-           // container.addClass('htmeSHHide')
 
             children.each(function (k, v) {
 
@@ -40,12 +30,10 @@
                    }
                }
             })
-           // children.hide();
 
         } else {
 
             click.html('Show');
-            //children.show();
 
             children.each(function (k, v) {
 
@@ -57,7 +45,6 @@
 
                 hidden[increment] = v;
             });
-           // container.addClass('htmeSHHide')
         }
 
     },element);

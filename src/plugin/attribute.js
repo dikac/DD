@@ -60,7 +60,6 @@
             return click.element();
         }();
 
-
         items.items['save'] = function () {
 
             let click = new HtmeComponentClick('HtmeAttributeSave', function (e) {
@@ -79,11 +78,6 @@
 
                     attr[$(buffer[i]).val()] = $(buffer[++i]).val();
                 }
-
-                // for(let k in attribute) {
-                //
-                //     container.removeAttr(k);
-                // }
 
                 for(let k in attr) {
 
@@ -104,7 +98,6 @@
         return items;
 
     }();
-
 
     let editor = function () {
 
@@ -137,8 +130,6 @@
         return click.element();
 
     }();
-
-
 
 
     HtmeContainer.panel().menu('edit').submenus['element'] = editor;
