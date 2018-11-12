@@ -64,27 +64,48 @@
 
             let click = new HtmeComponentClick('HtmeAttributeSave', function (e) {
 
-                let buffer = [];
+                // inputs dom
+                let inputs = [];
 
                 $(e.target).parents('.modal-content').children('.modal-body').find('input').each(function (k, v) {
 
-                    buffer.push(v);
+                    inputs.push(v);
 
                 });
 
-                let attr = {};
+                // attributes
+                let attributes = {};
 
-                for(let i =0; i < buffer.length; i++) {
+                for(let i =0; i < inputs.length; i++) {
 
-                    attr[$(buffer[i]).val()] = $(buffer[++i]).val();
-                }
+                    let name = String($(inputs[i]).val()).trim();
+                    let value = String($(inputs[++i]).val()).trim();
 
-                for(let k in attr) {
+                    if(name.length) {
 
-                    if(attr[k].length) {
-
-                        dom.attr(k, attr[k]);
+                        attributes[name.toLowerCase()] = value;
                     }
+                }
+                //console.log(attributes);
+
+                // remove attribute which not present in attribute var
+                dom.each(function (k, v) {
+
+                    $.each(this.attributes,function(i,a) {
+
+                        let eName = a.name.toLowerCase();
+
+                        if(!(eName in attributes)) {
+
+                            dom.removeAttr(eName);
+                        }
+                    })
+                });
+
+                // set attribute
+                for(let k in attributes) {
+
+                    dom.attr(k, attributes[k]);
                 }
             });
 
@@ -121,6 +142,7 @@
             }
 
             body.html(items.toString());
+            Htme.update.trigger();
 
         });
 
