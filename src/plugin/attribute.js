@@ -101,7 +101,7 @@
 
                 // set attribute
                 for(let k in attributes) {
-
+                    console.log(dom);
                     dom.attr(k, attributes[k]);
                 }
             });
@@ -126,7 +126,6 @@
             let attribute = HtmeGetAttributes(dom);
 
             modal.show();
-
 
             let body = $('.HtmeAttributeModal').find('.modal-body');
             body.empty();
