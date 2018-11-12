@@ -30,7 +30,6 @@
         return attribute;
     }
 
-
     let modal = new HtmeComponentModal('HtmeAttributeModal');
 
     modal.header = `
@@ -64,6 +63,7 @@
 
             let click = new HtmeComponentClick('HtmeAttributeSave', function (e) {
 
+                // input dom
                 let buffer = [];
 
                 $(e.target).parents('.modal-content').children('.modal-body').find('input').each(function (k, v) {
@@ -72,12 +72,24 @@
 
                 });
 
+                console.log(buffer);
+                // attributes
                 let attr = {};
 
-                for(let i =0; i < buffer.length; i++) {
+                for(let i = 0; i < buffer.length; i++) {
 
-                    attr[$(buffer[i]).val()] = $(buffer[++i]).val();
+                    let name = String($(buffer[i]).val()).trim();
+                    let val = String($(buffer[++i]).val()).trim();
+
+
+                    if(val.length && name.length) {
+
+                        attr[name] = val;
+                    }
+
                 }
+
+                console.log(attr);
 
                 for(let k in attr) {
 
@@ -89,7 +101,7 @@
             });
 
             click.element().content = 'Save';
-            click.element().attribute().get('data-dismiss').add('modal');
+           // click.element().attribute().get('data-dismiss').add('modal');
             click.element().attribute().get('class').add('btn btn-default');
 
             return click.element();
@@ -109,7 +121,6 @@
 
             modal.show();
 
-
             let body = $('.HtmeAttributeModal').find('.modal-body');
             body.empty();
 
@@ -121,6 +132,8 @@
             }
 
             body.html(items.toString());
+
+            Htme.update.trigger();
 
         });
 
@@ -145,6 +158,7 @@
     new HtmeComponentClick('HtmeAttributeRemove', function (e) {
 
         $(e.target).parents('.input-group').remove();
+
     });
 
 })();
