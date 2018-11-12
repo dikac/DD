@@ -17,12 +17,13 @@
         let attribute = {};
 
         jquery.each(function() {
+
             $.each(this.attributes, function() {
                 // this.attributes is not a plain object, but an array
                 // of attribute nodes, which contain both the name and value
                 if(this.specified) {
 
-                    attribute[this.name] = this.value;
+                    attribute[this.name.toLowerCase()] = this.value;
                 }
             });
         });
@@ -86,21 +87,17 @@
                         attributes[name.toLowerCase()] = value;
                     }
                 }
-                //console.log(attributes);
 
                 // remove attribute which not present in attribute var
-                dom.each(function (k, v) {
+                let domAttributes = HtmeGetAttributes(dom);
 
-                    $.each(this.attributes,function(i,a) {
+                for(let k in domAttributes) {
 
-                        let eName = a.name.toLowerCase();
+                    if(!(k in attributes)) {
 
-                        if(!(eName in attributes)) {
-
-                            dom.removeAttr(eName);
-                        }
-                    })
-                });
+                        dom.removeAttr(k);
+                    }
+                }
 
                 // set attribute
                 for(let k in attributes) {
