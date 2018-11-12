@@ -86,8 +86,9 @@
 
                         attr[name] = val;
                     }
-
                 }
+
+
 
                 console.log(attr);
 
