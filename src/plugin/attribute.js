@@ -17,18 +17,20 @@
         let attribute = {};
 
         jquery.each(function() {
+
             $.each(this.attributes, function() {
                 // this.attributes is not a plain object, but an array
                 // of attribute nodes, which contain both the name and value
                 if(this.specified) {
 
-                    attribute[this.name] = this.value;
+                    attribute[this.name.toLowerCase()] = this.value;
                 }
             });
         });
 
         return attribute;
     }
+
 
     let modal = new HtmeComponentModal('HtmeAttributeModal');
 
@@ -63,46 +65,49 @@
 
             let click = new HtmeComponentClick('HtmeAttributeSave', function (e) {
 
-                // input dom
-                let buffer = [];
+                // inputs dom
+                let inputs = [];
 
                 $(e.target).parents('.modal-content').children('.modal-body').find('input').each(function (k, v) {
 
-                    buffer.push(v);
+                    inputs.push(v);
 
                 });
 
-                console.log(buffer);
                 // attributes
-                let attr = {};
+                let attributes = {};
 
-                for(let i = 0; i < buffer.length; i++) {
+                for(let i =0; i < inputs.length; i++) {
 
-                    let name = String($(buffer[i]).val()).trim();
-                    let val = String($(buffer[++i]).val()).trim();
+                    let name = String($(inputs[i]).val()).trim();
+                    let value = String($(inputs[++i]).val()).trim();
 
+                    if(name.length) {
 
-                    if(val.length && name.length) {
-
-                        attr[name] = val;
+                        attributes[name.toLowerCase()] = value;
                     }
                 }
 
+                // remove attribute which not present in attribute var
+                let domAttributes = HtmeGetAttributes(dom);
 
+                for(let k in domAttributes) {
 
-                console.log(attr);
+                    if(!(k in attributes)) {
 
-                for(let k in attr) {
-
-                    if(attr[k].length) {
-
-                        dom.attr(k, attr[k]);
+                        dom.removeAttr(k);
                     }
+                }
+
+                // set attribute
+                for(let k in attributes) {
+                    console.log(dom);
+                    dom.attr(k, attributes[k]);
                 }
             });
 
             click.element().content = 'Save';
-           // click.element().attribute().get('data-dismiss').add('modal');
+            click.element().attribute().get('data-dismiss').add('modal');
             click.element().attribute().get('class').add('btn btn-default');
 
             return click.element();
@@ -133,7 +138,6 @@
             }
 
             body.html(items.toString());
-
             Htme.update.trigger();
 
         });
@@ -159,7 +163,6 @@
     new HtmeComponentClick('HtmeAttributeRemove', function (e) {
 
         $(e.target).parents('.input-group').remove();
-
     });
 
 })();
