@@ -101,7 +101,7 @@
 
                 // set attribute
                 for(let k in attributes) {
-                    console.log(dom);
+
                     dom.attr(k, attributes[k]);
                 }
             });
