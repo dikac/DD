@@ -788,7 +788,6 @@ Htme.transfer = new Htme.component.events();
  */
 Htme.update.handlers['sortable'] = function () {
 
-
     HtmeComponentBlock.binding().selects().sortable({
         containment: "parent",
         tolerance:'pointer',
@@ -813,6 +812,10 @@ Htme.update.handlers['sortable'] = function () {
 
 };
 
+Htme.render.handlers['jquery-ui-remove'] = function() {
+
+    $('.ui-sortable').removeClass('ui-sortable');
+};
 
 /**
  * prevent drop down menu closed when click not from itself
