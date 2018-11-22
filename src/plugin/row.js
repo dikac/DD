@@ -1,5 +1,26 @@
 (function () {
 
+    function fetchColumn(jquery) {
+
+        this.size = 0;
+        this.class = '';
+        this.valid = false;
+
+        let classes = jquery.attr('class').split(' ');
+
+        for (let i in classes) {
+
+            let $class = classes[i];
+
+            if($class.match(/^col-md-./i)) {
+
+                this.class = $class;
+                this.size = $class.match(/\d/)[0];
+                this.valid = true;
+            }
+        }
+    };
+
     let HtmeRow = new HtmeComponentBlock(new HtmeComponentAttribute({'HtmeRow':'HtmeRow'}));
     HtmeRow.element().attribute().get('class').add('row');
     HtmeRow.panel().name().attribute().get('class').add('htmeName');
@@ -48,6 +69,27 @@
         HtmeColumn.setPanel();
 
         delete menu.submenus['columnEdit'];
+
+        // reset name and input value
+        $('.HtmeColumn').each(function (k, v) {
+
+
+
+
+            let $class = new fetchColumn($(v));
+
+            if($class.valid) {
+
+                let container = $(v);
+
+                // remove attribute from old version
+                container.removeAttr('Htme-column');
+
+                container.find('.HtmeRowName').first().html(`Column ${$class.size}`);
+                container.find('.HtmeColumnInput').first().val($class.size);
+
+            }
+        })
     };
 
     Htme.render.handlers['row'] = function() {
@@ -108,17 +150,14 @@
             let input = new ColumValue(e);
 
             // remove
-            let val = input.container.attr('Htme-column');
+            let $class = new fetchColumn(input.container);
+            input.container.attr('Htme-column');
 
-            input.container.removeAttr(`Htme-column`);
-            input.container.removeClass(`col-md-${val}`);
+            input.container.removeClass($class.class);
 
             // set
             input.container.addClass(`col-md-${input.val}`);
-            input.container.attr('Htme-column', ''+input.val)
 
-            let panel = HtmeComponentPanel.binding().selectFromParent(input.container).children('.HtmeRowName');
-            panel.html(`Column ${input.val}`);
         });
 
         click.element().attribute().get('class').add('htmeItem');
@@ -135,8 +174,6 @@
             let input = new ColumValue(e);
 
             HtmeColumn.element().attribute().get('class').set('col', 'col-md-' + input.val);
-            HtmeColumn.element().attribute().get('Htme-column').set('col','' + input.val);
-            HtmeColumn.panel().name().content = `Column ${input.val}`;
 
             let menu = HtmeColumn.panel().menu('edit');
 
@@ -145,6 +182,8 @@
             input.container.append(HtmeColumn.toString());
 
             delete menu.submenus['columnEdit'];
+
+            Htme.edit.handlers['row']();
 
             Htme.update.trigger();
         });
