@@ -1,0 +1,13 @@
+{
+  "name": "foo",
+  "scripts": {
+    "tsc": "tsc"
+  },
+  "dependencies": {
+    "@types/jquery": "^3.3.27",
+    "@types/qunit": "^2.5.3",
+    "jquery-ui-dist": "^1.12.1",
+    "typescript": "^3.2.2"
+  },
+  "devDependencies": {}
+}
