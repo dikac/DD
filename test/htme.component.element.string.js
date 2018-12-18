@@ -1,7 +1,7 @@
 QUnit.test( "Component.Element.String construct", function( assert ) {
 
-    let dom = $(`<div></div>`);
-    let string = new Htme.Component.Element.String('value', dom);
+    let dom = $(`<div>value</div>`);
+    let string = new Htme.Component.Element.String(dom);
 
     assert.equal('value', dom.html(), "Passed!");
     assert.equal('value', string.content, "Passed!");
@@ -11,12 +11,12 @@ QUnit.test( "Component.Element.String construct", function( assert ) {
 
 QUnit.test( "Component.Element.String set", function( assert ) {
 
-    let string = new Htme.Component.Element.String('value');
     let dom = $(`<div></div>`);
+    let string = new Htme.Component.Element.String(dom);
 
     assert.equal('', dom.html(), "Passed!");
 
-    string.parent(dom);
+    string.content = 'value';
 
     assert.equal('value', dom.html(), "Passed!");
 
@@ -29,8 +29,8 @@ QUnit.test( "Component.Element.String set", function( assert ) {
 
 QUnit.test( "Component.Element.String detach & attach", function( assert ) {
 
-    let dom = $(`<div></div>`);
-    let string = new Htme.Component.Element.String('value', dom);
+    let dom = $(`<div>value</div>`);
+    let string = new Htme.Component.Element.String(dom);
 
     string.detach();
     assert.equal('', dom.html(), "Passed!");

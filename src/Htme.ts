@@ -1,84 +1,206 @@
-namespace Htme {export namespace Component {
+namespace Htme.DataStructure {
 
+    /**
+     *
+     */
+    export class MapImplement<K, V> implements Map<K, V> {
 
-    export class Attribute  {
+        constructor(private map: Map<K, V> = new Map<K, V>())
+        {
+        }
 
-        private container :  Set<string> = new Set<string>();
+        get [Symbol.toStringTag](): string {
+            return this.map[Symbol.toStringTag];
+        }
 
-        constructor(readonly $name : string, private jquery : JQuery) {
+        get size(): number
+        {
+            return this.map.size;
+        }
+
+        has(key: K): boolean
+        {
+            return this.map.has(key);
+        }
+
+        [Symbol.iterator](): IterableIterator<[K, V]> {
+            return this.map[Symbol.iterator]();
+        }
+
+        clear(): void {
+            this.map.clear();
+        }
+
+        delete(key: K): boolean {
+            return this.map.delete(key);
+        }
+
+        entries(): IterableIterator<[K, V]> {
+            return this.map.entries();
+        }
+
+        forEach(callbackfn: (value: V, key: K, map: Map<K, V>) => void, thisArg?: any): void {
+
+            return this.map.forEach(callbackfn, thisArg);
+        }
+
+        get(key: K): V | undefined {
+            return this.map.get(key);
+        }
+
+        keys(): IterableIterator<K> {
+            return this.map.keys();
+        }
+
+        set(key: K, value: V): this {
+            this.map.set(key, value);
+            return this;
+        }
+
+        values(): IterableIterator<V> {
+            return this.map.values();
+        }
+    }
+
+    /**
+     *
+     */
+    export class SetImplement<T> implements Set<T> {
+
+        constructor(private $set: Set<T> = new Set<T>())
+        {
+        }
+
+        [Symbol.iterator](): IterableIterator<T>
+        {
+            return this.$set[Symbol.iterator]();
+        }
+
+        entries(): IterableIterator<[T, T]>
+        {
+            return this.$set.entries();
+        }
+
+        keys(): IterableIterator<T>
+        {
+            return this.$set.keys();
+        }
+
+        forEach(callbackfn: (value: T, value2: T, set: Set<T>) => void, thisArg?: any): void
+        {
+            this.$set.forEach(callbackfn, thisArg);
+        }
+
+        values(): IterableIterator<T>
+        {
+            return this.$set.values();
+        }
+
+        add(value: T) : this
+        {
+            this.$set.add(value);
+            return this;
+        }
+
+        clear(): void
+        {
+            this.$set.clear();
+        }
+
+        delete(value: T): any
+        {
+            this.$set.delete(value);
+        }
+
+        get [Symbol.toStringTag](): string
+        {
+            return this.$set[Symbol.toStringTag];
+        }
+
+        get size(): number
+        {
+            return this.$set.size;
+        }
+
+        has(value: T): boolean
+        {
+            return this.$set.has(value);
+        }
+    }
+}
+
+namespace Htme.Component.Element {
+
+    import SetImplement = Htme.DataStructure.SetImplement;
+    import MapImplement = Htme.DataStructure.MapImplement;
+
+    interface Element {
+
+        attributes() : Attributes;
+        // parent();
+        detach();
+        //parent(jquery : JQuery|null);
+        attach();
+        //content : Content ;
+        readonly element : JQuery ;
+        toString() : string;
+    }
+
+    export class Attribute extends SetImplement<string> {
+
+        constructor(
+            readonly name: string,
+            private jquery: JQuery
+        ) {
+
+            super();
 
             let attribute = this.get();
 
-            if(attribute) {
+            if (attribute) {
 
-                for(let val of attribute.split(' ')) {
+                for (let val of attribute.split(' ')) {
 
-                    this.container.add(val);
+                    super.add(val);
                 }
             }
         }
 
-        [Symbol.iterator](): IterableIterator<string>
+        add(value: string): this
         {
+            for (let val of value.split(' ')) {
 
-            return this.container[Symbol.iterator]();
-        }
-
-        entries(): IterableIterator<[string, string]>
-        {
-
-            return this.container.entries();
-        }
-
-        keys(): IterableIterator<string> {
-
-
-            return this.container.keys();
-        }
-
-        forEach(callbackfn: (value: string, value2: string, set: Set<string>) => void, thisArg?: any): void
-        {
-
-            this.container.forEach(callbackfn, thisArg);
-        }
-
-        values(): IterableIterator<string> {
-            return this.container.values();
-        }
-
-        add(value : string) : any
-        {
-            for(let val of value.split(' ')) {
-
-                this.container.add(val);
+                super.add(val);
             }
 
             let attribute = this.get();
 
-            if(attribute !== undefined) {
+            if (attribute !== undefined) {
 
                 value = `${attribute} ${value}`;
             }
 
             this.set(value);
 
+            return this;
         }
 
-        set (value : string) : any {
-
-            this.jquery.attr(this.$name, value);
+        set(value: string): void
+        {
+            this.clear();
+            this.jquery.attr(this.name, value);
         }
 
-        get () : string | undefined {
+        get(): string | undefined {
 
-            return this.jquery.attr(this.$name);
+            return this.jquery.attr(this.name);
         };
 
-        toString() : string {
+        toString(): string {
 
             let attribute = this.get();
 
-            if(attribute === undefined) {
+            if (attribute === undefined) {
 
                 return '';
             }
@@ -86,68 +208,66 @@ namespace Htme {export namespace Component {
             return attribute;
         }
 
-        clear(keep : boolean = false): void
-        {
-            if(keep) {
+        clear(keep: boolean = false): void {
 
-                this.jquery.attr(this.$name, '');
+            if (keep) {
+
+                this.jquery.attr(this.name, '');
 
             } else {
 
-                this.jquery.removeAttr(this.$name);
+                this.jquery.removeAttr(this.name);
             }
 
-            this.container.clear();
+            super.clear();
         }
 
-        delete(value : string, keep : boolean = false) : any
-        {
-            for(let v of value.split(' ')) {
+        delete(value: string, keep: boolean = false): any {
 
-                this.container.delete(v);
+            for (let v of value.split(' ')) {
+
+                super.delete(v);
             }
 
-            let attribute = Array.from(this.container).join(' ').trim();
+            let attribute = Array.from(this).join(' ').trim();
 
-            if(attribute === '') {
+            if (attribute === '') {
 
                 this.clear(keep);
 
             } else {
 
-                this.jquery.attr(this.$name, attribute);
+                this.jquery.attr(this.name, attribute);
             }
         }
     }
 
 
+    // export class Events {
+    //
+    //     constructor(
+    //         private events : {[key:string]:(...args)=> any} = {}
+    //     ) {
+    //
+    //     }
+    //
+    //     call(...args) {
+    //
+    //         for(let i in this.events) {
+    //
+    //             this.events[i](...args);
+    //         }
+    //     }
+    // }
 
 
-    export class Events {
-
-        constructor(
-            private events : {[key:string]:(...args)=> any} = {}
-        ) {
-
-        }
-
-        call(...args) {
-
-            for(let i in this.events) {
-
-                this.events[i](...args);
-            }
-        }
-    }
-
-
-    export class Attributes {
-
-        private datas : {[key: string]: Attribute} = {};
+    export class Attributes extends MapImplement<string, Attribute> {
 
         constructor(public jquery : JQuery)
         {
-            let attribute = new Set<string>();
+            super();
+
+            let $this = this;
 
             jquery.each(function() {
 
@@ -156,27 +276,22 @@ namespace Htme {export namespace Component {
                     // of attribute nodes, which contain both the name and value
                     if(this.specified) {
 
-                        attribute.add(
-                            this.name.toLowerCase()
-                        );
+                        let name = this.name.toLowerCase();
+
+                        $this.set(name, new Attribute(name, jquery));
                     }
                 });
             });
-
-            for(let value of attribute) {
-
-                this.datas[value] = new Attribute(value, this.jquery)
-            }
         }
 
         toString() : string
         {
             let buffer : string[] = [];
 
-            for(let k in this.datas) {
+            for(let [name, attribute] of this) {
 
-                let value = this.datas[k].toString();
-                buffer.push(`${k}="${value}"`);
+
+                buffer.push(`${name}="${attribute}"`);
             }
 
             return buffer.join(' ');
@@ -185,124 +300,130 @@ namespace Htme {export namespace Component {
 
         get(attribute : string) : Attribute
         {
-            if(!(attribute in this.datas)) {
+            if(!this.has(attribute)) {
 
-                this.datas[attribute] = new Attribute(attribute, this.jquery);
+                this.set(attribute, new Attribute(attribute, this.jquery));
             }
 
-            return this.datas[attribute];
+            return super.get(attribute);
         }
     }
 
 
 
-    
-    export interface Jqueriable {
 
-        jquery() : JQuery ;
-    }
+// export interface Jqueriable {
+//
+//     jquery() : JQuery ;
+// }
 
-    // export class Item extends Map {
-    //
-    //
-    //
-    // }
+// export class Item extends Map {
+//
+//
+//
+// }
 
-    // export class Menu extends Map<string, Item> {
-    //
-    //
-    //
-    // }
+// export class Menu extends Map<string, Item> {
+//
+//
+//
+// }
 
-    // export class Panel extends Compound {
-    //
-    //     private $name : Elements;
-    //
-    //     constructor(jquery : JQuery|null = null, name : string) {
-    //
-    //         super(jquery);
-    //         this.$name = new Elements($(`<div class="HtmePanelName">${name}</div>`));
-    //         this.attributes.get('class').add('HtmePanel');
-    //
-    //         this.name = name;
-    //     }
-    //
-    //     set name (name : string) {
-    //
-    //         this.$name.html(name);
-    //
-    //         this.prepend(this.$name);
-    //     }
-    //
-    //     get name () : string {
-    //
-    //         return this.$name.content();
-    //     }
-    // }
+// export class Panel extends Compound {
+//
+//     private name : Elements;
+//
+//     constructor(jquery : JQuery|null = null, name : string) {
+//
+//         super(jquery);
+//         this.name = new Elements($(`<div class="HtmePanelName">${name}</div>`));
+//         this.attributes.get('class').add('HtmePanel');
+//
+//         this.name = name;
+//     }
+//
+//     set name (name : string) {
+//
+//         this.name.html(name);
+//
+//         this.prepend(this.name);
+//     }
+//
+//     get name () : string {
+//
+//         return this.name.content();
+//     }
+// }
 
 
-    // export class Container {
-    //
-    //     constructor(
-    //         private block : Elements,
-    //         private panel : Elements = new Elements($('<div></div>')),
-    //         readonly events : Events = new Events()
-    //     ) {
-    //
-    //     }
-    //
-    // }
-
-}}
+// export class Container {
+//
+//     constructor(
+//         private block : Elements,
+//         private panel : Elements = new Elements($('<div></div>')),
+//         readonly events : Events = new Events()
+//     ) {
+//
+//     }
+//
+// }
 
 
 
-namespace Htme.Component.Element {
-
-    interface Element<Content> {
-
-        attributes() : Attributes;
-       // parent();
-        //detach();
-        //parent(jquery : JQuery|null);
-        //attach();
-        content() : Content ;
-        toString() : string;
-    }
-
-
-     abstract class AbstractBlock<Content> implements Element<Content> {
+    abstract class AbstractBlock implements Element {
 
         private $attributes : Attributes;
+        private $element : JQuery;
 
-        constructor(protected element : JQuery|string) {
+        constructor(element : JQuery|string) {
 
-            if(typeof this.element === "string") {
+            if(typeof element === "string") {
 
-                this.element = $(this.element);
+                element = $(element);
             }
 
-            this.$attributes = new Attributes(this.element);
+            this.$element = element;
+            this.$attributes = new Attributes(element);
         }
 
+        abstract detach();
+        abstract attach();
 
-        abstract content () : Content;
-        abstract toString () : string;
+        get element() : JQuery {
+
+            return this.$element;
+        }
 
         attributes(): Attributes {
 
             return this.$attributes;
         }
+
+        // attributes(): Attributes {
+        //
+        //     return this.$attributes;
+        // }
+
+        toString() : string {
+
+            let string = this.element.wrap('<div></div>').parent().html();
+            this.element.unwrap();
+
+            return string;
+        }
     }
 
 
-    export class String extends AbstractBlock<string|null> {
+    export class String extends AbstractBlock {
 
+        private $content : string | null;
 
-        constructor() {
+        constructor(element : JQuery|string) {
 
+            super(element);
+            this.content = this.element.html();
         }
-       // private $parent : JQuery|null;
+        // private $parent : JQuery|null;
 
         // constructor(
         //     private $content : string,
@@ -319,22 +440,22 @@ namespace Htme.Component.Element {
         //     this.attach();
         // }
 
-        // attach() {
-        //
-        //     if(this.$parent) {
-        //
-        //         this.$parent.html(this.$content);
-        //     }
-        // }
-        //
-        // detach() {
-        //
-        //     if(this.$parent) {
-        //
-        //         this.$parent.empty();
-        //     }
-        //
-        // }
+        attach() {
+
+            if(this.$content) {
+
+                this.element.html(this.content);
+
+            } else {
+
+                this.element.empty();
+            }
+        }
+
+        detach() {
+
+            this.element.empty();
+        }
 
         get content() : string|null {
 
@@ -344,219 +465,197 @@ namespace Htme.Component.Element {
         set content(content : string|null) {
 
             this.$content = content;
-            super.element;
+            this.attach();
         }
     }
 
-    /*
-        export class Blockz implements Element {
+    export class Block extends AbstractBlock {
 
-            private $parent : JQuery|null;
+        private $content : Element|null = null;
 
-            constructor(
-                private element : Element,
-                private $content : Element| null,
-                parent : JQuery|null = null
-            ) {
+        constructor(
+            element : JQuery|string
+        ) {
 
-                this.parent(parent);
-            }
+            super(element);
 
-            attach() {
+            let content = this.element.html();
 
-                if(this.$parent) {
+            if(content.length > 0) {
 
-                    this.$parent.empty();
-                    this.$parent.append(this.element);
-                }
-            }
-
-            detach() {
-
-                if(this.$parent) {
-
-                    this.$content.detach();
-                }
-            }
-
-            parent(jquery: JQuery|null) {
-
-                this.detach();
-                this.$parent = jquery;
-                this.attach();
-            }
-
-            get content() : Element|null {
-
-                return this.$content;
-            }
-
-            set content(content : Element|null) {
-
-                this.$content = content;
-                this.attach();
+                this.content = new Block(content);
             }
         }
 
+        get content() : Element|null {
 
+            return this.$content;
+        }
 
+        set content(content : Element|null) {
 
+            this.$content = content;
+            this.attach();
+        }
 
+        attach() {
 
+            this.detach();
 
+            if(this.$content) {
 
+                this.element.append(this.content.element);
 
-
-
-
-
-
-
-
-
-
-
-        export class Compound implements Element {
-
-            private $parent : JQuery|null;
-
-            private children : {[key:string] : Element} = {};
-
-            constructor($parent : JQuery|null = null) {
-
-                // if(this.jquery === null) {
-                //
-                //     this.jquery = $('<div></div>');
-                // }
-                //
-                // for(let val of jquery.children()) {
-                //
-                //     this.append(new Compound($(val)))
-                // }
-
-              //  this.attributes = new Attributes(jquery);
-            }
-
-            parent(jquery : JQuery|null) {
-
-                this.detach();
-                this.$parent = jquery;
-                this.attach();
-
-            }
-
-            all() : {[key:string] : Element} {
-
-                return Object.assign<{}, {}>({}, this.children);
-            }
-
-            content() : string {
-
-                return this.$parent.html();
-            }
-
-            attach() {
-
-                if(this.$parent) {
-
-                    for(let k in this.children) {
-
-                        this.children[k].parent(this.$parent);
-                    }
-                }
-            }
-
-            detach() {
-
-                if(this.$parent) {
-
-                    this.$parent.empty();
-                }
-            }
-
-            toString() {
-
-                let string = this.$parent.wrap('<div></div>').parent().html();
-                this.$parent.unwrap();
-
-                return string;
-            }
-
-            protected ensureKey(key : string|null) : string {
-
-                if(key === null) {
-
-                    for(var i = 0; this.children.hasOwnProperty(i); i++);
-
-                    return i.toString();
-                }
-
-                return key;
-            }
-
-            protected ensure(element: Element|string , key : string|null = null) : [Element, string] {
-
-                element = this.ensureElement(element);
-                key = this.ensureKey(key);
-                this.remove(key);
-
-                return [element, key];
-            }
-
-            protected ensureElement(block: Element|string) : Element {
-
-                if(typeof block === "string") {
-
-                    return new Compound($(block));
-                }
-
-                return block;
-            }
-
-            remove(key) {
-
-                if(this.has(key)) {
-
-                    this.children[key].detach();
-                    delete this.children[key];
-                }
-            }
-
-            prepend(block: Element|string, key : string|null = null) : string {
-
-                [block, key] = this.ensure(block, key);
-
-                let buffer = {};
-                buffer[key] = block;
-
-                this.children = Object.assign(buffer, this.children);
-
-                this.attach();
-
-                return key;
-            }
-
-            append(block: Element|string , key : string|null = null): string {
-
-                [block, key] = this.ensure(block, key);
-
-                block.parent(this.$parent);
-                this.children[key] = block;
-
-                return key;
-            }
-
-            get(key) : Element | undefined {
-
-                return this.children[key];
-            }
-
-            has(key) : boolean {
-
-                return this.children.hasOwnProperty(key);
             }
         }
-    */
+
+        detach() {
+
+            this.element.empty();
+        }
+    }
+
+    export class Compound extends AbstractBlock {
+
+        private children : {[key:string] : Element} = {};
+
+        constructor(
+            element : JQuery|string
+        ) {
+
+            super(element);
+        }
+
+        all() : {[key:string] : Element} {
+
+            return Object.assign<{}, {}>({}, this.children);
+        }
+
+        clear() {
+
+            this.element.empty();
+        }
+
+        attach() {
+
+            for(let k in this.children) {
+
+                this.element.append(this.children[k].element);
+            }
+        }
+
+        detach() {
+
+            for(let k in this.children) {
+
+                this.children[k].element.detach();
+            }
+        }
+
+        protected ensureKey(key : string|null) : string {
+
+            if(key === null) {
+
+                for(let i = 0; this.children.hasOwnProperty(key = '_' + i); i++);
+
+            }
+
+            this.remove(key);
+
+            return key;
+        }
+
+        remove(key) {
+
+            if(this.has(key)) {
+
+                this.children[key].element.detach();
+                delete this.children[key];
+            }
+        }
+
+        prepend(block: Element, key : string|null = null) : string {
+
+            key = this.ensureKey( key);
+
+            let buffer = {};
+            buffer[key] = block;
+
+            this.children = Object.assign(buffer, this.children);
+
+            this.attach();
+
+            return key;
+        }
+
+        append(block: Element , key : string|null = null): string {
+
+            key = this.ensureKey( key);
+
+            this.element.append(block.element);
+            this.children[key] = block;
+
+            return key;
+        }
+
+        get(key) : Element | undefined {
+
+            return this.children[key];
+        }
+
+        has(key) : boolean {
+
+            return this.children.hasOwnProperty(key);
+        }
+    }
+}
+
+
+
+
+namespace Htme.Component.Structure {
+
+    export class Item  {
+
+
+    }
+
+    export class Menu  {
+
+
+    }
+
+    export class Panel  {
+
+
+    }
+
+    export class Base {
+
+
+    }
+
+    // export class Container extends Compound {
+    //
+    //     static create () {
+    //
+    //     }
+    // }
+    /* */
+}
+
+namespace Htme.Component.Engine {
+
+    import Compound = Htme.Component.Element.Compound;
+
+    export function deserializer(compound : Compound, handler : Map<string, ($:JQuery) => boolean>)  {
+
+        // jquery.children().each(function(key, value){
+        //
+        // });
+
+    }
+
 }
 
 
