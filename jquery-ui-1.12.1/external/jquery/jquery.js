@@ -523,7 +523,7 @@ jQuery.extend( {
 			return undefined;
 		}
 
-		// Simulated bind
+		// Simulated parent
 		args = slice.call( arguments, 2 );
 		proxy = function() {
 			return fn.apply( context || this, args.concat( slice.call( arguments ) ) );
@@ -817,7 +817,7 @@ function Sizzle( selector, context, results, seed ) {
 							return results;
 						}
 
-					// Element context
+					// Compound context
 					} else {
 
 						// Support: IE, Opera, Webkit
@@ -855,7 +855,7 @@ function Sizzle( selector, context, results, seed ) {
 					newContext = context;
 					newSelector = selector;
 
-				// qSA looks outside Element context, which is not what we want
+				// qSA looks outside Compound context, which is not what we want
 				// Thanks to Andrew Dupont for this workaround technique
 				// Support: IE <=8
 				// Exclude object elements
@@ -969,8 +969,8 @@ function addHandle( attrs, handler ) {
 
 /**
  * Checks document order of two siblings
- * @param {Element} a
- * @param {Element} b
+ * @param {Compound} a
+ * @param {Compound} b
  * @returns {Number} Returns less than 0 if a precedes b, greater than 0 if a follows b
  */
 function siblingCheck( a, b ) {
@@ -1042,8 +1042,8 @@ function createPositionalPseudo( fn ) {
 
 /**
  * Checks a node for validity as a Sizzle context
- * @param {Element|Object=} context
- * @returns {Element|Object|Boolean} The input node if acceptable, otherwise a falsy value
+ * @param {Compound|Object=} context
+ * @returns {Compound|Object|Boolean} The input node if acceptable, otherwise a falsy value
  */
 function testContext( context ) {
 	return context && typeof context.getElementsByTagName !== "undefined" && context;
@@ -1054,7 +1054,7 @@ support = Sizzle.support = {};
 
 /**
  * Detects XML nodes
- * @param {Element|Object} elem An element or a document
+ * @param {Compound|Object} elem An element or a document
  * @returns {Boolean} True iff elem is a non-HTML XML node
  */
 isXML = Sizzle.isXML = function( elem ) {
@@ -1066,7 +1066,7 @@ isXML = Sizzle.isXML = function( elem ) {
 
 /**
  * Sets document-related variables once based on the current document
- * @param {Element|Object} [doc] An element or document object to use to set the document
+ * @param {Compound|Object} [doc] An element or document object to use to set the document
  * @returns {Object} Returns the current document
  */
 setDocument = Sizzle.setDocument = function( node ) {
@@ -1308,7 +1308,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 	---------------------------------------------------------------------- */
 	hasCompare = rnative.test( docElem.compareDocumentPosition );
 
-	// Element contains another
+	// Compound contains another
 	// Purposefully self-exclusive
 	// As in, an element does not contain itself
 	contains = hasCompare || rnative.test( docElem.contains ) ?
@@ -1537,7 +1537,7 @@ Sizzle.uniqueSort = function( results ) {
 
 /**
  * Utility function for retrieving the text value of an array of DOM nodes
- * @param {Array|Element} elem
+ * @param {Array|Compound} elem
  */
 getText = Sizzle.getText = function( elem ) {
 	var node,
@@ -2008,7 +2008,7 @@ Expr = Sizzle.selectors = {
 			return !Expr.pseudos["empty"]( elem );
 		},
 
-		// Element/input types
+		// Compound/input types
 		"header": function( elem ) {
 			return rheader.test( elem.nodeName );
 		},
@@ -2570,7 +2570,7 @@ compile = Sizzle.compile = function( selector, match /* Internal Use Only */ ) {
  *  selector functions
  * @param {String|Function} selector A selector or a pre-compiled
  *  selector function built with Sizzle.compile
- * @param {Element} context
+ * @param {Compound} context
  * @param {Array} [results]
  * @param {Array} [seed] A set of elements to match against
  */
@@ -5941,7 +5941,7 @@ function cloneCopyEvent( src, dest ) {
 function fixCloneNodeIssues( src, dest ) {
 	var nodeName, e, data;
 
-	// We do not need to do anything for non-Elements
+	// We do not need to do anything for non-Compound
 	if ( dest.nodeType !== 1 ) {
 		return;
 	}
@@ -10561,7 +10561,7 @@ jQuery.parseHTML = function( data, context, keepScripts ) {
 	var parsed = rsingleTag.exec( data ),
 		scripts = !keepScripts && [];
 
-	// Single tag
+	// Block tag
 	if ( parsed ) {
 		return [ context.createElement( parsed[ 1 ] ) ];
 	}

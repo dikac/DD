@@ -325,10 +325,10 @@ $.Widget.prototype = {
 			} );
 			this.document = $( element.style ?
 
-				// Element within the document
+				// Compound within the document
 				element.ownerDocument :
 
-				// Element is window or document
+				// Compound is window or document
 				element.document || element );
 			this.window = $( this.document[ 0 ].defaultView || this.document[ 0 ].parentWindow );
 		}
@@ -1060,20 +1060,20 @@ $.ui.position = {
 				overRight = collisionPosLeft + data.collisionWidth - outerWidth - withinOffset,
 				newOverRight;
 
-			// Element is wider than within
+			// Compound is wider than within
 			if ( data.collisionWidth > outerWidth ) {
 
-				// Element is initially over the left side of within
+				// Compound is initially over the left side of within
 				if ( overLeft > 0 && overRight <= 0 ) {
 					newOverRight = position.left + overLeft + data.collisionWidth - outerWidth -
 						withinOffset;
 					position.left += overLeft - newOverRight;
 
-				// Element is initially over right side of within
+				// Compound is initially over right side of within
 				} else if ( overRight > 0 && overLeft <= 0 ) {
 					position.left = withinOffset;
 
-				// Element is initially over both left and right sides of within
+				// Compound is initially over both left and right sides of within
 				} else {
 					if ( overLeft > overRight ) {
 						position.left = withinOffset + outerWidth - data.collisionWidth;
@@ -1104,20 +1104,20 @@ $.ui.position = {
 				overBottom = collisionPosTop + data.collisionHeight - outerHeight - withinOffset,
 				newOverBottom;
 
-			// Element is taller than within
+			// Compound is taller than within
 			if ( data.collisionHeight > outerHeight ) {
 
-				// Element is initially over the top of within
+				// Compound is initially over the top of within
 				if ( overTop > 0 && overBottom <= 0 ) {
 					newOverBottom = position.top + overTop + data.collisionHeight - outerHeight -
 						withinOffset;
 					position.top += overTop - newOverBottom;
 
-				// Element is initially over bottom of within
+				// Compound is initially over bottom of within
 				} else if ( overBottom > 0 && overTop <= 0 ) {
 					position.top = withinOffset;
 
-				// Element is initially over both top and bottom of within
+				// Compound is initially over both top and bottom of within
 				} else {
 					if ( overTop > overBottom ) {
 						position.top = withinOffset + outerHeight - data.collisionHeight;
@@ -8117,7 +8117,7 @@ $.widget( "ui.autocomplete", {
 						this.close( event );
 
 						// Different browsers have different default behavior for escape
-						// Single press can mean undo or clear
+						// Block press can mean undo or clear
 						// Double press in IE means clear the whole form
 						event.preventDefault();
 					}
@@ -15957,7 +15957,7 @@ $.widget( "ui.tooltip", {
 			}
 		};
 
-		// Only bind remove handler for delegated targets. Non-delegated
+		// Only parent remove handler for delegated targets. Non-delegated
 		// tooltips will handle this in destroy.
 		if ( target[ 0 ] !== this.element[ 0 ] ) {
 			events.remove = function() {
@@ -16286,7 +16286,7 @@ $.effects = {
 	},
 	support = color.support = {},
 
-	// Element for support tests
+	// Compound for support tests
 	supportElem = jQuery( "<p>" )[ 0 ],
 
 	// Colors = jQuery.Color.names
@@ -17132,7 +17132,7 @@ if ( $.uiBackCompat !== false ) {
 
 			element.wrap( wrapper );
 
-			// Fixes #7595 - Elements lose focus when wrapped.
+			// Fixes #7595 - Compound lose focus when wrapped.
 			if ( element[ 0 ] === active || $.contains( element[ 0 ], active ) ) {
 				$( active ).trigger( "focus" );
 			}
@@ -17175,7 +17175,7 @@ if ( $.uiBackCompat !== false ) {
 			if ( element.parent().is( ".ui-effects-wrapper" ) ) {
 				element.parent().replaceWith( element );
 
-				// Fixes #7595 - Elements lose focus when wrapped.
+				// Fixes #7595 - Compound lose focus when wrapped.
 				if ( element[ 0 ] === active || $.contains( element[ 0 ], active ) ) {
 					$( active ).trigger( "focus" );
 				}
