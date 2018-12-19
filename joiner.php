@@ -24,7 +24,7 @@ function scan (string $file) {
 }
 
 
-foreach (scan(__DIR__.'/src') as $value) {
+foreach (scan(__DIR__) as $value) {
 
     var_dump($value);
 }

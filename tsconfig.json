@@ -2,9 +2,9 @@
   "compilerOptions": {
     "removeComments" : true,
     "moduleResolution": "node",
-    "module": "commonjs",
+    "module": "amd",
     "target": "es5",
-    "outDir": "compiled",
+    "outFile": "compiled/htme.js",
     "sourceMap": true,
     "downlevelIteration" : true,
     "lib": [
@@ -21,4 +21,5 @@
   "exclude":   [
     "src-"
   ]
+
 }
