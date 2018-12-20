@@ -20,7 +20,6 @@ namespace Htme.Component.Structure {
             return this.$panel;
         }
 
-
         attachPanel() {
 
             // value is not available on object construction
