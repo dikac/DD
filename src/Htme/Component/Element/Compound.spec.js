@@ -1,3 +1,30 @@
+QUnit.test( "Htme.Component.Element.Block construct", function( assert ) {
+
+    let Block = Htme.Component.Element.Block;
+    let Compound = Htme.Component.Element.Compound;
+
+    let dom = $(`
+        <div class="parent">              
+            <div class="child1"></div>
+            <div class="child2"></div>
+            <div class="child3"></div>
+        </div>
+    `);
+
+    let element = new Compound(dom);
+
+    assert.equal('<div class="child1"></div>', element.get('_0').toString(), "Passed!");
+    assert.equal('<div class="child2"></div>', element.get('_1').toString(), "Passed!");
+    assert.equal('<div class="child3"></div>', element.get('_2').toString(), "Passed!");
+
+    assert.equal(
+        '<div class="parent">'+
+        '<div class="child1"></div>'+
+        '<div class="child2"></div>'+
+        '<div class="child3"></div>'+
+        '</div>', element.toString(), "Passed!");
+
+});
 
 QUnit.test( "Htme.Component.Element.Block append", function( assert ) {
 
@@ -66,49 +93,48 @@ QUnit.test( "Htme.Component.Element.Block prepend", function( assert ) {
 
 });
 
-//
-// QUnit.test( "element construct append", function( assert ) {
-//
-//     let dom = $(`<div class="parent"></div>`);
-//     let element = new Htme.Component.Compound(dom);
-//
-//     element.append('<div class="child1"></div>');
-//     assert.equal('<div class="child1"></div>', element.get(0).toString(), "Passed!");
-//
-//     element.append('<div class="child2"></div>');
-//     assert.equal('<div class="child2"></div>', element.get(1).toString(), "Passed!");
-//
-//     element.append('<div class="child3"></div>');
-//     assert.equal('<div class="child3"></div>', element.get(2).toString(), "Passed!");
-//
-//     assert.equal(''+
-//         '<div class="parent">'+
-//             '<div class="child1"></div>'+
-//             '<div class="child2"></div>'+
-//             '<div class="child3"></div>'+
-//         '</div>', element.toString(), "Passed!");
-// });
-//
-// QUnit.test( "element construct prepend", function( assert ) {
-//
-//     let dom = $(`<div class="parent"></div>`);
-//     let element = new Htme.Component.Compound(dom);
-//
-//     element.prepend('<div class="child3"></div>');
-//     assert.equal('<div class="child3"></div>', element.get(0).toString(), "Passed!");
-//
-//     element.prepend('<div class="child2"></div>');
-//     assert.equal('<div class="child2"></div>', element.get(1).toString(), "Passed!");
-//
-//     element.prepend('<div class="child1"></div>');
-//     assert.equal('<div class="child1"></div>', element.get(2).toString(), "Passed!");
-//
-//
-//
-//     assert.equal(''+
-//         '<div class="parent">'+
-//             '<div class="child1"></div>'+
-//             '<div class="child2"></div>'+
-//             '<div class="child3"></div>'+
-//         '</div>', element.toString(), "Passed!");
-// });
+
+QUnit.test( "Htme.Component.Element.Block attach & detach", function( assert ) {
+
+    let Block = Htme.Component.Element.Block;
+    let Compound = Htme.Component.Element.Compound;
+
+    let dom = $(
+        '<div class="parent">'+
+        '<div class="child1"></div>'+
+        '<div class="child2"></div>'+
+        '<div class="child3"></div>'+
+        '</div>');
+
+    let element = new Compound(dom);
+
+    assert.equal(
+        '<div class="parent">'+
+        '<div class="child1"></div>'+
+        '<div class="child2"></div>'+
+        '<div class="child3"></div>'+
+        '</div>'
+        , element.toString(), "Passed!");
+
+
+    element.detach();
+
+    assert.equal(
+        '<div class="parent"></div>',
+        element.toString(), "Passed!"
+    );
+    assert.equal('<div class="child1"></div>', element.get('_0').toString(), "Passed!");
+    assert.equal('<div class="child2"></div>', element.get('_1').toString(), "Passed!");
+    assert.equal('<div class="child3"></div>', element.get('_2').toString(), "Passed!");
+
+    element.attach();
+
+    assert.equal(
+        '<div class="parent">'+
+        '<div class="child1"></div>'+
+        '<div class="child2"></div>'+
+        '<div class="child3"></div>'+
+        '</div>'
+        , element.toString(), "Passed!");
+
+});

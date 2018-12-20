@@ -1,4 +1,4 @@
-QUnit.test( "attribute construct undefined test", function( assert ) {
+QUnit.test( "Htme.Component.Element.Attribute construct undefined", function( assert ) {
 
     let dom = $('<div></div>');
     let attribute = new Htme.Component.Element.Attribute('class', dom);
@@ -7,7 +7,7 @@ QUnit.test( "attribute construct undefined test", function( assert ) {
     assert.equal(attribute.toString(), '', "Passed!");
 });
 
-QUnit.test( "attribute construct empty test", function( assert ) {
+QUnit.test( "Htme.Component.Element.Attribute construct empty", function( assert ) {
 
     let dom = $('<div class=""></div>');
     let attribute = new Htme.Component.Element.Attribute('class', dom);
@@ -16,7 +16,7 @@ QUnit.test( "attribute construct empty test", function( assert ) {
     assert.equal(attribute.toString(), '', "Passed!");
 });
 
-QUnit.test( "attribute construct set test", function( assert ) {
+QUnit.test( "Htme.Component.Element.Attribute construct set", function( assert ) {
 
     let dom = $('<div class="data"></div>');
     let attribute = new Htme.Component.Element.Attribute('class', dom);
@@ -25,7 +25,7 @@ QUnit.test( "attribute construct set test", function( assert ) {
     assert.equal(attribute.toString(), 'data', "Passed!");
 });
 
-QUnit.test( "attribute set test", function( assert ) {
+QUnit.test( "Htme.Component.Element.Attribute set", function( assert ) {
 
     let dom = $('<div class="data"></div>');
     let attribute = new Htme.Component.Element.Attribute('class', dom);
@@ -36,7 +36,7 @@ QUnit.test( "attribute set test", function( assert ) {
     assert.equal(attribute.toString(), 'val1 val2 val3', "Passed!");
 });
 
-QUnit.test( "attribute add test", function( assert ) {
+QUnit.test( "Htme.Component.Element.Attribute add", function( assert ) {
 
     let dom = $('<div class="data"></div>');
     let attribute = new Htme.Component.Element.Attribute('class', dom);
@@ -47,7 +47,7 @@ QUnit.test( "attribute add test", function( assert ) {
     assert.equal(attribute.toString(),'data val1 val2 val3', "Passed!");
 });
 
-QUnit.test( "attribute get test", function( assert ) {
+QUnit.test( "Htme.Component.Element.Attribute get", function( assert ) {
 
     let dom = $('<div class="data1 data2 data3"></div>');
     let attribute = new Htme.Component.Element.Attribute('class', dom);
@@ -57,7 +57,7 @@ QUnit.test( "attribute get test", function( assert ) {
 });
 
 
-QUnit.test( "attribute remove keep test", function( assert ) {
+QUnit.test( "Htme.Component.Element.Attribute remove keep", function( assert ) {
 
     let dom = $('<div class="data1 data2 data3"></div>');
 
@@ -70,7 +70,7 @@ QUnit.test( "attribute remove keep test", function( assert ) {
 });
 
 
-QUnit.test( "attribute remove unkeep test", function( assert ) {
+QUnit.test( "Htme.Component.Element.Attribute remove unkeep", function( assert ) {
 
     let dom = $('<div class="data1 data2 data3"></div>');
 
@@ -81,7 +81,7 @@ QUnit.test( "attribute remove unkeep test", function( assert ) {
     assert.equal(attribute.toString(), '', "Passed!" );
 });
 
-QUnit.test( "attribute clear unkeep test", function( assert ) {
+QUnit.test( "Htme.Component.Element.Attribute clear unkeep", function( assert ) {
 
     let dom = $('<div class="data1 data2 data3"></div>');
 
@@ -92,7 +92,7 @@ QUnit.test( "attribute clear unkeep test", function( assert ) {
     assert.equal(attribute.toString(), '', "Passed!" );
 });
 
-QUnit.test( "attribute clear unkeep test", function( assert ) {
+QUnit.test( "Htme.Component.Element.Attribute clear unkeep", function( assert ) {
 
     let dom = $('<div class="data1 data2 data3"></div>');
 
@@ -104,7 +104,7 @@ QUnit.test( "attribute clear unkeep test", function( assert ) {
 });
 
 
-QUnit.test( "attribute iterator test", function( assert ) {
+QUnit.test( "Htme.Component.Element.Attribute iterator", function( assert ) {
 
     let dom = $('<div class="data1 data2 data3" id="dis"></div>');
 

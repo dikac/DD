@@ -8,14 +8,13 @@ namespace Htme.Component.Structure {
         private $name : String;
 
         constructor(
-            element : JQuery|string, name : string
+            element : JQuery|string
         ) {
             super(element);
 
             this.attributes().get('class').add('HtmePanel');
 
-            this.$name = new String('<div class="HtmePanelName"></div>');
-            this.name = name;
+            this.$name = new String('<div class="HtmePanelName">{name}</div>');
 
             this.attachName();
         }

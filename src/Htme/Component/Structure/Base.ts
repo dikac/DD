@@ -4,7 +4,7 @@ namespace Htme.Component.Structure {
 
     export class Base extends Compound {
 
-        private $panel : Panel = new Panel('<div></div>', '%name%');
+        private $panel : Panel = new Panel('<div>%name%</div>');
 
         constructor(
             element : JQuery|string
@@ -33,7 +33,6 @@ namespace Htme.Component.Structure {
 
             this.$panel.detach();
         }
-
 
         set (content : string|JQuery) {
 

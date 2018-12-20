@@ -5,14 +5,17 @@ namespace Htme.Component.Element {
         private $attributes : Attributes;
         private $element : JQuery;
 
-        constructor(element : JQuery|string) {
+        constructor(element : JQuery|string|null = null) {
 
             element = ensureJquery(element);
             this.$element = element;
             this.$attributes = new Attributes(element);
         }
 
-        abstract detach();
+        detach() {
+
+            this.element.empty();
+        }
         abstract attach();
 
         get element() : JQuery {

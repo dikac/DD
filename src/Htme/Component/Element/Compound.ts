@@ -71,7 +71,15 @@ namespace Htme.Component.Element {
                 delete this.children[key];
             }
         }
+        get(key) : Element | undefined {
 
+            return this.children[key];
+        }
+
+        has(key) : boolean {
+
+            return this.children.hasOwnProperty(key);
+        }
         prepend(block: Element, key : string|null = null) : string {
 
             key = this.ensureKey( key);
@@ -96,14 +104,6 @@ namespace Htme.Component.Element {
             return key;
         }
 
-        get(key) : Element | undefined {
 
-            return this.children[key];
-        }
-
-        has(key) : boolean {
-
-            return this.children.hasOwnProperty(key);
-        }
     }
 }
