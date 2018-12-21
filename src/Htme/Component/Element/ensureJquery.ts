@@ -4,7 +4,12 @@ namespace Htme.Component.Element {
 
         if(typeof element === "string") {
 
-            return $(element);
+            return ensureJquery($(element));
+        }
+
+        if(!element) {
+
+           return ensureJquery('<div></div>');
         }
 
         return element;
