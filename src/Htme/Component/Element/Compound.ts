@@ -1,11 +1,11 @@
 namespace Htme.Component.Element {
 
-    export class Compound extends AbstractBlock {
+    export class Compound extends AbstractBlock implements Iterable<Element> {
 
-        private children : {[key:string] : Element} = {};
+        private children : Element[] = [];
 
         constructor(
-            element : JQuery|string
+            element : JQuery|string|null = null
         ) {
 
             super(element);
@@ -25,10 +25,10 @@ namespace Htme.Component.Element {
             })
         }
 
-        all() : {[key:string] : Element} {
-
-            return Object.assign<{}, {}>({}, this.children);
-        }
+        // all() : {[key:string] : Element} {
+        //
+        //     return Object.assign<{}, {}>({}, this.children);
+        // }
 
         clear() {
 
@@ -51,17 +51,17 @@ namespace Htme.Component.Element {
             }
         }
 
-        protected ensureKey(key : string|null) : string {
-
-            if(key === null) {
-
-                for(let i = 0; this.children.hasOwnProperty(key = '_' + i); i++);
-            }
-
-            this.remove(key);
-
-            return key;
-        }
+        // protected ensureKey(key : string|null) : string {
+        //
+        //     if(key === null) {
+        //
+        //         for(let i = 0; this.children.hasOwnProperty(key = '_' + i); i++);
+        //     }
+        //
+        //     this.remove(key);
+        //
+        //     return key;
+        // }
 
         remove(key) {
 
@@ -80,29 +80,31 @@ namespace Htme.Component.Element {
 
             return this.children.hasOwnProperty(key);
         }
-        prepend(block: Element, key : string|null = null) : string {
+        prepend(block: Element/*, key : string|null = null*/) : number {
 
-            key = this.ensureKey( key);
+           // key = this.ensureKey( key);
 
-            let buffer = {};
-            buffer[key] = block;
-
-            this.children = Object.assign(buffer, this.children);
+            this.children.unshift(block);
 
             this.attach();
 
-            return key;
+            return 0;
         }
 
-        append(block: Element , key : string|null = null): string {
+        append(block: Element /*, key : string|null = null*/): number {
 
-            key = this.ensureKey( key);
+          //  key = this.ensureKey( key);
 
             this.element.append(block.element);
-            this.children[key] = block;
+            return this.children.push(block);
 
-            return key;
+          //  return key;
         }
+
+        [Symbol.iterator](): Iterator<Element> {
+
+            return this.children[Symbol.iterator]();
+        };
 
 
     }

@@ -19,14 +19,14 @@ namespace Htme.Component.Structure {
             this.attachName();
         }
 
-        append(block: Menu, key: string | null = null): string {
+        append(block: Menu/*, key: string | null = null*/): number {
 
-            return super.append(block, key);
+            return super.append(block/*, key*/);
         }
 
-        prepend(block: Menu, key: string | null = null): string {
+        prepend(block: Menu/*, key: string | null = null*/): number {
 
-            return super.prepend(block, key);
+            return super.prepend(block/*, key*/);
         }
 
         set (content : string|JQuery) {

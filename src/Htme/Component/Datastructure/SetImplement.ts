@@ -35,7 +35,10 @@ namespace Htme.Component.Datastructure {
 
         add(value: T) : this
         {
+            //console.log([value, 2]);
             this.$set.add(value);
+
+           // console.log(this);
             return this;
         }
 

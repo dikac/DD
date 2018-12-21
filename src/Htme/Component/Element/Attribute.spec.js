@@ -69,6 +69,56 @@ QUnit.test( "Htme.Component.Element.Attribute remove keep", function( assert ) {
     assert.equal(attribute.toString(), '', "Passed!" );
 });
 
+QUnit.test( "Htme.Component.Element.Attribute construct remove", function( assert ) {
+
+    let dom = $('<div class="data1 data2 data3 val4"></div>');
+
+    let attribute = new Htme.Component.Element.Attribute('class', dom);
+
+    attribute.delete('data5', false);
+    assert.equal(attribute.get(), 'data1 data2 data3 val4', "Passed!" );
+    assert.equal(attribute.toString(), 'data1 data2 data3 val4', "Passed!" );
+
+    attribute.delete('data1', false);
+    assert.equal(attribute.get(), 'data2 data3 val4', "Passed!" );
+    assert.equal(attribute.toString(), 'data2 data3 val4', "Passed!" );
+
+    attribute.delete('data2 data3', false);
+    assert.equal(attribute.get(), 'val4', "Passed!" );
+    assert.equal(attribute.toString(), 'val4', "Passed!" );
+
+    attribute.delete('data5', false);
+    assert.equal(attribute.get(), 'val4', "Passed!" );
+    assert.equal(attribute.toString(), 'val4', "Passed!" );
+});
+
+QUnit.test( "Htme.Component.Element.Attribute add remove", function( assert ) {
+
+    let dom = $('<div></div>');
+
+    let attribute = new Htme.Component.Element.Attribute('class', dom);
+
+    attribute.add('data1');
+    attribute.add('data2');
+    attribute.add('data3');
+    attribute.add('data4');
+
+    attribute.delete('data5', false);
+    assert.equal(attribute.get(), 'data1 data2 data3 data4', "Passed!" );
+    assert.equal(attribute.toString(), 'data1 data2 data3 data4', "Passed!" );
+
+    attribute.delete('data1', false);
+    assert.equal(attribute.get(), 'data2 data3 data4', "Passed!" );
+    assert.equal(attribute.toString(), 'data2 data3 data4', "Passed!" );
+
+    attribute.delete('data2 data3', false);
+    assert.equal(attribute.get(), 'data4', "Passed!" );
+    assert.equal(attribute.toString(), 'data4', "Passed!" );
+
+    attribute.delete('data5', false);
+    assert.equal(attribute.get(), 'data4', "Passed!" );
+    assert.equal(attribute.toString(), 'data4', "Passed!" );
+});
 
 QUnit.test( "Htme.Component.Element.Attribute remove unkeep", function( assert ) {
 

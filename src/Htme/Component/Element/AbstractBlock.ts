@@ -16,6 +16,7 @@ namespace Htme.Component.Element {
 
             this.element.empty();
         }
+
         abstract attach();
 
         get element() : JQuery {

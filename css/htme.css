@@ -1,0 +1,66 @@
+.HtmePanel {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    /*line-height: 1.42857143;*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fafafa;
+}
+
+.HtmeHide {
+    display: none;
+}
+
+.HtmePanelName {
+    color: #000000;
+    position: absolute;
+
+    padding: 2px;
+    margin: 2px;
+    width: 100px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+    text-align: center;
+}
+
+.HtmeMenuItems {
+    position: absolute;
+    top: 25px;
+    left:-1px;
+    background-color: #fafafa;
+
+    width: auto;
+
+}
+
+.HtmeMenu {
+    padding: 4px;
+    user-select: none;
+    position: relative;
+}
+.HtmeMenu:hover {
+
+    background-color: #eaeaea;
+}
+.HtmeItem {
+
+    padding: 5px;
+}
+.HtmeItem:hover {
+
+    background-color: #eaeaea;
+}
+
+.HtmeMenuRight {
+
+    float: right;
+}
+.HtmeMenuLeft {
+
+    float: left;
+}

@@ -81,7 +81,7 @@ QUnit.test( "Htme.Component.Element.Block prepend", function( assert ) {
     let a = element.all();
     for(let k in a) {
 
-        console.log(a[k].element);
+        //console.log(a[k].element);
     }
 
     assert.equal(

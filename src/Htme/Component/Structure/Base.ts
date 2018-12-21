@@ -1,8 +1,9 @@
 namespace Htme.Component.Structure {
 
     import Compound = Htme.Component.Element.Compound;
+    import AbstractBlock = Htme.Component.Element.AbstractBlock;
 
-    export class Base extends Compound {
+    export class Base extends AbstractBlock implements Structure {
 
         private $panel : Panel = new Panel('<div>%name%</div>');
 
@@ -17,6 +18,7 @@ namespace Htme.Component.Structure {
         }
 
         get panel() : Panel {
+
             return this.$panel;
         }
 
@@ -34,15 +36,14 @@ namespace Htme.Component.Structure {
             this.$panel.detach();
         }
 
-        set (content : string|JQuery) {
-
-            super.set(content);
-            this.attachPanel();
-        }
+        // set (content : string|JQuery) {
+        //
+        //     super.set(content);
+        //     this.attachPanel();
+        // }
 
         attach()
         {
-            super.attach();
             this.attachPanel();
         }
 

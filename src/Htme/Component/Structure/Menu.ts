@@ -19,18 +19,64 @@ namespace Htme.Component.Structure {
 
             this.$name = new Htme.Component.Element.String('<div class="HtmeMenuName"></div>');
             this.name = name;
-            this.compound = new Compound('<div class="HtmeItems"></div>');
+            this.compound = new Compound('<div class="HtmeMenuItems"></div>');
 
+            this.attach();
+            this.hide();
+            this.left();
+
+            let $this = this;
+            this.element.click(function () {
+
+                $this.show();
+            });
+
+            $(document).click(function(e) {
+
+               if($(e.target).closest($this.element).length === 0) {
+
+                   $this.hide();
+               }
+            });
         }
 
-        append(block: Item, key : string|null = null) : string {
+        protected addClass(block: Element) {
 
-            return this.compound.append(block, key);
+            block.attributes().get('class').add('HtmeItem');
         }
 
-        prepend(block: Item, key : string|null = null) : string {
+        hide () {
 
-           return this.compound.prepend(block, key);
+            this.compound.attributes().get('class').add('HtmeHide');
+        }
+
+        show () {
+
+            this.compound.attributes().get('class').delete('HtmeHide');
+        }
+
+        right() {
+
+            this.attributes().get('class').add('HtmeMenuRight');
+            this.attributes().get('class').delete('HtmeMenuLeft');
+        }
+
+        left() {
+
+            this.attributes().get('class').delete('HtmeMenuRight');
+            this.attributes().get('class').add('HtmeMenuLeft');
+        }
+
+        append(block: Element/*, key : string|null = null*/) : number {
+
+            this.addClass(block);
+            return this.compound.append(block/*, key*/);
+        }
+
+        prepend(block: Element/*, key : string|null = null*/) : number {
+
+           this.addClass(block);
+           return this.compound.prepend(block/*, key*/);
         }
 
         remove(key) {

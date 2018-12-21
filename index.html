@@ -7,21 +7,17 @@
     <script src="jquery-ui-1.12.1/jquery-ui.min.js"></script>
     <!--<script src="dist/bundle.js"></script>-->
     <!--<script src="node_modules/systemjs/dist/system.js" ></script>-->
-
+    <link rel="stylesheet" href="css/htme.css" media="all">
     <script src="compiled/Htme.js"></script>
 
 </head>
 <body>
-<div class="ts">1</div>
+<div class="ts" data-htme="container">1</div>
 <script>
 
-//      require(['Htme'],function (Core) {
-//
-//         window.Htme = Core.Htme.FG;
-//         console.log(1);
-// ;
-//     });
 
+let plugin = new Htme.Plugin.Container.Plugin();
+plugin.deserialize(new Htme.Component.Structure.Base($('.ts')))
 
 </script>
 </body>
