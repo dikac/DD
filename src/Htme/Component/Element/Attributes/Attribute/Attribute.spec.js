@@ -47,6 +47,21 @@ QUnit.test( "Htme.Component.Element.Attribute add", function( assert ) {
     assert.equal(attribute.toString(),'data val1 val2 val3', "Passed!");
 });
 
+QUnit.test( "Htme.Component.Element.Attribute add repeat", function( assert ) {
+
+    let dom = $('<div class="data"></div>');
+    let attribute = new Htme.Component.Element.Attribute('class', dom);
+
+    for(let i = 0; i<10; i++) {
+
+        attribute.add('data');
+
+        assert.equal(attribute.get(),'data', "Passed!");
+        assert.equal(attribute.toString(),'data', "Passed!");
+    }
+
+});
+
 QUnit.test( "Htme.Component.Element.Attribute get", function( assert ) {
 
     let dom = $('<div class="data1 data2 data3"></div>');

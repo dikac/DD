@@ -1,7 +1,7 @@
-namespace Htme.Component.Element {
+namespace Htme.Component.Element.Attributes {
 
-    import SetImplement = Htme.Component.Datastructure.SetImplement;
     import MapImplement = Htme.Component.Datastructure.MapImplement;
+    import Attribute = Htme.Component.Element.Attributes.Attribute.Attribute;
 
     export class Attributes extends MapImplement<string, Attribute> {
 

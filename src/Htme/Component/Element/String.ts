@@ -1,57 +1,60 @@
 namespace Htme.Component.Element {
 
-    export class String extends AbstractBlock {
+    import Attributes = Htme.Component.Element.Attributes.Attributes;
 
-        private $content : string | null;
+    export class String implements Element {
 
-        constructor(element : JQuery|string) {
+        private dom : Dom;
+        private $content : string;
 
-            super(element);
-            this.content = this.element.html();
+        constructor(element : JQuery|string|null = null) {
+
+            this.dom = new Dom(element);
+            this.$content = this.dom.element.html();
         }
-        // private $parent : JQuery|null;
 
-        // constructor(
-        //     private $content : string,
-        //     parent : JQuery|null = null
-        // ) {
-        //
-        //     this.parent(parent);
-        // }
-
-        // parent(jquery : JQuery|null) {
-        //
-        //     this.detach();
-        //     this.$parent = jquery;
-        //     this.attach();
-        // }
 
         attach() {
 
             if(this.$content) {
 
-                this.element.html(this.content);
+                this.dom.element.html(this.content);
 
             } else {
 
-                this.element.empty();
+                this.dom.element.empty();
             }
         }
 
         detach() {
 
-            this.element.empty();
+            this.dom.element.empty();
         }
 
-        get content() : string|null {
+        get content() : string {
 
             return this.$content;
         }
 
-        set content(content : string|null) {
+        set content(content : string) {
 
             this.$content = content;
             this.attach();
+        }
+
+        toString(): string {
+
+            return this.dom.toString();
+        }
+
+        get element(): JQuery {
+
+            return this.dom.element;
+        }
+
+        get attributes(): Attributes {
+
+            return this.dom.attributes;
         }
     }
 }

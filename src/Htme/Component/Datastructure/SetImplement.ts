@@ -47,9 +47,9 @@ namespace Htme.Component.Datastructure {
             this.$set.clear();
         }
 
-        delete(value: T): any
+        delete(value: T): boolean
         {
-            this.$set.delete(value);
+            return this.$set.delete(value);
         }
 
         get [Symbol.toStringTag](): string

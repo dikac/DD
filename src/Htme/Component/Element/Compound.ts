@@ -1,6 +1,6 @@
 namespace Htme.Component.Element {
 
-    export class Compound extends AbstractBlock implements Iterable<Element> {
+    export class Compound extends Standard implements Iterable<Element> {
 
         private children : Element[] = [];
 
@@ -71,6 +71,8 @@ namespace Htme.Component.Element {
                 delete this.children[key];
             }
         }
+
+
         get(key) : Element | undefined {
 
             return this.children[key];

@@ -16,8 +16,24 @@
 <script>
 
 
-let plugin = new Htme.Plugin.Container.Plugin();
-plugin.deserialize(new Htme.Component.Structure.Base($('.ts')))
+// let plugin = new Htme.Plugin.Container.Plugin();
+// plugin.deserialize(new Htme.Component.Structure.Base($('.ts')))
+
+let base = new Htme.Component.Structure.Base($('.ts'));
+
+base.panel.name = 'Container';
+
+let menu1 = new Htme.Component.Structure.Menu();
+menu1.append(new Htme.Component.Element.String('<div>qwe qwe</div>'));
+menu1.append(new Htme.Component.Element.String('<div>qwe qwe</div>'));
+base.panel.append(menu1);
+
+
+let menu2 = new Htme.Component.Structure.Menu();
+base.panel.append(menu2);
+menu2.append(new Htme.Component.Element.String('<div>qwe qwe</div>'));
+menu2.append(new Htme.Component.Element.String('<div>qwe qwe</div>'));
+
 
 </script>
 </body>

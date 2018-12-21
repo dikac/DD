@@ -1,10 +1,8 @@
-namespace Htme.Component.Element {
+namespace Htme.Component.Element.Attributes.Attribute {
 
     import SetImplement = Htme.Component.Datastructure.SetImplement;
 
     export class Attribute extends SetImplement<string> {
-
-        //ms;
 
         constructor(
             readonly name: string,
@@ -12,22 +10,10 @@ namespace Htme.Component.Element {
         ) {
 
             super();
-
-           // var d = new Date();
-          //  this.ms = d.getMilliseconds();
-            this.resync();
-            // let attribute = this.get();
-            //
-            // if (attribute !== undefined) {
-            //
-            //     for (let val of attribute.split(' ')) {
-            //
-            //         super.add(val);
-            //     }
-            // }
+            this.syncFromDom();
         }
 
-        protected resync () {
+        protected syncFromDom () {
 
             super.clear();
 
@@ -46,27 +32,20 @@ namespace Htme.Component.Element {
         {
             for (let val of value.split(' ')) {
 
-              //  console.log([val, 1]);
                 super.add(val);
             }
 
-             let attribute = this.get();
 
-            if (attribute !== undefined) {
+             let attribute = Array.from(this).join(' ');
 
-                value = `${attribute} ${value}`;
-            }
-
-             this.set(value);
+             this.set(attribute);
 
             return this;
         }
 
         set(value: string): void
         {
-            //this.clear();
             this.jquery.attr(this.name, value);
-            this.resync();
         }
 
         get(): string | undefined {
@@ -104,16 +83,10 @@ namespace Htme.Component.Element {
 
             for (let v of value.split(' ')) {
 
-                //console.log(v);
                 super.delete(v);
             }
 
-           // console.log(this);
-
             let attribute = Array.from(this).join(' ').trim();
-
-           // console.log(this);
-            //console.log(attribute);
 
             if (attribute === '') {
 

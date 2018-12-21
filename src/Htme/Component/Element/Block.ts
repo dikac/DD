@@ -1,14 +1,17 @@
 namespace Htme.Component.Element {
 
-    export class Block extends AbstractBlock {
+    import Attributes = Htme.Component.Element.Attributes.Attributes;
+
+    export class Block implements Element {
 
         private $content : Element|null = null;
+        private dom : Dom;
 
         constructor(
             element : JQuery|string
         ) {
 
-            super(element);
+            this.dom = new Dom(element);
 
             let content = this.element.html();
 
@@ -43,6 +46,21 @@ namespace Htme.Component.Element {
         detach() {
 
             this.element.empty();
+        }
+
+        toString(): string {
+
+            return this.dom.toString();
+        }
+
+        get element(): JQuery {
+
+            return this.dom.element;
+        }
+
+        get attributes(): Attributes {
+
+            return this.dom.attributes;
         }
     }
 }

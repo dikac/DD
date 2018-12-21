@@ -7,9 +7,9 @@ namespace Htme.Plugin.Container {
 
         private compound : Compound  = new Compound();
 
-        constructor() {
-
-        }
+        // constructor() {
+        //
+        // }
 
     }
 }

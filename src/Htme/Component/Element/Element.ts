@@ -2,7 +2,7 @@ namespace Htme.Component.Element {
 
     export interface Element {
 
-        attributes(): Attributes;
+        attributes : Attributes;
 
         detach();
 

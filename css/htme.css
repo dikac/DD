@@ -33,7 +33,7 @@
     top: 25px;
     left:-1px;
     background-color: #fafafa;
-
+    min-width: 100px;
     width: auto;
 
 }

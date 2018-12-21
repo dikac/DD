@@ -1,10 +1,10 @@
-namespace Htme.Component.Structure {
+namespace Htme.Component.Structure.Panel.Menu {
 
     import Compound = Htme.Component.Element.Compound;
-    import AbstractBlock = Htme.Component.Element.AbstractBlock;
+    import AbstractBlock = Htme.Component.Element.Standard;
     import Element = Htme.Component.Element.Element;
 
-    export class Menu extends AbstractBlock {
+    export class Base extends AbstractBlock {
 
         private $name : Htme.Component.Element.String;
         private compound : Compound;

@@ -1,17 +1,22 @@
 namespace Htme.Component.Structure {
 
+    import Panel = Htme.Component.Structure.Panel.Panel;
     import Compound = Htme.Component.Element.Compound;
-    import AbstractBlock = Htme.Component.Element.AbstractBlock;
+    import AbstractBlock = Htme.Component.Element.Standard;
+    import Standard = Htme.Component.Structure.Panel.Standard;
 
     export class Base extends AbstractBlock implements Structure {
 
-        private $panel : Panel = new Panel('<div>%name%</div>');
+        private $panel : Standard;
 
         constructor(
             element : JQuery|string
         ) {
 
             super(element);
+
+
+            this.$panel = new Standard(this, '<div>%name%</div>');
 
             // call manually
             this.attachPanel();

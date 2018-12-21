@@ -1,15 +1,17 @@
 namespace Htme.Component.Element {
 
-    export abstract class AbstractBlock implements Element {
+    export class Standard implements Element {
 
         private $attributes : Attributes;
         private $element : JQuery;
+        private $inner;
 
         constructor(element : JQuery|string|null = null) {
 
             element = ensureJquery(element);
             this.$element = element;
             this.$attributes = new Attributes(element);
+            this.$inner;
         }
 
         detach() {
@@ -17,7 +19,9 @@ namespace Htme.Component.Element {
             this.element.empty();
         }
 
-        abstract attach();
+        attach() {
+
+        }
 
         get element() : JQuery {
 
@@ -28,11 +32,6 @@ namespace Htme.Component.Element {
 
             return this.$attributes;
         }
-
-        // attributes(): Attributes {
-        //
-        //     return this.$attributes;
-        // }
 
         toString() : string {
 
