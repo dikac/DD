@@ -16,6 +16,7 @@
   },
   "types" : ["jquery"],
   "include":  [
+    "src/Htme/Component/Element/String.ts",
     "src"
   ],
   "exclude":   [

@@ -1,11 +1,12 @@
 namespace Htme.Component.Structure.Panel {
 
-    import Compound = Htme.Component.Element.Compound;
+   // import Compound = Htme.Component.Element.Compound;
     import String = Htme.Component.Element.String;
     import Structure = Htme.Component.Structure.Structure;
-    import Menu = Htme.Component.Structure.Menu.Menu;
+   // import Menu = Htme.Component.Structure.Menu.Menu;
+    import MapElement = Htme.Component.Element.MapElement;
 
-    export class Standard extends Compound implements Panel {
+    export class Standard extends MapElement implements Panel {
 
         private $name : String;
 
@@ -15,28 +16,28 @@ namespace Htme.Component.Structure.Panel {
         ) {
             super(element);
 
-            this.attributes().get('class').add('HtmePanel');
+            this.attributes.get('class').add(Panel.Identifier);
 
             this.$name = new Htme.Component.Element.PanelName();
 
             this.attachName();
         }
 
-        append(block: Menu/*, key: string | null = null*/): number {
-
-            return super.append(block/*, key*/);
-        }
-
-        prepend(block: Menu/*, key: string | null = null*/): number {
-
-            return super.prepend(block/*, key*/);
-        }
-
-        // set (content : string|JQuery) {
+        // append(block: Menu/*, key: string | null = null*/): number {
         //
-        //     super.set(content);
-        //     this.attachName();
+        //     return super.append(block/*, key*/);
         // }
+        //
+        // prepend(block: Menu/*, key: string | null = null*/): number {
+        //
+        //     return super.prepend(block/*, key*/);
+        // }
+        //
+        // // set (content : string|JQuery) {
+        // //
+        // //     super.set(content);
+        // //     this.attachName();
+        // // }
 
         attachName() {
 

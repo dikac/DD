@@ -1,10 +1,10 @@
 namespace Htme.Component.Element {
 
-    import Attributes = Htme.Component.Element.Attributes.Attributes;
+    //import Attributes = Htme.Component.Element.Attributes.Attributes;
 
     export class Dom {
 
-        readonly attributes : Attributes;
+        readonly attributes : Htme.Component.Element.Attributes.Attributes;
         readonly element : JQuery;
 
         constructor(element : JQuery|string|null = null) {
@@ -20,7 +20,7 @@ namespace Htme.Component.Element {
             }
 
             this.element = element;
-            this.attributes = new Attributes(element);
+            this.attributes = new Htme.Component.Element.Attributes.Attributes(element);
         }
 
         toString() : string {

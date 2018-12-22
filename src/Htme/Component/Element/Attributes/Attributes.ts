@@ -1,9 +1,9 @@
 namespace Htme.Component.Element.Attributes {
 
     import MapImplement = Htme.Component.Datastructure.MapImplement;
-    import Attribute = Htme.Component.Element.Attributes.Attribute.Attribute;
 
-    export class Attributes extends MapImplement<string, Attribute> {
+
+    export class Attributes extends MapImplement<string, Htme.Component.Element.Attributes.Attribute.Attribute> {
 
         constructor(public jquery : JQuery)
         {
@@ -20,7 +20,7 @@ namespace Htme.Component.Element.Attributes {
 
                         let name = this.name.toLowerCase();
 
-                        $this.set(name, new Attribute(name, jquery));
+                        $this.set(name, new Htme.Component.Element.Attributes.Attribute.Attribute(name, jquery));
                     }
                 });
             });
@@ -40,11 +40,11 @@ namespace Htme.Component.Element.Attributes {
 
         }
 
-        get(attribute : string) : Attribute
+        get(attribute : string) : Htme.Component.Element.Attributes.Attribute.Attribute
         {
             if(!this.has(attribute)) {
 
-                this.set(attribute, new Attribute(attribute, this.jquery));
+                this.set(attribute, new Htme.Component.Element.Attributes.Attribute.Attribute(attribute, this.jquery));
             }
 
             return super.get(attribute);

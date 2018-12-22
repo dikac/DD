@@ -1,9 +1,9 @@
 namespace Htme.Component.Element {
 
     import MapImplement = Htme.Component.Datastructure.MapImplement;
-    import Attributes = Htme.Component.Element.Attributes.Attributes;
+   // import Attributes = Htme.Component.Element.Attributes.Attributes;
 
-    export class MapElement extends MapImplement<string, Element>{
+    export class MapElement<E extends Element> extends MapImplement<string, E>{
 
         private dom : Dom;
 
@@ -23,7 +23,7 @@ namespace Htme.Component.Element {
             })
         }
 
-        protected superSet(key : string, element: Element) {
+        protected superSet(key : string, element: E) {
 
             super.set(key, element);
         }
@@ -36,7 +36,7 @@ namespace Htme.Component.Element {
 
         attach() {
 
-            for(let value of this) {
+            for(let [key, value] of this) {
 
                 this.element.append(value.element);
             }
@@ -84,7 +84,7 @@ namespace Htme.Component.Element {
         // }
 
 
-        set(key : string, element: Element) : this {
+        set(key : string, element: E) : this {
 
             super.set(key, element);
             this.attach();
@@ -102,7 +102,7 @@ namespace Htme.Component.Element {
             return this.dom.element;
         }
 
-        get attributes(): Attributes {
+        get attributes(): Htme.Component.Element.Attributes.Attributes {
 
             return this.dom.attributes;
         }

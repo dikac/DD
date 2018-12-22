@@ -1,6 +1,6 @@
 namespace Htme.Component.Element {
 
-    export class PanelName extends String {
+    export class PanelName extends Htme.Component.Element.String {
 
         constructor() {
 

@@ -1,9 +1,10 @@
 namespace Htme.Component.Structure.Panel {
 
     import Element = Htme.Component.Element.Element;
-    import Menu = Htme.Component.Structure.Menu.Menu;
 
-    export interface Panel extends Map<string, Menu>, Element {
+    export const Identifier :  string =  'HtmePanel';
+
+    export interface Panel extends Map<string, Htme.Component.Structure.Panel.Menu.Menu>, Element {
 
         name : string;
 
