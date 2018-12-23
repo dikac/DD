@@ -8,7 +8,8 @@ namespace Htme.Component.Element {
         private dom : Dom;
 
         constructor(
-            element : JQuery|string|null = null
+            element : JQuery|string|null = null,
+            factory : (element : JQuery) => E | null = null
         ) {
 
             super();
@@ -17,10 +18,13 @@ namespace Htme.Component.Element {
 
             let $this = this;
 
-            this.dom.element.children().each(function (k, v) {
+            if(factory) {
 
-                $this.superSet(k.toString(), new Htme.Component.Element.String($(v)));
-            })
+                this.dom.element.children().each(function (k, v) {
+
+                    $this.superSet(k.toString(), factory($(v)));
+                })
+            }
         }
 
         protected superSet(key : string, element: E) {

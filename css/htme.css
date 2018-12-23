@@ -6,11 +6,29 @@
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #fafafa;
+    background-color: #f3f3f3;
+
+    box-shadow:
+            inset -1px -1px #dcdcdc,
+            inset 1px 1px #dcdcdc
+    ;
+
 }
 
 .HtmeHide {
     display: none;
+}
+
+/*TODO CHANGE NAME SO CONTENT CAN USE*/
+.HtmeContainer {
+
+    position: relative;;
+    padding-top: 23px;
+    box-shadow:
+            inset -1px 0 #dcdcdc,
+            inset 1px 0 #dcdcdc,
+            inset 0 -1px #dcdcdc
+    ;
 }
 
 .HtmePanelName {
@@ -32,10 +50,14 @@
     position: absolute;
     top: 25px;
     left:-1px;
-    background-color: #fafafa;
+    background-color: #f8f8f8;
     min-width: 100px;
     width: auto;
-
+    box-shadow:
+            inset -1px 0 #dcdcdc,
+            inset 1px 0 #dcdcdc,
+            inset 0 -1px #dcdcdc
+;
 }
 
 .HtmeMenu {

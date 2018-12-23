@@ -16,6 +16,7 @@ namespace Htme.Component.Element {
 
             this.dom = new Dom(element);
             this.$content = this.dom.element.html();
+
         }
 
         add(value: Element) : this

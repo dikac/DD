@@ -5,7 +5,6 @@ namespace Htme.Component.Structure.Panel.Menu.Item {
     export interface Item extends Element {
 
         name : string;
-
-        bind(element : Element)
+        structure : Structure;
     }
 }

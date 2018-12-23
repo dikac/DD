@@ -1,22 +1,21 @@
 namespace Htme.Component.Structure {
 
     import Panel = Htme.Component.Structure.Panel.Panel;
-    import Compound = Htme.Component.Element.Compound;
-    import AbstractBlock = Htme.Component.Element.Standard;
-    import Standard = Htme.Component.Structure.Panel.Standard;
+    import Dom = Htme.Component.Element.Dom;
+   // import AbstractBlock = Htme.Component.Element.Standard;
+   // import PanelStandard = Htme.Component.Structure.Panel.Standard;
 
-    export class Base extends AbstractBlock implements Structure {
+    export class Standard extends Dom implements Structure {
 
-        private $panel : Standard;
+        private $panel : Htme.Component.Structure.Panel.Standard;
 
         constructor(
-            element : JQuery|string
+            element : JQuery|string|null = null
         ) {
 
             super(element);
 
-
-            this.$panel = new Standard(this, '<div>%name%</div>');
+            this.$panel = new Htme.Component.Structure.Panel.Standard(this, null,'%name%');
 
             // call manually
             this.attachPanel();
@@ -55,7 +54,7 @@ namespace Htme.Component.Structure {
         detach()
         {
             this.detachPanel();
-            super.detach();
+            this.element.empty();
         }
 
     }

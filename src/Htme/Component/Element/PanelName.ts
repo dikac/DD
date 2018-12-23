@@ -2,9 +2,9 @@ namespace Htme.Component.Element {
 
     export class PanelName extends Htme.Component.Element.String {
 
-        constructor() {
+        constructor(name : string = '{panel name}') {
 
-            super('<div class="HtmePanelName">{name}</div>');
+            super(`<div class="HtmePanelName">${name}</div>`);
         }
     }
 }

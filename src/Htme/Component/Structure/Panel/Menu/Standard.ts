@@ -5,22 +5,25 @@ namespace Htme.Component.Structure.Panel.Menu {
     import Dom = Htme.Component.Element.Dom;
     import Item = Htme.Component.Structure.Panel.Menu.Item.Item;
 
-    export class Base extends Dom implements Menu, Map<string, Item>{
+    export class Standard extends Dom implements Menu, Map<string, Item>{
 
         private $name : Htme.Component.Element.String;
-        private elements : MapElement;
+        private items : MapElement<Item>;
+        private $structure : Structure;
 
         constructor(
+            structure: Structure,
             element : JQuery|string|null = null,
             name : string = '{name}'
         ) {
             super(element);
 
-            this.attributes.get('class').add('HtmeMenu');
+            this.$name = new Htme.Component.Element.String(`<div class="HtmeMenuName">${name}</div>`);
+            this.items = new MapElement<Item>('<div class="HtmeMenuItems"></div>');
 
-            this.$name = new Htme.Component.Element.String('<div class="HtmeMenuName"></div>');
-            this.name = name;
-            this.elements = new MapElement<Item>('<div class="HtmeMenuItems"></div>');
+            this.attributes.get('class').add(IDENTIFIER);
+            this.structure = structure;
+
 
             this.attach();
             this.hide();
@@ -41,6 +44,21 @@ namespace Htme.Component.Structure.Panel.Menu {
             });
         }
 
+        get structure() : Structure {
+
+            return this.$structure;
+        }
+
+        set structure(structure : Structure)  {
+
+            this.$structure = structure;
+
+            for(let [k, value] of this) {
+
+                value.structure  = structure;
+            }
+        }
+
         protected addClass(block: Element) {
 
             block.attributes.get('class').add('HtmeItem');
@@ -48,12 +66,12 @@ namespace Htme.Component.Structure.Panel.Menu {
 
         hide () {
 
-            this.elements.attributes.get('class').add('HtmeHide');
+            this.items.attributes.get('class').add('HtmeHide');
         }
 
         show () {
 
-            this.elements.attributes.get('class').delete('HtmeHide');
+            this.items.attributes.get('class').delete('HtmeHide');
         }
 
         right() {
@@ -70,36 +88,37 @@ namespace Htme.Component.Structure.Panel.Menu {
 
         set(key : string, block: Item) : this {
 
+            block.structure
+                = this.structure;
             this.addClass(block);
-            return this.elements.set(key, block);
+            this.items.set(key, block);
+            return this;
         }
-
 
         detach() {
 
             this.element.empty();
         }
 
-
         delete(key) : boolean {
 
-            return this.elements.delete(key);
+            return this.items.delete(key);
         }
 
-        get(key) : Element | undefined {
+        get(key) : Item | undefined {
 
-            return this.elements.get(key);
+            return this.items.get(key);
         }
 
         has(key) : boolean {
 
-            return this.elements.has(key);
+            return this.items.has(key);
         }
 
         attach()
         {
             this.element.append(this.$name.element);
-            this.element.append(this.elements.element);
+            this.element.append(this.items.element);
         }
 
         get name() : string
@@ -116,45 +135,45 @@ namespace Htme.Component.Structure.Panel.Menu {
 
         get [Symbol.toStringTag] () : string  {
 
-            return this.elements[Symbol.toStringTag];
+            return this.items[Symbol.toStringTag];
         }
 
         get size () : number  {
 
-            return this.elements.size
+            return this.items.size
         };
 
         [Symbol.iterator](): IterableIterator<[string, Item]> {
 
-            return this.elements[Symbol.iterator]();
+            return this.items[Symbol.iterator]();
         }
 
         clear(): void {
 
-            this.elements.clear();
+            this.items.clear();
         }
 
 
 
         entries(): IterableIterator<[string, Item]> {
-            return             this.elements.entries();;
+            return             this.items.entries();;
         }
 
         forEach(callbackfn: (value: Item, key: string, map: Map<string, Item>) => void, thisArg?: any): void {
 
-            return this.elements.forEach(callbackfn, thisArg);
+            return this.items.forEach(callbackfn, thisArg);
         }
 
         keys(): IterableIterator<string> {
 
-            return this.elements.keys();
+            return this.items.keys();
         }
 
 
 
         values(): IterableIterator<Item> {
 
-            return this.elements.values();
+            return this.items.values();
         }
     }
     

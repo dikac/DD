@@ -12,27 +12,30 @@
 
 </head>
 <body>
-<div class="ts" data-htme="container">1</div>
+<div class="ts" data-htme="container"><div >1</div></div>
 <script>
 
 
 // let plugin = new Htme.Plugin.Container.Plugin();
 // plugin.deserialize(new Htme.Component.Structure.Base($('.ts')))
 
-let base = new Htme.Component.Structure.Base($('.ts'));
-
-base.panel.name = 'Container';
-
-let menu1 = new Htme.Component.Structure.Menu();
-menu1.append(new Htme.Component.Element.String('<div>qwe qwe</div>'));
-menu1.append(new Htme.Component.Element.String('<div>qwe qwe</div>'));
-base.panel.append(menu1);
+let base = new Htme.Plugin.Container.Element($('.ts'));
 
 
-let menu2 = new Htme.Component.Structure.Menu();
-base.panel.append(menu2);
-menu2.append(new Htme.Component.Element.String('<div>qwe qwe</div>'));
-menu2.append(new Htme.Component.Element.String('<div>qwe qwe</div>'));
+
+// let item = new Htme.Component.Structure.Panel.Menu.Item.Click('<div>Click</div>', function (event, structure) {
+//
+//     structure.element.append($('<p>zzz</p>'))
+// });
+// //menu1.set('aa', new Htme.Component.Element.String('<div>qwe qwe</div>'));
+// base.panel.get('new').set('container', item);
+
+
+
+//let menu2 = new Htme.Component.Structure.Panel.Menu.Standard();
+//base.panel.set('new', menu2);
+//menu2.set('a', new Htme.Component.Element.String('<div>qwe qwe</div>'));
+//menu2.set('aa', new Htme.Component.Element.String('<div>qwe qwe</div>'));
 
 
 </script>
