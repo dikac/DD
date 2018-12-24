@@ -1,6 +1,6 @@
 namespace Htme.Component.Structure {
 
-    import Panel = Htme.Component.Structure.Panel.Panel;
+    //import Panel = Htme.Component.Structure.Panel.Panel;
     import Dom = Htme.Component.Element.Dom;
    // import AbstractBlock = Htme.Component.Element.Standard;
    // import PanelStandard = Htme.Component.Structure.Panel.Standard;
@@ -21,7 +21,7 @@ namespace Htme.Component.Structure {
             this.attachPanel();
         }
 
-        get panel() : Panel {
+        get panel() : Htme.Component.Structure.Panel.Panel {
 
             return this.$panel;
         }

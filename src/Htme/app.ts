@@ -1,6 +1,7 @@
 namespace Htme {
 
     import Dom = Htme.Component.Element.Dom;
+    import MapPlugin = Htme.Plugin.MapPlugin;
 
     export class app  {
 
@@ -11,7 +12,16 @@ namespace Htme {
             private plugins : string[] = [],
             content : string|null = null
         ) {
-            this.container = new Htme.Plugin.Container.Element(selector);
+
+            let map = new MapPlugin();
+
+            for(let a of plugins) {
+
+                map.set(a, Htme.Plugin[a]);
+            }
+
+
+            this.container = new Htme.Plugin.Container.Element(selector, map);
 
         }
 
@@ -44,30 +54,30 @@ namespace Htme {
 
     }
 
-    export function init(
-        selector : JQuery|string,
-        plugins : string[] = [],
-        content : string|null = null
-    ) {
-
-        let container = new Htme.Plugin.Container.Element(selector);
-        let element;
-
-        container.element.children().each(function(k, v){
-
-            for(let plugin of plugins) {
-
-                container.add(Plugin[plugin].deserialize(v, plugins));
-            }
-
-        });
-
-        for(let plugin of plugins) {
-
-            Plugin[plugin].handle($(content), plugins);
-        }
-
-       return element;
-    }
+    // export function init(
+    //     selector : JQuery|string,
+    //     plugins : string[] = [],
+    //     content : string|null = null
+    // ) {
+    //
+    //     let container = new Htme.Plugin.Container.Element(selector);
+    //     let element;
+    //
+    //     container.element.children().each(function(k, v){
+    //
+    //         for(let plugin of plugins) {
+    //
+    //             container.add(Plugin[plugin].deserialize(v, plugins));
+    //         }
+    //
+    //     });
+    //
+    //     for(let plugin of plugins) {
+    //
+    //         Plugin[plugin].handle($(content), plugins);
+    //     }
+    //
+    //    return element;
+    // }
 
 }

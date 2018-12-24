@@ -10,7 +10,7 @@ namespace Htme.Plugin.Container {
 
         constructor(
             element : JQuery|string|null = null,
-            handler : (content : JQuery|string)  => Structure
+            handler : Htme.Plugin.Plugin
         ) {
 
             super(element);
@@ -22,17 +22,20 @@ namespace Htme.Plugin.Container {
             this.panel.get('new');
             this.panel.get('edit');
             this.panel.get('window');
+
         }
 
         readonly [Symbol.toStringTag]: string;
         readonly size: number;
 
-        [Symbol.iterator](): IterableIterator<Htme.Component.Structure.Standard> {
+        [Symbol.iterator](): IterableIterator<Htme.Component.Structure.Standard>
+        {
 
             return this.children[Symbol.iterator]();
         }
 
-        add(value: Htme.Component.Structure.Standard): this {
+        add(value: Htme.Component.Structure.Standard): this
+        {
 
             this.children.add(value);
             return this;
@@ -43,29 +46,35 @@ namespace Htme.Plugin.Container {
             this.children.clear();
         }
 
-        delete(value: Htme.Component.Structure.Standard): boolean {
+        delete(value: Htme.Component.Structure.Standard): boolean
+        {
 
             return this.children.delete(value);
         }
 
-        entries(): IterableIterator<[Htme.Component.Structure.Standard, Htme.Component.Structure.Standard]> {
+        entries(): IterableIterator<[Htme.Component.Structure.Standard, Htme.Component.Structure.Standard]>
+        {
             return this.children.entries();
         }
 
-        forEach(callbackfn: (value: Htme.Component.Structure.Standard, value2: Htme.Component.Structure.Standard, set: Set<Htme.Component.Structure.Standard>) => void, thisArg?: any): void {
+        forEach(callbackfn: (value: Htme.Component.Structure.Standard, value2: Htme.Component.Structure.Standard, set: Set<Htme.Component.Structure.Standard>) => void, thisArg?: any): void
+        {
 
             return this.children.forEach(callbackfn, thisArg);
         }
 
-        has(value: Htme.Component.Structure.Standard): boolean {
+        has(value: Htme.Component.Structure.Standard): boolean
+        {
             return this.children.has(value);
         }
 
-        keys(): IterableIterator<Htme.Component.Structure.Standard> {
+        keys(): IterableIterator<Htme.Component.Structure.Standard>
+        {
             return this.children.keys();
         }
 
-        values(): IterableIterator<Htme.Component.Structure.Standard> {
+        values(): IterableIterator<Htme.Component.Structure.Standard>
+        {
             return this.children.values();
         }
 
