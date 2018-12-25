@@ -1,4 +1,4 @@
-QUnit.test( "Htme.Component.Element.Block construct", function( assert ) {
+QUnit.test( "Htme.Component.Element.Compound construct", function( assert ) {
 
     let Block = Htme.Component.Element.Block;
     let Compound = Htme.Component.Element.Compound;
@@ -26,7 +26,7 @@ QUnit.test( "Htme.Component.Element.Block construct", function( assert ) {
 
 });
 
-QUnit.test( "Htme.Component.Element.Block append", function( assert ) {
+QUnit.test( "Htme.Component.Element.Compound append", function( assert ) {
 
     let Block = Htme.Component.Element.Block;
     let Compound = Htme.Component.Element.Compound;
@@ -57,7 +57,7 @@ QUnit.test( "Htme.Component.Element.Block append", function( assert ) {
 
 });
 
-QUnit.test( "Htme.Component.Element.Block prepend", function( assert ) {
+QUnit.test( "Htme.Component.Element.Compound prepend", function( assert ) {
 
     let Block = Htme.Component.Element.Block;
     let Compound = Htme.Component.Element.Compound;
@@ -94,7 +94,7 @@ QUnit.test( "Htme.Component.Element.Block prepend", function( assert ) {
 });
 
 
-QUnit.test( "Htme.Component.Element.Block attach & detach", function( assert ) {
+QUnit.test( "Htme.Component.Element.Compound attach & detach", function( assert ) {
 
     let Block = Htme.Component.Element.Block;
     let Compound = Htme.Component.Element.Compound;

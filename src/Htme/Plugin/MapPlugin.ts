@@ -4,12 +4,14 @@ namespace Htme.Plugin {
 
     export class MapPlugin extends MapImplement<string, Plugin> implements Plugin  {
 
+        name : string = 'Map';
+
         deserialize(jquery: JQuery): Htme.Component.Structure.Structure | null
         {
             let structure;
 
             for(let [k, value] of this) {
-
+               // console.log(value);
                 structure = value.deserialize(jquery);
 
                 if(structure) {
@@ -19,6 +21,10 @@ namespace Htme.Plugin {
             }
 
             return null;
+        }
+
+        plugin(Plugin) {
+
         }
 
         process(structure: Htme.Component.Structure.Structure)

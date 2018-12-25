@@ -88,9 +88,11 @@ namespace Htme.Component.Structure.Panel.Menu {
 
         set(key : string, block: Item) : this {
 
-            block.structure
-                = this.structure;
+            block.structure = this.structure;
             this.addClass(block);
+
+            console.log(key, block.element);
+
             this.items.set(key, block);
             return this;
         }
@@ -156,7 +158,7 @@ namespace Htme.Component.Structure.Panel.Menu {
 
 
         entries(): IterableIterator<[string, Item]> {
-            return             this.items.entries();;
+            return   this.items.entries();;
         }
 
         forEach(callbackfn: (value: Item, key: string, map: Map<string, Item>) => void, thisArg?: any): void {

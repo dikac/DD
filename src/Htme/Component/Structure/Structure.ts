@@ -9,6 +9,7 @@ namespace Htme.Component.Structure {
     export interface Structure extends Element  {
 
         readonly panel : Panel;
+        content : string;
 
     }
 

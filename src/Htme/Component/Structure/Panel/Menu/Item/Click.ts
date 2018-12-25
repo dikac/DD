@@ -18,7 +18,6 @@ namespace Htme.Component.Structure.Panel.Menu.Item {
 
             let $this = this;
             this.element.click(function (event) {
-
                 handler(event, $this.structure)
             });
         }

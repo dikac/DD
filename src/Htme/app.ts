@@ -9,47 +9,46 @@ namespace Htme {
 
         constructor(
             selector : JQuery|string,
-            private plugins : string[] = [],
-            content : string|null = null
+            private plugins : Htme.Plugin.Plugin[] = [],
         ) {
 
-            let map = new MapPlugin();
+            plugins.push(new Htme.Plugin.Container.Plugin());
 
-            for(let a of plugins) {
-
-                map.set(a, Htme.Plugin[a]);
-            }
-
-
-            this.container = new Htme.Plugin.Container.Element(selector, map);
-
-        }
-
-        set(data) {
-
-            let dom = new Dom(data);
-            let plugins = this.plugins;
-            let container = this.container;
-
-            dom.element.children().each(function(k, v){
-
-                for(let plugin of plugins) {
-
-                    container.add(Plugin[plugin].deserialize(v, plugins));
-                }
-
-            });
-
+            let unordered = {};
             for(let plugin of plugins) {
 
-                Plugin[plugin].handle(plugin, plugins);
+                unordered[plugin.name] = plugin;
             }
 
+            const ordered = {};
+            Object.keys(unordered).sort().forEach(function(key) {
+                ordered[key] = unordered[key];
+            });
+
+
+            let map = new MapPlugin();
+            for(let k in ordered) {
+
+                let plugin = ordered[k];
+                plugin.plugin(map);
+
+                map.set(k, plugin);
+            }
+
+           // console.log(map);
+            this.container = new Htme.Plugin.Container.Structure.Structure(selector, map);
+        }
+
+
+
+        set(data : string) {
+
+            this.container.IsContent = data;
         }
 
         get() : string {
 
-            return this.container.toString();
+            return this.container.content;
         }
 
     }

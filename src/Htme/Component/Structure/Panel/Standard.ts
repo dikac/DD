@@ -7,6 +7,11 @@ namespace Htme.Component.Structure.Panel {
     import MenuStandard = Htme.Component.Structure.Panel.Menu.Standard;
     import MapElement = Htme.Component.Element.MapElement;
 
+    // export function defaultFactory (element : JQuery|string|null = null) : Menu | null {
+    //
+    //     return new Standard(element);
+    // }
+
     export class Standard extends MapElement<Menu> implements Panel {
 
         private $name : String;
@@ -16,15 +21,16 @@ namespace Htme.Component.Structure.Panel {
             structure : Structure,
             element : JQuery|string|null = null,
             name : string = '{panel name}',
-            factory : (element : JQuery) => Menu | null = null
+           // factory : (element : JQuery|string|null) => Menu | null = defaultFactory
         ) {
-            super(element, factory);
+            super(element/*, factory*/);
             this.structure = structure;
 
             this.attributes.get('class').add(IDENTIFIER);
 
             this.$name = new Htme.Component.Element.PanelName(name);
 
+            this.element.prepend(this.$name.element);
             //this.attachName();
         }
 
@@ -51,13 +57,15 @@ namespace Htme.Component.Structure.Panel {
             return this;
         }
 
+
         get(key: string): Menu {
 
             let menu = super.get(key);
 
             if(!menu) {
 
-                this.set(key, new MenuStandard(this.structure, null, key))
+                menu = new MenuStandard(this.structure, null, key);
+                this.set(key, menu)
             }
 
             return menu;
@@ -79,31 +87,31 @@ namespace Htme.Component.Structure.Panel {
         // //     this.attachName();
         // // }
 
-        attachName() {
+        // attachName() {
+        //
+        //     // value is not available on object construction
+        //     if(this.$name) {
+        //
+        //         this.element.prepend(this.$name.element);
+        //     }
+        // }
 
-            // value is not available on object construction
-            if(this.$name) {
+        // detachName() {
+        //
+        //     this.$name.detach();
+        // }
 
-                this.element.prepend(this.$name.element);
-            }
-        }
-
-        detachName() {
-
-            this.$name.detach();
-        }
-
-        attach()
-        {
-            super.attach();
-            this.attachName();
-        }
-
-        detach()
-        {
-            this.detachName();
-            super.detach();
-        }
+        // attach()
+        // {
+        //     super.attach();
+        //    // this.attachName();
+        // }
+        //
+        // detach()
+        // {
+        //     //this.detachName();
+        //     super.detach();
+        // }
 
         get name() : string
         {

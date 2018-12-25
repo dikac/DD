@@ -1,4 +1,4 @@
-QUnit.test( "Htme.Component.Structure construct", function( assert ) {
+QUnit.test( "Htme.Component.Structure.Panel.Standard construct", function( assert ) {
 
     let dom = $(`<div></div>`);
     let element = new Htme.Component.Structure.Panel(dom);
@@ -11,7 +11,7 @@ QUnit.test( "Htme.Component.Structure construct", function( assert ) {
 });
 
 
-QUnit.test( "Htme.Component.Structure set name", function( assert ) {
+QUnit.test( "Htme.Component.Structure.Panel.Standard name", function( assert ) {
 
     let dom = $(`<div></div>`);
     let element = new Htme.Component.Structure.Panel(dom);
@@ -27,7 +27,7 @@ QUnit.test( "Htme.Component.Structure set name", function( assert ) {
     assert.equal(element.name, 'Content',"Passed!");
 });
 
-QUnit.test( "Htme.Component.Structure add panel", function( assert ) {
+QUnit.test( "Htme.Component.Structure.Panel.Standard add panel", function( assert ) {
 
     let dom = $(`<div></div>`);
     let element = new Htme.Component.Structure.Panel(dom);

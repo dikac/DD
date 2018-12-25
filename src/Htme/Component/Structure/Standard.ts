@@ -10,15 +10,31 @@ namespace Htme.Component.Structure {
         private $panel : Htme.Component.Structure.Panel.Standard;
 
         constructor(
-            element : JQuery|string|null = null
+            element : JQuery|string|null = null,
+            handler : Htme.Plugin.Plugin
         ) {
 
             super(element);
 
             this.$panel = new Htme.Component.Structure.Panel.Standard(this, null,'%name%');
 
+            handler.process(this);
+
             // call manually
             this.attachPanel();
+        }
+
+        get content () : string {
+
+            this.detachPanel();
+            let string = this.element.html();
+            this.attachPanel();
+            return string;
+        }
+
+        set content(content : string) {
+
+            this.element.html(content);
         }
 
         get panel() : Htme.Component.Structure.Panel.Panel {
@@ -37,25 +53,20 @@ namespace Htme.Component.Structure {
 
         detachPanel() {
 
-            this.$panel.detach();
+            this.$panel.element.detach();
         }
 
-        // set (content : string|JQuery) {
         //
-        //     super.set(content);
+        // attach()
+        // {
         //     this.attachPanel();
         // }
-
-        attach()
-        {
-            this.attachPanel();
-        }
-
-        detach()
-        {
-            this.detachPanel();
-            this.element.empty();
-        }
+        //
+        // detach()
+        // {
+        //     this.detachPanel();
+        //     this.element.empty();
+        // }
 
     }
 

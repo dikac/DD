@@ -3,33 +3,31 @@ namespace Htme.Component.Element {
     import MapImplement = Htme.Component.Datastructure.MapImplement;
    // import Attributes = Htme.Component.Element.Attributes.Attributes;
 
-    export class MapElement<E extends Element> extends MapImplement<string, E>{
+    export class MapElement<Value extends Element> extends MapImplement<string, Value> implements Element {
 
         private dom : Dom;
 
         constructor(
             element : JQuery|string|null = null,
-            factory : (element : JQuery) => E | null = null
+            factory : (JQuery) => Value| null = null
         ) {
 
             super();
 
             this.dom = new Dom(element);
 
-            let $this = this;
+            let buffer = [];
 
-            if(factory) {
+            this.dom.element.children().each(function (k, v) {
 
-                this.dom.element.children().each(function (k, v) {
+                buffer.push(factory($(v)));
 
-                    $this.superSet(k.toString(), factory($(v)));
-                })
+            });
+
+            for(let [k, v] of buffer) {
+
+                this.set(k.toString(), v);
             }
-        }
-
-        protected superSet(key : string, element: E) {
-
-            super.set(key, element);
         }
 
         clear() {
@@ -38,18 +36,24 @@ namespace Htme.Component.Element {
             this.element.empty();
         }
 
-        attach() {
+        // attach() {
+        //
+        //     this.detach();
+        //     for(let [key, value] of this) {
+        //
+        //         this.element.append(value.element);
+        //     }
+        // }
 
-            for(let [key, value] of this) {
-
-                this.element.append(value.element);
-            }
-        }
-
-        detach() {
-
-            this.element.html();
-        }
+        // detach() {
+        //
+        //     for(let [key, value] of this) {
+        //
+        //         value.detach();
+        //     }
+        //
+        //     this.element.empty();
+        // }
 
         // protected ensureKey(key : string|null) : string {
         //
@@ -63,35 +67,37 @@ namespace Htme.Component.Element {
         //     return key;
         // }
 
+        // hide(key : string) {
+        //
+        //     let value = this.get(key);
+        //
+        //     if(value) {
+        //
+        //         value.element.detach();
+        //     }
+        // }
+
         delete(key : string) : boolean {
 
-            if(super.delete(key)) {
+            if(this.has(key)) {
 
-                this.attach();
+                super.get(key).element.remove();
+                super.delete(key);
+
                 return true;
             }
 
             return false;
         }
 
-        // replace (content : string|JQuery) {
-        //
-        //     content = ensureJquery(content);
-        //
-        //     this.element.empty();
-        //     let $this = this;
-        //
-        //     content.each(function (k, v) {
-        //
-        //         $this.append(new String($(v)));
-        //     })
-        // }
 
+        set(key : string, element: Value) : this {
 
-        set(key : string, element: E) : this {
-
+            this.delete(key);
             super.set(key, element);
-            this.attach();
+            this.element.append(element.element);
+            // this.detach();
+            // this.attach();
             return this;
         }
 

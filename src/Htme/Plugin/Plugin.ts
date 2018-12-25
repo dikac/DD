@@ -5,6 +5,8 @@ namespace Htme.Plugin {
 
     export interface Plugin {
 
+        name : string;
+        plugin(Plugin);
         deserialize(jquery : JQuery) : Structure|null;
         process(structure : Structure);
     }

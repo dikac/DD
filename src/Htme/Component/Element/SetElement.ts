@@ -5,24 +5,44 @@ namespace Htme.Component.Element {
     import SetImplement = Htme.Component.Datastructure.SetImplement;
     import Element = Htme.Component.Element.Element;
 
-    export class SetElement extends SetImplement<Element> implements Element {
+    export class SetElement<Value extends Element = Element> extends SetImplement<Value> implements Element {
 
         private dom : Dom;
         private $content : string;
 
-        constructor(element : JQuery|string|null = null) {
+        constructor(
+            element : JQuery|string|null = null,
+                    factory : (JQuery) => Value| null = null
+        ) {
 
             super();
 
             this.dom = new Dom(element);
             this.$content = this.dom.element.html();
 
+            let buffer = [];
+
+            this.dom.element.children().each(function (k, v) {
+
+                buffer.push(factory($(v)));
+
+            });
+
+            //console.log(buffer);
+
+            for(
+                let                     v
+                of buffer) {
+
+                this.add(v);
+            }
+
         }
 
-        add(value: Element) : this
+        add(value: Value) : this
         {
             super.add(value);
-            this.attach();
+            this.element.append(value.element);
             return this;
         }
 
@@ -32,11 +52,11 @@ namespace Htme.Component.Element {
             this.element.empty();
         }
 
-        delete(value: Element): boolean
+        delete(value: Value): boolean
         {
             if(super.delete(value)) {
 
-                this.attach();
+                value.element.remove();
                 return true;
             }
 
@@ -59,17 +79,17 @@ namespace Htme.Component.Element {
             return this.dom.attributes;
         }
 
-        attach() {
-
-            for(let value of this) {
-
-                this.element.append(value.element);
-            }
-        }
-
-        detach() {
-
-            this.element.html();
-        }
+        // attach() {
+        //
+        //     for(let value of this) {
+        //
+        //         this.element.append(value.element);
+        //     }
+        // }
+        //
+        // detach() {
+        //
+        //     this.element.html();
+        // }
     }
 }

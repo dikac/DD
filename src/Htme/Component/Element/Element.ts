@@ -4,9 +4,9 @@ namespace Htme.Component.Element {
 
         attributes : Attributes.Attributes;
 
-        detach();
-
-        attach();
+        // detach();
+        //
+        // attach();
 
         readonly element: JQuery;
 

@@ -2,16 +2,18 @@
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 14px;
     /*line-height: 1.42857143;*/
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
+    height: 25px;
+
     width: 100%;
     background-color: #f3f3f3;
 
-    box-shadow:
-            inset -1px -1px #dcdcdc,
-            inset 1px 1px #dcdcdc
-    ;
+    border-bottom: 1px solid #dcdcdc;
+
+    /*box-shadow:*/
+            /*inset -1px -1px #dcdcdc,*/
+            /*inset 1px 1px #dcdcdc*/
+    /*;*/
 
 }
 
@@ -23,11 +25,13 @@
 .HtmeContainer {
 
     position: relative;;
-    padding-top: 23px;
-    box-shadow:
-            inset -1px 0 #dcdcdc,
-            inset 1px 0 #dcdcdc,
-            inset 0 -1px #dcdcdc
+    /*padding-top: 23px;*/
+
+    border: 1px solid #dcdcdc;
+    /*box-shadow:*/
+            /*inset -1px 0 #dcdcdc,*/
+            /*inset 1px 0 #dcdcdc,*/
+            /*inset 0 -1px #dcdcdc*/
     ;
 }
 
@@ -53,6 +57,7 @@
     background-color: #f8f8f8;
     min-width: 100px;
     width: auto;
+    z-index: 10;
     box-shadow:
             inset -1px 0 #dcdcdc,
             inset 1px 0 #dcdcdc,
