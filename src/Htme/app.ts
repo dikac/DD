@@ -1,7 +1,10 @@
+///<reference path="Plugin/MapPlugin.ts"/>
+///<reference path="Plugin/Container/Structure/Structure.ts"/>
+
 namespace Htme {
 
-    import Dom = Htme.Component.Element.Dom;
     import MapPlugin = Htme.Plugin.MapPlugin;
+    import Container = Htme.Plugin.Container.Structure.Structure;
 
     export class app  {
 
@@ -11,9 +14,6 @@ namespace Htme {
             selector : JQuery|string,
             private plugins : Htme.Plugin.Plugin[] = [],
         ) {
-
-            plugins.push(new Htme.Plugin.Container.Plugin());
-
             let unordered = {};
             for(let plugin of plugins) {
 
@@ -35,10 +35,8 @@ namespace Htme {
                 map.set(k, plugin);
             }
 
-           // console.log(map);
-            this.container = new Htme.Plugin.Container.Structure.Structure(selector, map);
+            this.container = new Container(selector, map);
         }
-
 
 
         set(data : string) {
@@ -52,31 +50,5 @@ namespace Htme {
         }
 
     }
-
-    // export function init(
-    //     selector : JQuery|string,
-    //     plugins : string[] = [],
-    //     content : string|null = null
-    // ) {
-    //
-    //     let container = new Htme.Plugin.Container.Element(selector);
-    //     let element;
-    //
-    //     container.element.children().each(function(k, v){
-    //
-    //         for(let plugin of plugins) {
-    //
-    //             container.add(Plugin[plugin].deserialize(v, plugins));
-    //         }
-    //
-    //     });
-    //
-    //     for(let plugin of plugins) {
-    //
-    //         Plugin[plugin].handle($(content), plugins);
-    //     }
-    //
-    //    return element;
-    // }
 
 }

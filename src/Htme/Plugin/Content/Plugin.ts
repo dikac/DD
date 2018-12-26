@@ -1,15 +1,16 @@
-namespace Htme.Plugin.Container {
+///<reference path="Structure/Structure.ts"/>
+namespace Htme.Plugin.Content {
 
     import PluginInterface = Htme.Plugin.Plugin;
-
     import Structure = Htme.Component.Structure.Structure;
-    import ContainerStructure = Htme.Plugin.Container.Structure.Structure;
+    import ContentStructure = Htme.Plugin.Content.Structure.Structure;
     import Click = Htme.Component.Structure.Panel.Menu.Item.Click;
     import Dom = Htme.Component.Element.Dom;
+    import Type = Htme.Component.Structure.Type.Container;
 
     export class Plugin implements PluginInterface {
 
-        name : string = 'Container';
+        name : string = 'Content';
 
         private $plugin : PluginInterface;
 
@@ -22,37 +23,29 @@ namespace Htme.Plugin.Container {
             jquery : JQuery,
         ): Structure|null {
 
-          //  console.log(jquery);
             let element = new Dom(jquery);
 
             if((new Handle.Handle).valid(element.attributes)) {
 
-               // if(Validator.IsContainer(element.attributes)) {
-
-                    return new Htme.Plugin.Container.Structure.Structure(element.element, this.$plugin);
-              //  }
-
+                return new ContentStructure(element.element, this.$plugin);
             }
 
             return null;
         }
 
-
         process(structure : Structure) {
 
-            if((new Htme.Component.Structure.Type.Container).valid(structure.attributes)) {
+            if((new Type).valid(structure.attributes)) {
 
                 let $this = this;
 
-                let click = new Click('<div>Container</div>',function (event, structure) {
+                let click = new Click('<div>Content</div>',function (event, structure) {
 
-                    let container = new ContainerStructure(null, $this.$plugin);
+                    let container = new ContentStructure(null, $this.$plugin);
                     structure.element.append(container.element)
-
                 });
 
-                structure.panel.get('new').set('Container', click);
-
+                structure.panel.get('new').set('Content', click);
             }
         }
 

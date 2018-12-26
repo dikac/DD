@@ -11,7 +11,7 @@ QUnit.test( "Component.Element.Block construct", function( assert ) {
 });
 
 
-QUnit.test( "Component.Element.String set", function( assert ) {
+QUnit.test( "Component.Element.Block set", function( assert ) {
 
     let Block = Htme.Component.Element.Block;
 
@@ -30,20 +30,20 @@ QUnit.test( "Component.Element.String set", function( assert ) {
 
 });
 
-QUnit.test( "Component.Element.String detach & attach", function( assert ) {
-
-    let Block = Htme.Component.Element.Block;
-
-    let dom = $(`<div><p></p></div>`);
-    let element = new Block(dom);
-
-    element.detach();
-
-    assert.equal(element.content.toString(), '<p></p>',"Passed!");
-    assert.equal(element.toString(), '<div></div>',"Passed!");
-
-    element.attach();
-
-    assert.equal(element.content.toString(), '<p></p>',"Passed!");
-    assert.equal(element.toString(), '<div><p></p></div>',"Passed!");
-});
+// QUnit.test( "Component.Element.Block detach & attach", function( assert ) {
+//
+//     let Block = Htme.Component.Element.Block;
+//
+//     let dom = $(`<div><p></p></div>`);
+//     let element = new Block(dom);
+//
+//     element.detach();
+//
+//     assert.equal(element.content.toString(), '<p></p>',"Passed!");
+//     assert.equal(element.toString(), '<div></div>',"Passed!");
+//
+//     element.attach();
+//
+//     assert.equal(element.content.toString(), '<p></p>',"Passed!");
+//     assert.equal(element.toString(), '<div><p></p></div>',"Passed!");
+// });

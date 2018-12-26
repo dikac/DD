@@ -5,6 +5,8 @@
     <title>Core</title>
     <script src="jquery-ui-1.12.1/jquery-3.3.1.min.js"></script>
     <script src="jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="jquery-ui-1.12.1/jquery-ui.css">
+    <link rel="stylesheet" href="https://jqueryui.com/resources/demos/style.css">
     <!--<script src="dist/bundle.js"></script>-->
     <!--<script src="node_modules/systemjs/dist/system.js" ></script>-->
     <link rel="stylesheet" href="css/htme.css" media="all">
@@ -13,14 +15,29 @@
 </head>
 <body>
 <div class="ts">
-    <div data-htme-type="Container" class="HtmeContainer" data-htme-handle="Container"></div>
+    <div data-htme-type="Content" class="HtmeStructure" data-htme-handle="Content"></div>
+    <div data-htme-type="Content" class="HtmeStructure" data-htme-handle="Content"></div>
+    <div data-htme-type="Content" class="HtmeStructure" data-htme-handle="Content"></div>
+    <div data-htme-type="Container" class="HtmeStructure" data-htme-handle="Container">
+        <div data-htme-type="Content" class="HtmeStructure" data-htme-handle="Content"></div>
+        <div data-htme-type="Content" class="HtmeStructure" data-htme-handle="Content"></div>
+        <div data-htme-type="Content" class="HtmeStructure" data-htme-handle="Content"></div>
+        <div data-htme-type="Content" class="HtmeStructure" data-htme-handle="Content"></div>
+    </div>
 </div>
 <script>
 
+
+
 let app = new Htme.app('.ts', [
-    Htme.Plugin.Container.load()
+    Htme.Plugin.Container.Load(),
+    Htme.Plugin.Content.Load(),
+    Htme.Plugin.Sortable.Load(),
 ]);
 
+let mdl = new Htme.Component.Element.Modal();
+mdl.set('attr',new Htme.Component.Element.String(null, 'stringift'));
+mdl.show();
 // let plugin = new Htme.Plugin.Container.Plugin();
 // plugin.deserialize(new Htme.Component.Structure.Base($('.ts')))
 
@@ -34,7 +51,7 @@ let app = new Htme.app('.ts', [
 //     structure.element.append($('<p>zzz</p>'))
 // });
 // //menu1.set('aa', new Htme.Component.Element.String('<div>qwe qwe</div>'));
-// base.panel.get('new').set('container', item);
+// base.panel.get('new').set('ToContainer', item);
 
 
 

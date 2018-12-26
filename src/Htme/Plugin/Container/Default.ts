@@ -2,7 +2,7 @@ namespace Htme.Plugin {
 
 
     import PluginInterface = Htme.Plugin.Plugin;
-    import IsContainer = Htme.Component.Validator.IsContainer;
+
     import Standard = Htme.Component.Structure.Standard;
     import ContainerStructure = Htme.Plugin.Container.Structure.Structure;
     import Click = Htme.Component.Structure.Panel.Menu.Item.Click;

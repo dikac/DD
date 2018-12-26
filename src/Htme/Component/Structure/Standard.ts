@@ -16,6 +16,8 @@ namespace Htme.Component.Structure {
 
             super(element);
 
+            this.attributes.get('class').add(Structure.IDENTIFIER);
+
             this.$panel = new Htme.Component.Structure.Panel.Standard(this, null,'%name%');
 
             handler.process(this);

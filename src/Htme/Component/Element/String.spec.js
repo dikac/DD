@@ -27,17 +27,17 @@ QUnit.test( "Component.Element.String set", function( assert ) {
 
 });
 
-QUnit.test( "Component.Element.String detach & attach", function( assert ) {
-
-    let dom = $(`<div>value</div>`);
-    let string = new Htme.Component.Element.String(dom);
-
-    string.detach();
-    assert.equal('', dom.html(), "Passed!");
-    assert.equal('value', string.content, "Passed!");
-
-
-    string.attach();
-    assert.equal('value', dom.html(), "Passed!");
-    assert.equal('value', string.content, "Passed!");
-});
+// QUnit.test( "Component.Element.String detach & attach", function( assert ) {
+//
+//     let dom = $(`<div>value</div>`);
+//     let string = new Htme.Component.Element.String(dom);
+//
+//     string.detach();
+//     assert.equal('', dom.html(), "Passed!");
+//     assert.equal('value', string.content, "Passed!");
+//
+//
+//     string.attach();
+//     assert.equal('value', dom.html(), "Passed!");
+//     assert.equal('value', string.content, "Passed!");
+// });

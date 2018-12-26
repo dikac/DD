@@ -16,16 +16,6 @@
   },
   "types" : ["jquery"],
   "include":  [
-    "src/Htme/Component/Element/String.ts",
-    "src/Htme/Component/Dom/Dom.ts",
-    "src/Htme/Component/Datastructure/MapImplement.ts",
-    "src/Htme/Component/Datastructure/SetImplement.ts",
-    "src/Htme/Component/Element/SetElement.ts",
-    "src/Htme/Component/Element/MapElement.ts",
-    "src/Htme/Component/Structure/Standard.ts",
-    "src/Htme/Plugin/Container/Structure/Structure.ts",
-    "src/Htme/Plugin/MapPlugin.ts",
-    "src/Htme/Component/Structure/Panel/Menu/Standard.ts",
     "src"
   ],
   "exclude":   [

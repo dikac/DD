@@ -1,6 +1,6 @@
 namespace Htme.Plugin.Container {
 
-    export function load () {
+    export function Load () {
 
         return new Plugin();
     }

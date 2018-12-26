@@ -1,3 +1,4 @@
+///<reference path="../../../Component/Element/SetElement.ts"/>
 namespace Htme.Plugin.Container.Structure {
 
     import StructureInterface = Htme.Component.Structure.Structure;
@@ -26,10 +27,12 @@ namespace Htme.Plugin.Container.Structure {
             this.$panel =  new  Htme.Component.Structure.Panel.Standard(this, null, 'Container');
 
 
-            Htme.Component.Process.container(this.attributes);
+            (new Htme.Component.Structure.Type.Container).set(this.attributes);
+            (new Htme.Plugin.Container.Handle.Handle).set(this.attributes)
+           // Htme.Component.Process.ToContainer(this.attributes);
+           // this.attributes.get('data-htme-handle').set('Container');
 
             handler.process(this);
-
 
             this.$panel.get('new');
             this.$panel.get('edit');

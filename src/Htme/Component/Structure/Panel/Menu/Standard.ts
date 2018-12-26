@@ -91,7 +91,7 @@ namespace Htme.Component.Structure.Panel.Menu {
             block.structure = this.structure;
             this.addClass(block);
 
-            console.log(key, block.element);
+          //  console.log(key, block.element);
 
             this.items.set(key, block);
             return this;

@@ -1,3 +1,4 @@
+///<reference path="Menu/Standard.ts"/>
 namespace Htme.Component.Structure.Panel {
 
    // import Compound = Htme.Component.Element.Compound;
@@ -81,9 +82,9 @@ namespace Htme.Component.Structure.Panel {
         //     return super.prepend(block/*, key*/);
         // }
         //
-        // // set (content : string|JQuery) {
+        // // set (ToContent : string|JQuery) {
         // //
-        // //     super.set(content);
+        // //     super.set(ToContent);
         // //     this.attachName();
         // // }
 

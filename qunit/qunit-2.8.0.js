@@ -363,7 +363,7 @@
 
         function breadthFirstCompareChild(a, b) {
 
-            // If a is a container not reference-equal to b, postpone the comparison to the
+            // If a is a ToContainer not reference-equal to b, postpone the comparison to the
             // end of the pairs queue -- unless (a, b) has been seen before, in which case skip
             // over the pair.
             if (a === b) {
@@ -608,11 +608,11 @@
                 pair = pairs[i];
 
                 // Perform type-specific comparison on any pairs that are not strictly
-                // equal. For container types, that comparison will postpone comparison
-                // of any sub-container pair to the end of the pair queue. This gives
+                // equal. For ToContainer types, that comparison will postpone comparison
+                // of any sub-ToContainer pair to the end of the pair queue. This gives
                 // breadth-first search order. It also avoids the reprocessing of
                 // reference-equal siblings, cousins etc, which can have a significant speed
-                // impact when comparing a container of small objects each of which has a
+                // impact when comparing a ToContainer of small objects each of which has a
                 // reference to the same (singleton) large object.
                 if (pair.a !== pair.b && !typeEquiv(pair.a, pair.b)) {
                     return false;
@@ -930,7 +930,7 @@
                         }
                         ret += close;
 
-                        // Show content of TextNode or CDATASection
+                        // Show ToContent of TextNode or CDATASection
                         if (_node.nodeType === 3 || _node.nodeType === 4) {
                             ret += _node.nodeValue;
                         }
@@ -959,7 +959,7 @@
                     // Object calls it internally, the key part of an item in a map
                     key: quote,
 
-                    // Function calls it internally, it's the content of the function
+                    // Function calls it internally, it's the ToContent of the function
                     functionCode: "[code]",
 
                     // Node calls it internally, it's a html attribute value
@@ -4540,7 +4540,7 @@
         todoTests: 0
     };
 
-    // Escape text for attribute or text content.
+    // Escape text for attribute or text ToContent.
     function escapeText(s) {
         if (!s) {
             return "";
@@ -4906,7 +4906,7 @@
             addEvent(moduleSearch, "focus", searchFocus);
             addEvent(moduleSearch, "click", searchFocus);
 
-            label.id = "qunit-modulefilter-search-container";
+            label.id = "qunit-modulefilter-search-ToContainer";
             label.innerHTML = "Module: ";
             label.appendChild(moduleSearch);
 
@@ -4947,7 +4947,7 @@
                 addEvent(document, "click", hideHandler);
                 addEvent(document, "keydown", hideHandler);
 
-                // Hide on Escape keydown or outside-container click
+                // Hide on Escape keydown or outside-ToContainer click
                 function hideHandler(e) {
                     var inContainer = moduleFilter.contains(e.target);
 

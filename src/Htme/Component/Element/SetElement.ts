@@ -1,3 +1,4 @@
+///<reference path="../Datastructure/SetImplement.ts"/>
 namespace Htme.Component.Element {
 
     import MapImplement = Htme.Component.Datastructure.MapImplement;
@@ -5,14 +6,16 @@ namespace Htme.Component.Element {
     import SetImplement = Htme.Component.Datastructure.SetImplement;
     import Element = Htme.Component.Element.Element;
 
-    export class SetElement<Value extends Element = Element> extends SetImplement<Value> implements Element {
+    export class SetElement<Value extends Element = Element>
+        extends SetImplement<Value>
+        implements Element {
 
         private dom : Dom;
         private $content : string;
 
         constructor(
             element : JQuery|string|null = null,
-                    factory : (JQuery) => Value| null = null
+            factory : (JQuery) => Value| null = null
         ) {
 
             super();
@@ -30,9 +33,7 @@ namespace Htme.Component.Element {
 
             //console.log(buffer);
 
-            for(
-                let                     v
-                of buffer) {
+            for(let v of buffer) {
 
                 this.add(v);
             }

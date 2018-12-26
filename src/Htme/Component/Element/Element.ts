@@ -4,12 +4,11 @@ namespace Htme.Component.Element {
 
         attributes : Attributes.Attributes;
 
-        // detach();
-        //
-        // attach();
-
         readonly element: JQuery;
 
         toString(): string;
+
+
+
     }
 }

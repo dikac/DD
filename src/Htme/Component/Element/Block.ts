@@ -29,23 +29,12 @@ namespace Htme.Component.Element {
         set content(content : Element|null) {
 
             this.$content = content;
-            this.attach();
-        }
-
-        attach() {
-
-            this.detach();
+            this.element.empty();
 
             if(this.$content) {
 
                 this.element.append(this.content.element);
-
             }
-        }
-
-        detach() {
-
-            this.element.empty();
         }
 
         toString(): string {

@@ -5,41 +5,25 @@ namespace Htme.Component.Element {
     export class String implements Element {
 
         private dom : Dom;
-        private $content : string;
 
-        constructor(element : JQuery|string|null = null) {
+        constructor(element : JQuery|string|null = null, content : string|null = null) {
 
             this.dom = new Dom(element);
-            this.$content = this.dom.element.html();
-        }
 
+            if(content !== null) {
 
-        attach() {
-
-            if(this.$content) {
-
-                this.dom.element.html(this.content);
-
-            } else {
-
-                this.dom.element.empty();
+                this.content = content;
             }
-        }
-
-        detach() {
-
-            this.dom.element.empty();
-        }
+         }
 
         get content() : string {
 
-            return this.$content;
+            return this.dom.element.html();
         }
 
         set content(content : string) {
 
-            this.$content = content;
-            this.attach();
+            this.element.html(content);//.attach();
         }
 
         toString(): string {

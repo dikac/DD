@@ -1,3 +1,4 @@
+///<reference path="../Component/Datastructure/MapImplement.ts"/>
 namespace Htme.Plugin {
 
     import MapImplement = Htme.Component.Datastructure.MapImplement;
