@@ -26,8 +26,8 @@
 }
 
 .HtmeModal {
-    width: 150px;
-    height: 150px;
+    width: auto;
+    height: auto;
     padding: 0.5em;
 
     border:double black;
@@ -40,7 +40,12 @@
 ;
 }
 
-/*TODO CHANGE NAME SO CONTENT CAN USE*/
+.HtmeActive {
+    box-shadow:
+     -1px -1px 1px green,
+     1px 1px 1px green
+}
+
 .HtmeStructure {
     min-height: 25px;
     padding: 2px;

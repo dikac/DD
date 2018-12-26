@@ -1,0 +1,16 @@
+
+.HtmeAttributeWrapper {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 10px;
+    background-color: #fff;
+    color: #444;
+}
+
+.HtmeAttributeItem {
+    background-color: #444;
+    color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    font-size: 150%;
+}

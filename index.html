@@ -11,6 +11,7 @@
     <!--<script src="node_modules/systemjs/dist/system.js" ></script>-->
     <link rel="stylesheet" href="css/htme.css" media="all">
     <link rel="stylesheet" href="css/plugin/draggable.css" media="all">
+    <link rel="stylesheet" href="css/plugin/attribute.css" media="all">
     <script src="compiled/Htme.js"></script>
 
 </head>
@@ -26,6 +27,15 @@
         <div data-htme-type="Content" class="HtmeStructure" data-htme-handle="Content"></div>
     </div>
 </div>
+
+
+
+<div class="wrapper">
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+</div>
+
 <script>
 
 
@@ -36,6 +46,8 @@ let app = new Htme.app('.ts', [
     Htme.Plugin.Content.Load(),
     Htme.Plugin.Sortable.Load(),
 ]);
+
+
 
 // let mdl = new Htme.Component.Element.Modal();
 // mdl.set('attr',new Htme.Component.Element.String(null, 'stringift'));
