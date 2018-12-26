@@ -42,8 +42,9 @@
 
 .HtmeActive {
     box-shadow:
-     -1px -1px 1px green,
-     1px 1px 1px green
+     0 0 1px 1px rgb(0, 125, 0)
+     /*,1px 1px 1px rgb(0, 125, 0)*/
+    ;
 }
 
 .HtmeStructure {

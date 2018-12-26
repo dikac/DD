@@ -72,48 +72,6 @@ namespace Htme.Component.Structure.Panel {
             return menu;
         }
 
-        // append(block: Menu/*, key: string | null = null*/): number {
-        //
-        //     return super.append(block/*, key*/);
-        // }
-        //
-        // prepend(block: Menu/*, key: string | null = null*/): number {
-        //
-        //     return super.prepend(block/*, key*/);
-        // }
-        //
-        // // set (ToContent : string|JQuery) {
-        // //
-        // //     super.set(ToContent);
-        // //     this.attachName();
-        // // }
-
-        // attachName() {
-        //
-        //     // value is not available on object construction
-        //     if(this.$name) {
-        //
-        //         this.element.prepend(this.$name.element);
-        //     }
-        // }
-
-        // detachName() {
-        //
-        //     this.$name.detach();
-        // }
-
-        // attach()
-        // {
-        //     super.attach();
-        //    // this.attachName();
-        // }
-        //
-        // detach()
-        // {
-        //     //this.detachName();
-        //     super.detach();
-        // }
-
         get name() : string
         {
             return this.$name.content;
