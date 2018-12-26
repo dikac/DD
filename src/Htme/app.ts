@@ -36,6 +36,7 @@ namespace Htme {
             }
 
             this.container = new Container(selector, map);
+            console.log(this.container);
         }
 
 

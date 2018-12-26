@@ -92,6 +92,7 @@
     padding: 4px;
     user-select: none;
     position: relative;
+    cursor: pointer;
 }
 .HtmeMenu:hover {
 
@@ -99,6 +100,7 @@
 }
 .HtmeItem {
 
+    cursor: pointer;
     padding: 5px;
 }
 .HtmeItem:hover {

@@ -10,6 +10,7 @@
     <!--<script src="dist/bundle.js"></script>-->
     <!--<script src="node_modules/systemjs/dist/system.js" ></script>-->
     <link rel="stylesheet" href="css/htme.css" media="all">
+    <link rel="stylesheet" href="css/plugin/draggable.css" media="all">
     <script src="compiled/Htme.js"></script>
 
 </head>
@@ -30,14 +31,15 @@
 
 
 let app = new Htme.app('.ts', [
+    Htme.Plugin.Attribute.Load(),
     Htme.Plugin.Container.Load(),
     Htme.Plugin.Content.Load(),
     Htme.Plugin.Sortable.Load(),
 ]);
 
-let mdl = new Htme.Component.Element.Modal();
-mdl.set('attr',new Htme.Component.Element.String(null, 'stringift'));
-mdl.show();
+// let mdl = new Htme.Component.Element.Modal();
+// mdl.set('attr',new Htme.Component.Element.String(null, 'stringift'));
+// mdl.show();
 // let plugin = new Htme.Plugin.Container.Plugin();
 // plugin.deserialize(new Htme.Component.Structure.Base($('.ts')))
 

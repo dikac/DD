@@ -17,7 +17,7 @@ namespace Htme.Component.Element {
 
             if(content.length > 0) {
 
-                this.content = new Block(content);
+                //this.content = new Block(content);
             }
         }
 

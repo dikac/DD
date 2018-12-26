@@ -25,6 +25,7 @@ namespace Htme.Plugin.Content.Structure {
 
             handler.process(this);
 
+
             this.$panel.get('edit');
             this.$panel.get('window');
 

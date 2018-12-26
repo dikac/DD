@@ -27,6 +27,7 @@ namespace Htme.Plugin.Sortable {
 
             if((new Htme.Component.Structure.Type.Container).valid(structure.attributes)) {
 
+                structure.attributes.get('class').add('HtmeSortable');
                 structure.element.sortable({
                     containment: "parent",
                     tolerance:'pointer',

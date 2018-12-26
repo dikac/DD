@@ -1,3 +1,4 @@
+///<reference path="../../../../Dom/Dom.ts"/>
 namespace Htme.Component.Structure.Panel.Menu.Item {
 
     import Element = Htme.Component.Element.Element;

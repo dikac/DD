@@ -45,7 +45,7 @@ namespace Htme.Plugin.Content {
                     structure.element.append(container.element)
                 });
 
-                structure.panel.get('new').set('Content', click);
+                structure.panel.get('new').set(this.name.toLowerCase(), click);
             }
         }
 

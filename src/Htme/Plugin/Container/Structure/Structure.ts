@@ -1,10 +1,12 @@
 ///<reference path="../../../Component/Element/SetElement.ts"/>
+///<reference path="../../../Component/Structure/Panel/Menu/Item/Click.ts"/>
 namespace Htme.Plugin.Container.Structure {
 
     import StructureInterface = Htme.Component.Structure.Structure;
     import SetImplement = Htme.Component.Datastructure.SetImplement;
     import SetElement = Htme.Component.Element.SetElement;
     import Panel = Htme.Component.Structure.Panel.Panel;
+    import Click = Htme.Component.Structure.Panel.Menu.Item.Click;
    // import StandardPanel = Htme.Component.Structure.Panel.Standard;
    // import Compound = Htme.Component.Element.Compound;
 
@@ -25,21 +27,15 @@ namespace Htme.Plugin.Container.Structure {
             });
 
             this.$panel =  new  Htme.Component.Structure.Panel.Standard(this, null, 'Container');
-
-
-            (new Htme.Component.Structure.Type.Container).set(this.attributes);
-            (new Htme.Plugin.Container.Handle.Handle).set(this.attributes)
-           // Htme.Component.Process.ToContainer(this.attributes);
-           // this.attributes.get('data-htme-handle').set('Container');
-
-            handler.process(this);
-
             this.$panel.get('new');
             this.$panel.get('edit');
             this.$panel.get('window');
-
             this.attachPanel();
 
+            (new Htme.Component.Structure.Type.Container).set(this.attributes);
+            (new Htme.Plugin.Container.Handle.Handle).set(this.attributes);
+
+            handler.process(this);
         }
 
         get panel() : Htme.Component.Structure.Panel.Panel {
