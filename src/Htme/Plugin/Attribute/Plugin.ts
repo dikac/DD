@@ -1,3 +1,4 @@
+///<reference path="Element/Editor.ts"/>
 namespace Htme.Plugin.Attribute {
 
     import PluginInterface = Htme.Plugin.Plugin;
@@ -11,6 +12,7 @@ namespace Htme.Plugin.Attribute {
     import String = Htme.Component.Element.String;
     import SetElement = Htme.Component.Element.SetElement;
     import MapElement = Htme.Component.Element.MapElement;
+    import Editor = Htme.Plugin.Attribute.Element.Editor;
 
     export class Plugin implements PluginInterface {
 
@@ -32,58 +34,40 @@ namespace Htme.Plugin.Attribute {
 
             let $this = this;
 
-            let modal = new Modal();
+            let editor = new Editor(structure);
 
-            modal.handlerIn = function(event) {
-
-                structure.attributes.get('class').add('HtmeActive');
-            };
-
-            modal.handlerOut = function(event) {
-
-                structure.attributes.get('class').delete('HtmeActive');
-            };
+            // modal.handlerIn = function(event) {
+            //
+            //     structure.attributes.get('class').add('HtmeActive');
+            // };
+            //
+            // modal.handlerOut = function(event) {
+            //
+            //     structure.attributes.get('class').delete('HtmeActive');
+            // };
 
             let click = new Click('<div>Attribute</div>',function (event, structure) {
 
-                modal.show();
-
                 let offset = click.element.offset();
                 let w = click.element.width();
-
-                modal.attributes.get('style').add(`top:${offset.top}px;left:${offset.left + w}px;position:absolute`);
-
-                let a = new MapElement();
-                a.attributes.get('class').add('HtmeAttributeWrapper');
-
-                a.set('class', new String(null, 'class'));
-                a.set('class:input', new Block('<input name="a" type="text">'));
-                // a.set('name', new String(null, 'class'));
-                // a.get('name').attributes.get('style').add('float:left;width:30%;');
+                editor.show(offset.top, offset.left + w);
+                // modal.show();
                 //
-                // a.set('input', new Block('<input name="a" type="text">'));
-                // a.get('input').attributes.get('style').add('float:left;width:70%;');
-
-                modal.set('inputs', a);
-                // modal.set('a', new Block(`
-                // <table>
-                //     <tr>
-                //         <td>zzz</td>
-                //         <td><input name="a" type="text" style="width:100%"></td>
-                //     </tr>
-                //     <tr>
-                //         <td>name</td>
-                //         <td><input name="a" type="text" style="width:100%"></td>
-                //     </tr>
-                // </table>
+                // let offset = click.element.offset();
+                // let w = click.element.width();
                 //
-                // `));
-               // modal.set('ab', new Block('id <input name="a" type="text" style="width: 100%">'));
-                //modal.set('ac', new Block('data-htme-handle<input name="a" type="text" style="width: 100%">'));
+                // modal.attributes.get('style').add(`top:${offset.top}px;left:${offset.left + w}px;position:absolute`);
+                //
+                // let a = new MapElement();
+                // a.attributes.get('class').add('HtmeAttributeWrapper');
+                //
+                // a.set('class', new String(null, 'class'));
+                // a.set('class:input', new Block('<input name="a" type="text">'));
+                //
+                //
+                // modal.set('inputs', a);
 
-              //  click.element.append(modal.element);
-                //let container = new ContentStructure(null, $this.$plugin);
-               // structure.element.append(container.element)
+
             });
 
             structure.panel.get('edit').set(this.name.toLowerCase(), click);
