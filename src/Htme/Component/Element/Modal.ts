@@ -1,5 +1,6 @@
 namespace Htme.Component.Element {
 
+    import Attribute = Htme.Component.Set_.Attribute;
     export const IDENTIFIER : string = 'HtmeModal';
 
     export class Modal extends MapElement<Element>  {
@@ -11,8 +12,20 @@ namespace Htme.Component.Element {
             public handlerOut : (event) => void | null = null,
         ) {
             super(element, factory);
-            this.attributes.get('class').add(IDENTIFIER);
-            this.attributes.get('class').add("ui-widget-content");
+
+
+            this.attributes.edit('class', function (value: string) {
+
+                let map = new Attribute(value);
+                map.add(IDENTIFIER);
+                map.add("ui-widget-content");
+                return map.toString();
+            });
+
+
+
+            //this.attributes.get('class').add(IDENTIFIER);
+            //this.attributes.get('class').add("ui-widget-content");
 
             let $this = this;
 

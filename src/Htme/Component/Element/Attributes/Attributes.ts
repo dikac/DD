@@ -3,7 +3,7 @@ namespace Htme.Component.Element.Attributes {
     import MapImplement = Htme.Component.Datastructure.MapImplement;
 
 
-    export class Attributes extends MapImplement<string, Htme.Component.Element.Attributes.Attribute.Attribute> {
+    export class Attributes extends MapImplement<string, string> {
 
         constructor(public jquery : JQuery)
         {
@@ -20,10 +20,15 @@ namespace Htme.Component.Element.Attributes {
 
                         let name = this.name.toLowerCase();
 
-                        $this.set(name, new Htme.Component.Element.Attributes.Attribute.Attribute(name, jquery));
+                        $this.superSet(name, this.value);
                     }
                 });
             });
+        }
+
+        protected superSet(key: string, value: string) {
+
+            super.set(key, value);
         }
 
         toString() : string
@@ -32,7 +37,6 @@ namespace Htme.Component.Element.Attributes {
 
             for(let [name, attribute] of this) {
 
-
                 buffer.push(`${name}="${attribute}"`);
             }
 
@@ -40,12 +44,33 @@ namespace Htme.Component.Element.Attributes {
 
         }
 
-        get(attribute : string) : Htme.Component.Element.Attributes.Attribute.Attribute
-        {
-            if(!this.has(attribute)) {
+        set(key: string, value: string): this {
 
-                this.set(attribute, new Htme.Component.Element.Attributes.Attribute.Attribute(attribute, this.jquery));
-            }
+            this.jquery.attr(key, value);
+            return super.set(key, value);
+        }
+
+        delete(key: string): boolean {
+
+            this.jquery.removeAttr(key);
+            return super.delete(key);
+        }
+
+        edit(
+            key : string,
+            callback : (current : string) => string
+        ) {
+
+            let result = callback(this.get(key));
+            this.set(key, result);
+        }
+
+        get(attribute : string) : string|undefined
+        {
+            // if(!this.has(attribute)) {
+            //
+            //     this.set(attribute, new Htme.Component.Element.Attributes.Attribute.Attribute(attribute, this.jquery));
+            // }
 
             return super.get(attribute);
         }

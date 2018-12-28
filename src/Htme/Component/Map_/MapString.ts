@@ -10,14 +10,19 @@ namespace Htme.Component.Map_ {
         constructor(
             data : string,
             private associative : string,
-            private value : string) {
+            private value : string
+        ) {
 
             super();
 
             for(let val of data.split(value)) {
 
                 let [key, value =  ''] = val.split(associative, 2);
-                this.set(key, value);
+
+                if(key.length) {
+
+                    this.set(key, value);
+                }
             }
         }
 
