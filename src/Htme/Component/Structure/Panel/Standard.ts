@@ -7,6 +7,7 @@ namespace Htme.Component.Structure.Panel {
     import Menu = Htme.Component.Structure.Panel.Menu.Menu;
     import MenuStandard = Htme.Component.Structure.Panel.Menu.Standard;
     import MapElement = Htme.Component.Element.MapElement;
+    import SetAttribute = Htme.Component.Set_.Attribute;
 
     // export function defaultFactory (element : JQuery|string|null = null) : Menu | null {
     //
@@ -27,7 +28,15 @@ namespace Htme.Component.Structure.Panel {
             super(element/*, factory*/);
             this.structure = structure;
 
-            this.attributes.get('class').add(IDENTIFIER);
+           // this.attributes.get('class').add(IDENTIFIER);
+
+            this.attributes.edit('class', function (attribute : string) : string {
+
+                let set = new SetAttribute(attribute);
+                set.add(IDENTIFIER);
+                return set.toString();
+
+            });
 
             this.$name = new Htme.Component.Element.PanelName(name);
 

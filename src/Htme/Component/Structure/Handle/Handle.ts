@@ -17,7 +17,7 @@ namespace Htme.Component.Structure.Handle {
 
         set(attributes : Attributes) {
 
-            attributes.get('data-htme-handle').set(this.handle);
+            attributes.set('data-htme-handle', this.handle);
         }
     }
 

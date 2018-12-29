@@ -1,6 +1,7 @@
 namespace Htme.Component.Structure.Type {
 
     import Attributes = Htme.Component.Element.Attributes.Attributes;
+    import SetAttribute = Htme.Component.Set_.Attribute;
 
     export abstract class Type {
 
@@ -18,8 +19,14 @@ namespace Htme.Component.Structure.Type {
 
         set(attributes : Attributes) {
 
-            attributes.get('data-htme-type').set(this.type);
-            attributes.get('class').add('HtmeStructure');
+            attributes.set('data-htme-type', this.type);
+            attributes.edit('class', function (attribute : string) : string {
+
+                let set = new SetAttribute(attribute);
+                set.add('HtmeStructure');
+                return set.toString();
+
+            });
         }
     }
 

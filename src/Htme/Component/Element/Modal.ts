@@ -1,6 +1,7 @@
+///<reference path="../Set_/Attribute.ts"/>
 namespace Htme.Component.Element {
 
-    import Attribute = Htme.Component.Set_.Attribute;
+    import SetAttribute = Htme.Component.Set_.Attribute;
     export const IDENTIFIER : string = 'HtmeModal';
 
     export class Modal extends MapElement<Element>  {
@@ -13,10 +14,8 @@ namespace Htme.Component.Element {
         ) {
             super(element, factory);
 
-
             this.attributes.edit('class', function (value: string) {
-
-                let map = new Attribute(value);
+                let map = new SetAttribute(value);
                 map.add(IDENTIFIER);
                 map.add("ui-widget-content");
                 return map.toString();

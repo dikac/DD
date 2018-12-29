@@ -1,3 +1,4 @@
+///<reference path="../../Component/Set_/Attribute.ts"/>
 namespace Htme.Plugin.Sortable {
 
     import PluginInterface = Htme.Plugin.Plugin;
@@ -27,7 +28,13 @@ namespace Htme.Plugin.Sortable {
 
             if((new Htme.Component.Structure.Type.Container).valid(structure.attributes)) {
 
-                structure.attributes.get('class').add('HtmeSortable');
+                structure.attributes.edit('class', function (str: string) {
+
+                    let set = new Htme.Component.Set_.Attribute(str);
+                    set.add('HtmeSortable');
+                    return set.toString();
+                });
+
                 structure.element.sortable({
                     containment: "parent",
                     tolerance:'pointer',

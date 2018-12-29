@@ -15,9 +15,14 @@ namespace Htme.Component.Map_ {
 
             super();
 
-            for(let val of data.split(value)) {
+            if(data === undefined) {
 
-                let [key, value =  ''] = val.split(associative, 2);
+                data = '';
+            }
+
+            for(let val of data.split(this.value)) {
+
+                let [key, value =  ''] = val.split(this.associative, 2);
 
                 if(key.length) {
 
@@ -33,6 +38,7 @@ namespace Htme.Component.Map_ {
 
             for(let [key, value] of this) {
 
+               // console.log(this);
                 buffer.push(key + this.associative + value);
             }
 

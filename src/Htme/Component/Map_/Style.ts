@@ -10,7 +10,7 @@ namespace Htme.Component.Map_ {
 
         constructor(value : string) {
 
-            super(value, ':', '');
+            super(value, ':', ';');
         }
     }
 

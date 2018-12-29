@@ -4,6 +4,7 @@ namespace Htme.Component.Structure {
     import Dom = Htme.Component.Element.Dom;
    // import AbstractBlock = Htme.Component.Element.Standard;
    // import PanelStandard = Htme.Component.Structure.Panel.Standard;
+    import SetAttribute = Htme.Component.Set_.Attribute;
 
     export class Standard extends Dom implements Structure {
 
@@ -16,7 +17,14 @@ namespace Htme.Component.Structure {
 
             super(element);
 
-            this.attributes.get('class').add(Structure.IDENTIFIER);
+            //this.attributes.get('class').add(Structure.IDENTIFIER);
+            this.attributes.edit('class', function (attribute : string) : string {
+
+                let set = new SetAttribute(attribute);
+                set.add(IDENTIFIER);
+                return set.toString();
+
+            });
 
             this.$panel = new Htme.Component.Structure.Panel.Standard(this, null,'%name%');
 

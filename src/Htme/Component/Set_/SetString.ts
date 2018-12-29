@@ -15,6 +15,11 @@ namespace Htme.Component.Set_ {
 
             super();
 
+            if(data === undefined) {
+
+                data = '';
+            }
+
             for(let val of data.split(delimiter)) {
 
                 if(val.length) {

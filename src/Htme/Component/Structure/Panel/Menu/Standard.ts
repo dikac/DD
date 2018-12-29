@@ -4,6 +4,7 @@ namespace Htme.Component.Structure.Panel.Menu {
     import MapElement = Htme.Component.Element.MapElement;
     import Dom = Htme.Component.Element.Dom;
     import Item = Htme.Component.Structure.Panel.Menu.Item.Item;
+    import SetAttribute = Htme.Component.Set_.Attribute;
 
     export class Standard extends Dom implements Menu, Map<string, Item>{
 
@@ -21,7 +22,15 @@ namespace Htme.Component.Structure.Panel.Menu {
             this.$name = new Htme.Component.Element.String(`<div class="HtmeMenuName">${name}</div>`);
             this.items = new MapElement<Item>('<div class="HtmeMenuItems"></div>');
 
-            this.attributes.get('class').add(IDENTIFIER);
+          //  this.attributes.get('class').add(IDENTIFIER);
+            this.attributes.edit('class', function (attribute : string) : string {
+
+                let set = new SetAttribute(attribute);
+                set.add(IDENTIFIER);
+                return set.toString();
+
+            });
+
             this.structure = structure;
 
 
@@ -61,29 +70,69 @@ namespace Htme.Component.Structure.Panel.Menu {
 
         protected addClass(block: Element) {
 
-            block.attributes.get('class').add('HtmeItem');
+           // block.attributes.get('class').add('HtmeItem');
+
+            block.attributes.edit('class', function (attribute : string) : string {
+
+                let set = new SetAttribute(attribute);
+                set.add('HtmeItem');
+                return set.toString();
+
+            });
         }
 
         hide () {
 
-            this.items.attributes.get('class').add('HtmeHide');
+           // this.items.attributes.get('class').add('HtmeHide');
+            this.items.attributes.edit('class', function (attribute : string) : string {
+
+                let set = new SetAttribute(attribute);
+                set.add('HtmeHide');
+                return set.toString();
+
+            });
         }
 
         show () {
 
-            this.items.attributes.get('class').delete('HtmeHide');
+           // this.items.attributes.get('class').delete('HtmeHide');
+            this.items.attributes.edit('class', function (attribute : string) : string {
+
+                let set = new SetAttribute(attribute);
+                set.delete('HtmeHide');
+                return set.toString();
+
+            });
         }
 
         right() {
 
-            this.attributes.get('class').add('HtmeMenuRight');
-            this.attributes.get('class').delete('HtmeMenuLeft');
+           // this.attributes.get('class').add('HtmeMenuRight');
+           // this.attributes.get('class').delete('HtmeMenuLeft');
+
+            this.attributes.edit('class', function (attribute : string) : string {
+
+                let set = new SetAttribute(attribute);
+                set.add('HtmeMenuRight');
+                set.delete('HtmeMenuLeft');
+                return set.toString();
+
+            });
         }
 
         left() {
 
-            this.attributes.get('class').delete('HtmeMenuRight');
-            this.attributes.get('class').add('HtmeMenuLeft');
+           // this.attributes.get('class').delete('HtmeMenuRight');
+           // this.attributes.get('class').add('HtmeMenuLeft');
+
+            this.attributes.edit('class', function (attribute : string) : string {
+
+                let set = new SetAttribute(attribute);
+                set.delete('HtmeMenuRight');
+                set.add('HtmeMenuLeft');
+                return set.toString();
+
+            });
         }
 
         set(key : string, block: Item) : this {
