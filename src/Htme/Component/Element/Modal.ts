@@ -22,7 +22,6 @@ namespace Htme.Component.Element {
             });
 
 
-
             //this.attributes.get('class').add(IDENTIFIER);
             //this.attributes.get('class').add("ui-widget-content");
 
@@ -49,15 +48,33 @@ namespace Htme.Component.Element {
 
                     $this.handlerOut(event);
                 }
+            }).mousedown(function () {
+
+                $this.show();
             });
+        }
 
+        clear() {
 
+            super.clear();
+            /**
+             * event is not working when jquery.empty() is called
+             */
+            this.element.resizable({
+
+                handles: 'all'
+
+            });
         }
 
 
         show() {
 
             $('body').append(this.element);
+
+            // this.element.resizable({
+            //     handles: 'all'
+            // });
         }
 
         hide() {

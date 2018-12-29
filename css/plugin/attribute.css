@@ -1,9 +1,9 @@
 
 .HtmeAttributeWrapper {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto auto;
     grid-gap: 10px;
-    background-color: #fff;
+   /* background-color: #fff;*/
     color: #444;
 }
 

@@ -1,4 +1,5 @@
 ///<reference path="Menu/Standard.ts"/>
+///<reference path="../../Element/Panel.ts"/>
 namespace Htme.Component.Structure.Panel {
 
    // import Compound = Htme.Component.Element.Compound;
@@ -7,6 +8,7 @@ namespace Htme.Component.Structure.Panel {
     import Menu = Htme.Component.Structure.Panel.Menu.Menu;
     import MenuStandard = Htme.Component.Structure.Panel.Menu.Standard;
     import MapElement = Htme.Component.Element.MapElement;
+    import PanelElement = Htme.Component.Element.Panel;
     import SetAttribute = Htme.Component.Set_.Attribute;
 
     // export function defaultFactory (element : JQuery|string|null = null) : Menu | null {
@@ -14,9 +16,9 @@ namespace Htme.Component.Structure.Panel {
     //     return new Standard(element);
     // }
 
-    export class Standard extends MapElement<Menu> implements Panel {
+    export class Standard extends PanelElement<Menu> implements Panel {
 
-        private $name : String;
+        // private $name : String;
         private $structure : Structure;
 
         constructor(
@@ -25,7 +27,7 @@ namespace Htme.Component.Structure.Panel {
             name : string = '{panel name}',
            // factory : (element : JQuery|string|null) => Menu | null = defaultFactory
         ) {
-            super(element/*, factory*/);
+            super(element/*, factory*/, name);
             this.structure = structure;
 
            // this.attributes.get('class').add(IDENTIFIER);
@@ -38,9 +40,9 @@ namespace Htme.Component.Structure.Panel {
 
             });
 
-            this.$name = new Htme.Component.Element.PanelName(name);
-
-            this.element.prepend(this.$name.element);
+            // this.$name = new Htme.Component.Element.PanelName(name);
+            //
+            // this.element.prepend(this.$name.element);
             //this.attachName();
         }
 
@@ -80,16 +82,16 @@ namespace Htme.Component.Structure.Panel {
 
             return menu;
         }
-
-        get name() : string
-        {
-            return this.$name.content;
-        }
-
-        set name(name : string)
-        {
-            this.$name.content = name;
-        }
+        //
+        // get name() : string
+        // {
+        //     return this.$name.content;
+        // }
+        //
+        // set name(name : string)
+        // {
+        //     this.$name.content = name;
+        // }
     }
     
 }

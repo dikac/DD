@@ -5,6 +5,7 @@ namespace Htme.Plugin.Attribute.Element {
     import Attributes = Htme.Component.Element.Attributes.Attributes;
     import Block = Htme.Component.Element.Block;
     import MapElement = Htme.Component.Element.MapElement;
+    import Panel = Htme.Component.Element.Panel;
 
     export class Editor {
 
@@ -20,8 +21,6 @@ namespace Htme.Plugin.Attribute.Element {
                     set.add('HtmeActive');
                     return set.toString();
                 });
-
-
             };
 
             this.modal.handlerOut = function(event) {
@@ -42,13 +41,23 @@ namespace Htme.Plugin.Attribute.Element {
                 return map.toString();
             });
 
+
+
+           // let panel = new Panel();
+            this.modal.set('panel', new Htme.Component.Element.String('<div>Attribute</div>'));
+
         }
 
+        protected newLinkedElement() {
+
+
+        }
 
         show(top : number, left : number) {
 
-            this.modal.clear();
+           // this.modal.clear();
 
+            let $this = this;
             let map = new MapElement();
 
             //console.log(typeof map);
@@ -61,11 +70,38 @@ namespace Htme.Plugin.Attribute.Element {
                 return set.toString();
             });
 
-
             for (let [key, value] of this.structure.attributes) {
 
-                map.set(key, new Block(`<div>key</div>`));
-                map.set(key + ':input', new Block(`<input type="text" name="${key}" value="${value}" />`));
+
+                let inputValue = new Block(`<input type="text" name="${key}" value="${value}" />`);
+                inputValue.element.keyup(function (event) {
+
+                    let attribute = $(this).attr('name');
+                    let value = $(this).val();
+
+                    $this.structure.attributes.set(attribute, value.toString() );
+                });
+
+
+                let inputName = new Block(`<input type="text" value="${value}" />`);
+                inputValue.element.keyup(function (event) {
+
+                    let value = $(this).val();
+
+                    $this.structure.attributes.set(attribute, value.toString() );
+                });
+
+                                map.set(key, new Block(`<div>${key}</div>`));
+
+
+                map.set(key + ':input', input);
+
+
+
+
+
+
+                map.set(key + ':remove', new Block(`<div>Remove</div>`));
             }
 
             this.modal.set('inputs', map);
