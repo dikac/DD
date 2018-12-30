@@ -29,7 +29,7 @@ namespace Htme.Component.Element {
 
             this.element.draggable({
 
-                addClasses: false
+                addClasses: false,
 
             }).resizable({
 
@@ -48,6 +48,7 @@ namespace Htme.Component.Element {
 
                     $this.handlerOut(event);
                 }
+
             }).mousedown(function () {
 
                 $this.show();
@@ -70,7 +71,11 @@ namespace Htme.Component.Element {
 
         show() {
 
-            $('body').append(this.element);
+            let body = $('body');
+            if(body.children().last()[0] !== this.element[0]) {
+
+                body.append(this.element);
+            }
 
             // this.element.resizable({
             //     handles: 'all'

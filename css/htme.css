@@ -1,16 +1,17 @@
+
 .HtmePanel {
+
+    width: 100%;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-color: #f3f3f3;
     font-size: 14px;
+    border-bottom: 1px solid #dcdcdc;
     /*line-height: 1.42857143;*/
     position: absolute;
     height: 25px;
     top: 0;
     left: 0;
 
-    width: 100%;
-    background-color: #f3f3f3;
-
-    border-bottom: 1px solid #dcdcdc;
 
     /*margin: -10px;*/
 
@@ -33,7 +34,7 @@
     border:double black;
     background-color: #f3f3f3;
     /*margin: -10px;*/
-
+    cursor: move;
     /*box-shadow:*/
             /*inset -1px -1px #ffffff,*/
             /*inset 1px 1px #ffffff*/

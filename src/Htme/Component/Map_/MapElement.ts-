@@ -1,37 +1,12 @@
-namespace Htme.Component.Element {
+namespace Htme.Component.Map_ {
+
 
     import MapImplement = Htme.Component.Datastructure.MapImplement;
+    import Element = Htme.Component.Element.Element;
    // import Attributes = Htme.Component.Element.Attributes.Attributes;
 
-    export class MapElement<Value extends Element>
-        extends MapImplement<string, Value>
-        implements Element
-    {
+    export class MapElement<Value extends Element> extends MapImplement<string, Value>  {
 
-        private dom : Dom;
-
-        constructor(
-            element : JQuery|string|null = null,
-            factory : (JQuery) => Value| null = null
-        ) {
-
-            super();
-
-            this.dom = new Dom(element);
-
-            let buffer = [];
-
-            this.dom.element.children().each(function (k, v) {
-
-                buffer.push(factory($(v)));
-
-            });
-
-            for(let [k, v] of buffer) {
-
-                this.set(k.toString(), v);
-            }
-        }
 
         clear() {
 
@@ -112,7 +87,12 @@ namespace Htme.Component.Element {
 
         get element(): JQuery {
 
-            return this.dom.element;
+            let buffer;
+
+            for(let [key, value] of this) {
+
+                buffer = value.element.add();
+            }
         }
 
         get attributes(): Htme.Component.Element.Attributes.Attributes {

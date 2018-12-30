@@ -6,12 +6,15 @@ namespace Htme.Plugin.Attribute.Element {
     import Block = Htme.Component.Element.Block;
     import MapElement = Htme.Component.Element.MapElement;
     import Panel = Htme.Component.Element.Panel;
+    import SetElement = Htme.Component.Element.SetElement;
 
     export class Editor {
 
         private modal : Modal = new Modal();
+        private inputs = new SetElement<Inputs>();
 
         constructor(private structure : Structure) {
+
 
             this.modal.handlerIn = function(event) {
 
@@ -42,71 +45,144 @@ namespace Htme.Plugin.Attribute.Element {
             });
 
 
-
            // let panel = new Panel();
-            this.modal.set('panel', new Htme.Component.Element.String('<div>Attribute</div>'));
+            this.modal.set('panel', new Htme.Component.Element.String(
+                '<div class="HtmeAttributeHeading">Attribute</div>'
+            ));
+
+            this.modal.set('title', new Htme.Component.Element.String(
+                '<div class="HtmeAttributeWrapper"></div>'
+            ));
+
+            //let title = new SetElement();
+            //title.attributes.set('class', 'HtmeAttributeWrapper');
+
+
+           // this.modal.set('name', title);
+
+            this.inputs.attributes.set('class', 'HtmeAttributeWrapper');
+            this.modal.set('inputs', this.inputs);
+        }
+
+        protected attributeToInput() {
+
+            this.inputs.clear();
+            this.inputs.element.append((new Htme.Component.Element.String(null,'Name')).element);
+            this.inputs.element.append((new Htme.Component.Element.String(null,'Value')).element);
+            this.inputs.element.append((new Htme.Component.Element.String(null,'Add')).element);
+
+            let $this = this;
+
+            for(let [attr, val] of this.structure.attributes) {
+
+                this.inputs.add(new Inputs(attr, val, function () {
+
+                    $this.inputToAttribute();
+
+                },  this.inputs));
+            }
+        }
+
+        protected inputToAttribute() {
+
+            let buffer = {};
+
+            for(let [attr, val] of this.structure.attributes) {
+
+                buffer[attr.toLowerCase()] = val;
+            }
+
+            for(let value of this.inputs) {
+
+                let [attr, val] = value.get();
+                this.structure.attributes.set(attr, val);
+                delete buffer[attr.toLowerCase()];
+            }
+
+            for(let attr in buffer) {
+
+                this.structure.attributes.delete(attr);
+            }
 
         }
 
-        protected newLinkedElement() {
-
-
-        }
+        // protected add(name : string, attribute : string) {
+        //
+        //     let value = new Block(`<input type="text" name="${key}" value="${value}" />`);
+        //
+        //     value.element.keyup(function (event) {
+        //
+        //         let attribute = $(this).attr('name');
+        //         let value = $(this).val();
+        //
+        //         $this.structure.attributes.set(attribute, value.toString() );
+        //     });
+        //
+        //
+        //     let inputName = new Block(`<input type="text" value="${value}" />`);
+        //     value.element.keyup(function (event) {
+        //
+        //         let value = $(this).val();
+        //
+        //         $this.structure.attributes.set(attribute, value.toString() );
+        //     });
+        // }
 
         show(top : number, left : number) {
 
            // this.modal.clear();
 
-            let $this = this;
-            let map = new MapElement();
+            // let $this = this;
+            // let map = new MapElement();
 
             //console.log(typeof map);
             //console.log(map instanceof Map);
             //map.attributes.get('class').add('HtmeAttributeWrapper');
-            map.attributes.edit('class', function(attribute : string) : string {
+            // map.attributes.edit('class', function(attribute : string) : string {
+            //
+            //     let set = new Htme.Component.Set_.Attribute(attribute);
+            //     set.add('HtmeAttributeWrapper');
+            //     return set.toString();
+            // });
 
-                let set = new Htme.Component.Set_.Attribute(attribute);
-                set.add('HtmeAttributeWrapper');
-                return set.toString();
-            });
-
-            for (let [key, value] of this.structure.attributes) {
-
-
-                let inputValue = new Block(`<input type="text" name="${key}" value="${value}" />`);
-                inputValue.element.keyup(function (event) {
-
-                    let attribute = $(this).attr('name');
-                    let value = $(this).val();
-
-                    $this.structure.attributes.set(attribute, value.toString() );
-                });
+           // for (let [key, value] of this.structure.attributes) {
 
 
-                let inputName = new Block(`<input type="text" value="${value}" />`);
-                inputValue.element.keyup(function (event) {
+                // let inputValue = new Block(`<input type="text" name="${key}" value="${value}" />`);
+                // inputValue.element.keyup(function (event) {
+                //
+                //     let attribute = $(this).attr('name');
+                //     let value = $(this).val();
+                //
+                //     $this.structure.attributes.set(attribute, value.toString() );
+                // });
+                //
+                //
+                // let inputName = new Block(`<input type="text" value="${value}" />`);
+                // inputValue.element.keyup(function (event) {
+                //
+                //     let value = $(this).val();
+                //
+                //     $this.structure.attributes.set(attribute, value.toString() );
+                // });
 
-                    let value = $(this).val();
-
-                    $this.structure.attributes.set(attribute, value.toString() );
-                });
-
-                                map.set(key, new Block(`<div>${key}</div>`));
+                           //     map.set(key, new Block(`<div>${key}</div>`));
 
 
-                map.set(key + ':input', input);
-
-
+               // map.set(key + ':input', input);
 
 
 
 
-                map.set(key + ':remove', new Block(`<div>Remove</div>`));
-            }
 
-            this.modal.set('inputs', map);
+
+               // map.set(key + ':remove', new Block(`<div>Remove</div>`));
+          //  }
+
+
 
             this.modal.show();
+            this.attributeToInput();
             //this.modal.attributes.get('style').add(`top:${top}px;left:${left}px;z-index:11;z-index:11`);
 
             this.modal.attributes.edit('style', function(attribute : string) : string {

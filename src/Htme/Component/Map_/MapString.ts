@@ -31,7 +31,6 @@ namespace Htme.Component.Map_ {
             }
         }
 
-
         toString(): string {
 
             let buffer : string[] = [];
