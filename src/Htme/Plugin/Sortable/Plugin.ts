@@ -28,12 +28,15 @@ namespace Htme.Plugin.Sortable {
 
             if((new Htme.Component.Structure.Type.Container).valid(structure.attributes)) {
 
-                structure.attributes.edit('class', function (str: string) {
+                let set = new Htme.Component.Set_.Attribute(structure.attributes, 'class');
+                set.add('HtmeSortable');
 
-                    let set = new Htme.Component.Set_.Attribute(str);
-                    set.add('HtmeSortable');
-                    return set.toString();
-                });
+                // structure.attributes.edit('class', function (str: string) {
+                //
+                //     let set = new Htme.Component.Set_.Attribute(str);
+                //     set.add('HtmeSortable');
+                //     return set.toString();
+                // });
 
                 structure.element.sortable({
                     containment: "parent",

@@ -14,6 +14,10 @@ namespace Htme.Component.Map_ {
         ) {
 
             super();
+        //     this.replace(data);
+        // }
+        //
+        // protected replace(data : string) {
 
             if(data === undefined) {
 

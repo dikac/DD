@@ -18,31 +18,42 @@ namespace Htme.Plugin.Attribute.Element {
 
             this.modal.handlerIn = function(event) {
 
-                structure.attributes.edit('class', function(attribute : string) : string {
+                let set = new Htme.Component.Set_.Attribute(structure.attributes, 'class');
+                set.add('HtmeActive');
 
-                    let set = new Htme.Component.Set_.Attribute(attribute);
-                    set.add('HtmeActive');
-                    return set.toString();
-                });
+                // structure.attributes.edit('class', function(attribute : string) : string {
+                //
+                //     let set = new Htme.Component.Set_.Attribute(attribute);
+                //     set.add('HtmeActive');
+                //     return set.toString();
+                // });
             };
 
             this.modal.handlerOut = function(event) {
 
-                structure.attributes.edit('class', function(attribute : string) : string {
 
-                    let set = new Htme.Component.Set_.Attribute(attribute);
-                    set.delete('HtmeActive');
-                    return set.toString();
-                });
+                let set = new Htme.Component.Set_.Attribute(structure.attributes, 'class');
+                set.delete('HtmeActive');
+
+                // structure.attributes.edit('class', function(attribute : string) : string {
+                //
+                //     let set = new Htme.Component.Set_.Attribute(attribute);
+                //     set.delete('HtmeActive');
+                //     return set.toString();
+                // });
 
             };
 
-            this.modal.attributes.edit('style', function(attribute : string) : string {
+            let map = new Htme.Component.Map_.Style(this.modal.attributes, 'style');
+            map.set('position', 'absolute');
+          //  return map.toString();
 
-                let map = new Htme.Component.Map_.Style(attribute);
-                map.set('position', 'absolute');
-                return map.toString();
-            });
+            // this.modal.attributes.edit('style', function(attribute : string) : string {
+            //
+            //     let map = new Htme.Component.Map_.Style(attribute);
+            //     map.set('position', 'absolute');
+            //     return map.toString();
+            // });
 
 
            // let panel = new Panel();
@@ -50,9 +61,16 @@ namespace Htme.Plugin.Attribute.Element {
                 '<div class="HtmeAttributeHeading">Attribute</div>'
             ));
 
-            this.modal.set('title', new Htme.Component.Element.String(
-                '<div class="HtmeAttributeWrapper"></div>'
-            ));
+            let close =  new Htme.Component.Element.String(
+                '<div class="HtmeAttributeWrapper">Close</div>'
+            );
+            this.modal.set('close',close);
+
+            let $this = this;
+            close.element.click(function () {
+
+                $this.modal.hide();
+            });
 
             //let title = new SetElement();
             //title.attributes.set('class', 'HtmeAttributeWrapper');
@@ -66,12 +84,24 @@ namespace Htme.Plugin.Attribute.Element {
 
         protected attributeToInput() {
 
+            let $this = this;
+
             this.inputs.clear();
             this.inputs.element.append((new Htme.Component.Element.String(null,'Name')).element);
             this.inputs.element.append((new Htme.Component.Element.String(null,'Value')).element);
-            this.inputs.element.append((new Htme.Component.Element.String(null,'Add')).element);
 
-            let $this = this;
+            let add = new Htme.Component.Element.String(null,'Add');
+            add.element.click(function () {
+
+                $this.inputs.add(new Inputs('', '', function () {
+
+                    $this.inputToAttribute();
+
+                },  $this.inputs));
+            });
+
+            this.inputs.element.append(add.element);
+
 
             for(let [attr, val] of this.structure.attributes) {
 
@@ -95,14 +125,23 @@ namespace Htme.Plugin.Attribute.Element {
             for(let value of this.inputs) {
 
                 let [attr, val] = value.get();
-                this.structure.attributes.set(attr, val);
-                delete buffer[attr.toLowerCase()];
+
+                if(attr.length) {
+
+                    this.structure.attributes.set(attr, val);
+                    delete buffer[attr.toLowerCase()];
+                }
+
             }
 
             for(let attr in buffer) {
 
                 this.structure.attributes.delete(attr);
             }
+
+        }
+
+        hide() {
 
         }
 
@@ -185,14 +224,20 @@ namespace Htme.Plugin.Attribute.Element {
             this.attributeToInput();
             //this.modal.attributes.get('style').add(`top:${top}px;left:${left}px;z-index:11;z-index:11`);
 
-            this.modal.attributes.edit('style', function(attribute : string) : string {
 
-                let map = new Htme.Component.Map_.Style(attribute);
-                map.set('top', top + 'px');
-                map.set('left', left + 'px');
-              //  map.set('left', left + 'px');
-                return map.toString();
-            });
+            let map = new Htme.Component.Map_.Style(this.modal.attributes, 'style');
+            map.set('top', top + 'px');
+            map.set('left', left + 'px');
+
+
+            // this.modal.attributes.edit('style', function(attribute : string) : string {
+            //
+            //     let map = new Htme.Component.Map_.Style(attribute);
+            //     map.set('top', top + 'px');
+            //     map.set('left', left + 'px');
+            //   //  map.set('left', left + 'px');
+            //     return map.toString();
+            // });
         }
 
     }

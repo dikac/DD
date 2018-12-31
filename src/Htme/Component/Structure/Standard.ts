@@ -18,13 +18,17 @@ namespace Htme.Component.Structure {
             super(element);
 
             //this.attributes.get('class').add(Structure.IDENTIFIER);
-            this.attributes.edit('class', function (attribute : string) : string {
+            let set = new SetAttribute(this.attributes, 'class');
+            set.add(IDENTIFIER);
+           // return set.toString();
 
-                let set = new SetAttribute(attribute);
-                set.add(IDENTIFIER);
-                return set.toString();
-
-            });
+            // this.attributes.edit('class', function (attribute : string) : string {
+            //
+            //     let set = new SetAttribute(attribute);
+            //     set.add(IDENTIFIER);
+            //     return set.toString();
+            //
+            // });
 
             this.$panel = new Htme.Component.Structure.Panel.Standard(this, null,'%name%');
 

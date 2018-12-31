@@ -12,7 +12,7 @@
 
 .HtmeAttributeWrapper {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto 70px;
     grid-gap: 10px;
    /* background-color: #fff;*/
     color: #444;

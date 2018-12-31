@@ -32,13 +32,17 @@ namespace Htme.Component.Structure.Panel {
 
            // this.attributes.get('class').add(IDENTIFIER);
 
-            this.attributes.edit('class', function (attribute : string) : string {
 
-                let set = new SetAttribute(attribute);
-                set.add(IDENTIFIER);
-                return set.toString();
+            let set = new SetAttribute(this.attributes, 'class');
+            set.add(IDENTIFIER);
 
-            });
+            // this.attributes.edit('class', function (attribute : string) : string {
+            //
+            //     let set = new SetAttribute(attribute);
+            //     set.add(IDENTIFIER);
+            //     return set.toString();
+            //
+            // });
 
             // this.$name = new Htme.Component.Element.PanelName(name);
             //

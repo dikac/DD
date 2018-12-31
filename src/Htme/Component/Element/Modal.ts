@@ -14,12 +14,16 @@ namespace Htme.Component.Element {
         ) {
             super(element, factory);
 
-            this.attributes.edit('class', function (value: string) {
-                let map = new SetAttribute(value);
-                map.add(IDENTIFIER);
-                map.add("ui-widget-content");
-                return map.toString();
-            });
+
+            let map = new SetAttribute(this.attributes, 'class');
+            map.add(IDENTIFIER);
+            map.add("ui-widget-content");
+            // this.attributes.edit('class', function (value: string) {
+            //     let map = new SetAttribute(value);
+            //     map.add(IDENTIFIER);
+            //     map.add("ui-widget-content");
+            //     return map.toString();
+            // });
 
 
             //this.attributes.get('class').add(IDENTIFIER);

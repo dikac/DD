@@ -20,13 +20,19 @@ namespace Htme.Component.Structure.Type {
         set(attributes : Attributes) {
 
             attributes.set('data-htme-type', this.type);
-            attributes.edit('class', function (attribute : string) : string {
 
-                let set = new SetAttribute(attribute);
-                set.add('HtmeStructure');
-                return set.toString();
+            let set = new SetAttribute(attributes, 'class');
+            set.add('HtmeStructure');
+            //return set.toString();
 
-            });
+
+            // attributes.edit('class', function (attribute : string) : string {
+            //
+            //     let set = new SetAttribute(attribute);
+            //     set.add('HtmeStructure');
+            //     return set.toString();
+            //
+            // });
         }
     }
 
