@@ -14,7 +14,7 @@
       "es5"
     ]
   },
-  "types" : ["jquery"],
+  "types" : ["jquery", "tinymce"],
   "include":  [
     "src"
   ],

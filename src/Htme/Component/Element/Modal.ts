@@ -1,8 +1,12 @@
 ///<reference path="../Set_/Attribute.ts"/>
+///<reference path="../Map_/Style.ts"/>
 namespace Htme.Component.Element {
 
     import SetAttribute = Htme.Component.Set_.Attribute;
+    import Style = Htme.Component.Map_.Style;
     export const IDENTIFIER : string = 'HtmeModal';
+
+    let index = 1;
 
     export class Modal extends MapElement<Element>  {
 
@@ -55,8 +59,11 @@ namespace Htme.Component.Element {
 
             }).mousedown(function () {
 
-                $this.show();
-            });
+                let style = new Style($this.attributes);
+                style.set('z-index', index.toString());
+                index++;
+
+            })/*.selectable()*/;
         }
 
         clear() {

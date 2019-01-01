@@ -1,4 +1,5 @@
 ///<reference path="Map_.ts"/>
+///<reference path="MapString.ts"/>
 namespace Htme.Component.Map_ {
 
     import StringableI = Stringable.Stringable;
@@ -9,12 +10,13 @@ namespace Htme.Component.Map_ {
      */
     export class Style extends MapString {
 
+        private name : string = 'style';
         constructor(
             private attributes : Attributes,
-            private name : string
+
         ) {
 
-            super(attributes.get(name), ':', ';');
+            super(attributes.get('style'), ':', ';');
         }
 
         clear(keep: boolean = false): void {

@@ -44,7 +44,7 @@ namespace Htme.Plugin.Attribute.Element {
 
             };
 
-            let map = new Htme.Component.Map_.Style(this.modal.attributes, 'style');
+            let map = new Htme.Component.Map_.Style(this.modal.attributes);
             map.set('position', 'absolute');
           //  return map.toString();
 
@@ -225,7 +225,7 @@ namespace Htme.Plugin.Attribute.Element {
             //this.modal.attributes.get('style').add(`top:${top}px;left:${left}px;z-index:11;z-index:11`);
 
 
-            let map = new Htme.Component.Map_.Style(this.modal.attributes, 'style');
+            let map = new Htme.Component.Map_.Style(this.modal.attributes);
             map.set('top', top + 'px');
             map.set('left', left + 'px');
 
