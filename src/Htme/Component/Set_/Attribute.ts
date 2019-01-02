@@ -4,6 +4,7 @@ namespace Htme.Component.Set_ {
 
     import StringableI = Stringable.Stringable;
     import Attributes = Htme.Component.Element.Attributes.Attributes;
+    import Stringable = Htme.Component.Stringable.Stringable;
 
     /**
      *
@@ -12,59 +13,96 @@ namespace Htme.Component.Set_ {
 
         constructor(
             private attributes : Attributes,
-            private name : string
+            private name : string,
+            delimiter : string = ' '
         ) {
 
-            super(attributes.get(name), ' ');
+            super('', delimiter);
+            this.update();
+        }
+        //
+        // get attribute () : string|undefined {
+        //
+        //     return this.attributes.get(this.name);
+        // }
+
+        update()
+        {
+            super.replace(this.attributes.get(this.name));
         }
 
-        clear(keep: boolean = false): void {
+        replace(data: string) {
 
-            super.clear();
-
-            if (keep) {
-
-                this.attributes.set(this.name, '');
-
-            } else {
-
-                this.attributes.delete(this.name);
-            }
-        }
-
-        add(value: string): this {
-
-            super.add(value);
+            super.replace(data);
 
             if(this.attributes) {
 
-                this.attributes.set(this.name, this.toString());
+                this.attributes.set(this.name, data);
             }
-
-            return this;
-
         }
 
+        // toString(): string {
+        //
+        //     let attribute =  this.attribute;
+        //
+        //     if(!attribute) {
+        //
+        //         attribute = '';
+        //     }
+        //
+        //     return attribute;
+        // }
 
-        delete(value: string, keep: boolean = false): boolean {
 
-            let deleted =  super.delete(value);
+        clear(): void {
 
-            if(deleted) {
+            super.clear();
+            // attribute does not set on super construction
+            if(this.attributes) {
 
-                let attribute = this.toString();
-
-                if(attribute.length) {
-
-                    this.attributes.set(this.name, attribute);
-
-                } else {
-
-                    this.clear(keep);
-                }
+                this.attributes.set(this.name, '');
             }
+        }
 
-            return deleted;
+        remove() {
+
+            this.attributes.delete(this.name);
+        }
+
+        clean() {
+
+            let attribute = this.attributes.get(this.name);
+
+            if(!attribute) {
+
+                this.remove();
+            }
+        }
+
+        add(value: string): this
+        {
+            super.add(value);
+            this.commit();
+            return this;
+        }
+
+        delete(value: string): boolean
+        {
+            let $return = super.delete(value);
+            this.commit();
+            return $return;
+        }
+
+        commit() : this {
+
+            this.attributes.set(this.name, this.toString());
+            return this;
+        }
+
+        fetch() : this {
+
+            this.replace(this.attributes.get(this.name));
+            return this;
         }
     }
 

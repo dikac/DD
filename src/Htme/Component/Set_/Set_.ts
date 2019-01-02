@@ -4,7 +4,7 @@ namespace Htme.Component.Set_ {
      */
     export class Set_<T> implements Set<T> {
 
-        constructor(private $set: Set<T> = new Set<T>())
+        constructor(protected $set: Set<T> = new Set<T>())
         {
         }
 

@@ -14,10 +14,12 @@ namespace Htme.Component.Map_ {
         ) {
 
             super();
-        //     this.replace(data);
-        // }
-        //
-        // protected replace(data : string) {
+            this.replace(data);
+        }
+
+        replace(data : string) {
+
+            this.clear();
 
             if(data === undefined) {
 
@@ -41,7 +43,6 @@ namespace Htme.Component.Map_ {
 
             for(let [key, value] of this) {
 
-               // console.log(this);
                 buffer.push(key + this.associative + value);
             }
 

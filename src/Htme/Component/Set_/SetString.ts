@@ -10,17 +10,23 @@ namespace Htme.Component.Set_ {
 
         constructor(
             data : string,
-            private delimiter : string
+            public delimiter : string
         ) {
 
             super();
+            this.replace(data);
+        }
+
+        replace(data : string) {
+
+            this.clear();
 
             if(data === undefined) {
 
                 data = '';
             }
 
-            for(let val of data.split(delimiter)) {
+            for(let val of data.split(this.delimiter)) {
 
                 if(val.length) {
 

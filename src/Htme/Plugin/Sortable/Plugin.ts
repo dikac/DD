@@ -43,6 +43,7 @@ namespace Htme.Plugin.Sortable {
                     tolerance:'pointer',
                     helper : 'clone',
                     items : '>.HtmeStructure'  ,
+                    handle: ".HtmePanel",
                    // cancel: '.' + Htme.Component.Structure.Panel.IDENTIFIER,
                     stop : function (event, ui) {
 

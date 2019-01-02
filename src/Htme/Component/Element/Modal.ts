@@ -10,6 +10,8 @@ namespace Htme.Component.Element {
 
     export class Modal extends MapElement<Element>  {
 
+        private $showed = false;
+
         constructor(
             element : JQuery|string|null = null,
             factory : (JQuery) => Element| null = null,
@@ -35,9 +37,11 @@ namespace Htme.Component.Element {
 
             let $this = this;
 
+            this.element.append($('<p> drag me</p>'));
             this.element.draggable({
 
                 addClasses: false,
+                handle : 'p'
 
             }).resizable({
 
@@ -60,7 +64,10 @@ namespace Htme.Component.Element {
             }).mousedown(function () {
 
                 let style = new Style($this.attributes);
+                style.fetch();
+                console.log(style.toString());
                 style.set('z-index', index.toString());
+                console.log(style.toString());
                 index++;
 
             })/*.selectable()*/;
@@ -73,28 +80,36 @@ namespace Htme.Component.Element {
              * event is not working when jquery.empty() is called
              */
             this.element.resizable({
-
                 handles: 'all'
-
             });
         }
 
+        move(top : string, left : string) {
+
+            let style = new Style(this.attributes);
+            style.set('top', top);
+            style.set('left', left);
+        }
+
+        showed() : boolean {
+
+            return this.$showed;
+        }
 
         show() {
 
             let body = $('body');
-            if(body.children().last()[0] !== this.element[0]) {
+
+            if(!this.$showed) {
 
                 body.append(this.element);
+                this.$showed = true;
             }
-
-            // this.element.resizable({
-            //     handles: 'all'
-            // });
         }
 
         hide() {
 
+            this.$showed = false;
             this.element.detach();
         }
     }

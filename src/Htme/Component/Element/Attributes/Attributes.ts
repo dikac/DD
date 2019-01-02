@@ -2,7 +2,6 @@ namespace Htme.Component.Element.Attributes {
 
     import MapImplement = Htme.Component.Datastructure.MapImplement;
 
-
     export class Attributes extends MapImplement<string, string> {
 
         constructor(public jquery : JQuery)
@@ -56,9 +55,19 @@ namespace Htme.Component.Element.Attributes {
             return super.delete(key);
         }
 
+        // clean(key: string) {
+        //
+        //     let attribute = this.get(key);
+        //
+        //     if(!attribute) {
+        //
+        //         this.remove();
+        //     }
+        // }
+
         edit(
             key : string,
-            callback : (current : string) => string
+            callback : (current : string|undefined) => string
         ) {
 
             let result = callback(this.get(key));

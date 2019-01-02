@@ -51,7 +51,12 @@ namespace Htme.Plugin.Container {
 
                 });
 
-                structure.panel.get('new').set(this.name.toLowerCase(), click);
+                let menu = structure.panel.get('new');
+
+                if(menu) {
+
+                    menu.set(this.name.toLowerCase(), click);
+                }
 
             }
         }

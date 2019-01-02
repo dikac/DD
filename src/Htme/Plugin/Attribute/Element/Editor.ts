@@ -12,6 +12,7 @@ namespace Htme.Plugin.Attribute.Element {
 
         private modal : Modal = new Modal();
         private inputs = new SetElement<Inputs>();
+       // protected $showed = false;
 
         constructor(private structure : Structure) {
 
@@ -167,6 +168,11 @@ namespace Htme.Plugin.Attribute.Element {
         //     });
         // }
 
+        //
+        // get showed() : boolean {
+        //     return this.$showed;
+        // }
+
         show(top : number, left : number) {
 
            // this.modal.clear();
@@ -220,14 +226,19 @@ namespace Htme.Plugin.Attribute.Element {
 
 
 
-            this.modal.show();
-            this.attributeToInput();
             //this.modal.attributes.get('style').add(`top:${top}px;left:${left}px;z-index:11;z-index:11`);
 
+            if(!this.modal.showed()) {
 
-            let map = new Htme.Component.Map_.Style(this.modal.attributes);
-            map.set('top', top + 'px');
-            map.set('left', left + 'px');
+                this.modal.show();
+                this.attributeToInput();
+
+                this.modal.move(top + 'px', left + 'px');
+            }
+
+            // let map = new Htme.Component.Map_.Style(this.modal.attributes);
+            // map.set('top', top + 'px');
+            // map.set('left', left + 'px');
 
 
             // this.modal.attributes.edit('style', function(attribute : string) : string {
