@@ -50,7 +50,16 @@ namespace Htme.Plugin.Attribute {
 
                 let offset = click.element.offset();
                 let w = click.element.width();
-                editor.show(offset.top, offset.left + w);
+
+                if(offset && w) {
+
+                    editor.show(offset.top, offset.left + w);
+                } else {
+
+                    throw new Error('Could not get coordinate');
+                }
+
+
                 // modal.show();
                 //
                 // let offset = click.element.offset();
@@ -70,7 +79,16 @@ namespace Htme.Plugin.Attribute {
 
             });
 
-            structure.panel.get('edit').set(this.name.toLowerCase(), click);
+            let edit = structure.panel.get('edit');
+
+            if(edit) {
+
+                edit.set(this.name.toLowerCase(), click);
+
+            } else {
+
+                throw new Error('Menu Edit is not defined');
+            }
 
         }
 

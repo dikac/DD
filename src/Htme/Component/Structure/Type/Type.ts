@@ -14,7 +14,14 @@ namespace Htme.Component.Structure.Type {
 
         valid(attributes : Attributes) {
 
-            return attributes.get('data-htme-type').toString() === this.type;
+            let type = attributes.get('data-htme-type');
+
+            if(type) {
+
+                return type === this.type;
+            }
+
+            return false;
         }
 
         set(attributes : Attributes) {

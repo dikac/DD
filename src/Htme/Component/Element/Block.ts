@@ -31,9 +31,13 @@ namespace Htme.Component.Element {
             this.$content = content;
             this.element.empty();
 
-            if(this.$content) {
+            if(content) {
 
-                this.element.append(this.content.element);
+                this.element.append(content.element);
+
+            } else {
+
+                this.element.empty();
             }
         }
 

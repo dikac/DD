@@ -18,7 +18,7 @@ namespace Htme.Component.Set_ {
         ) {
 
             super('', delimiter);
-            this.update();
+            this.fetch();
         }
         //
         // get attribute () : string|undefined {
@@ -26,10 +26,7 @@ namespace Htme.Component.Set_ {
         //     return this.attributes.get(this.name);
         // }
 
-        update()
-        {
-            super.replace(this.attributes.get(this.name));
-        }
+
 
         replace(data: string) {
 
@@ -99,11 +96,20 @@ namespace Htme.Component.Set_ {
             return this;
         }
 
-        fetch() : this {
+        fetch() : this
+        {
+            let source = this.attributes.get(this.name);
 
-            this.replace(this.attributes.get(this.name));
+            if(!source) {
+
+                source = '';
+            }
+
+            super.replace(source);
+
             return this;
         }
+
     }
 
 }

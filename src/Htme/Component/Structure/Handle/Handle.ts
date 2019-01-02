@@ -12,7 +12,14 @@ namespace Htme.Component.Structure.Handle {
 
         valid(attributes : Attributes) {
 
-            return attributes.get('data-htme-handle').toString() === this.handle;
+            let handle = attributes.get('data-htme-handle');
+
+            if(handle) {
+
+                return handle === this.handle;
+            }
+
+            return false;
         }
 
         set(attributes : Attributes) {

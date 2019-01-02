@@ -45,7 +45,20 @@ namespace Htme.Plugin.Content {
                     structure.element.append(container.element)
                 });
 
-                structure.panel.get('new').set(this.name.toLowerCase(), click);
+
+
+                let edit = structure.panel.get('new');
+
+                if(edit) {
+
+                    edit.set(this.name.toLowerCase(), click);
+
+                } else {
+
+                    throw new Error('Menu New is not defined');
+                }
+
+                //structure.panel.get('new').set(this.name.toLowerCase(), click);
             }
         }
 

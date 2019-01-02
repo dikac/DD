@@ -14,9 +14,9 @@ namespace Htme.Component.Element {
 
         constructor(
             element : JQuery|string|null = null,
-            factory : (JQuery) => Element| null = null,
-            public handlerIn : (event) => void | null = null,
-            public handlerOut : (event) => void | null = null,
+            factory : ((JQuery) => Element)| null = null,
+            public handlerIn : ((event) => void) | null = null,
+            public handlerOut : ((event) => void) | null = null,
         ) {
             super(element, factory);
 

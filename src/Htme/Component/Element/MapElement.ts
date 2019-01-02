@@ -12,24 +12,32 @@ namespace Htme.Component.Element {
 
         constructor(
             element : JQuery|string|null = null,
-            factory : (JQuery) => Value| null = null
+            factory : ((JQuery) => Value|null)| null = null
         ) {
 
             super();
 
             this.dom = new Dom(element);
 
-            let buffer = [];
+            let buffer : Value[] = [];
 
             this.dom.element.children().each(function (k, v) {
 
-                buffer.push(factory($(v)));
+                if(factory) {
+
+                    let result = factory($(v));
+
+                    if(result) {
+
+                        buffer.push(result);
+                    }
+                }
 
             });
 
-            for(let [k, v] of buffer) {
+            for(let k in buffer) {
 
-                this.set(k.toString(), v);
+                this.set(k.toString(), buffer[k]);
             }
         }
 
@@ -84,8 +92,13 @@ namespace Htme.Component.Element {
 
             if(this.has(key)) {
 
-                super.get(key).element.remove();
-                super.delete(key);
+                let val = super.get(key);
+
+                if(val) {
+
+                    val.element.remove();
+                    super.delete(key);
+                }
 
                 return true;
             }

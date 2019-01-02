@@ -18,7 +18,8 @@ namespace Htme.Component.Map_ {
 
         ) {
 
-            super(attributes.get(name), associative, value);
+            super('', associative, value);
+            this.fetch();
         }
 
         commit() : this {
@@ -33,7 +34,13 @@ namespace Htme.Component.Map_ {
 
         fetch() : this {
 
-            this.replace(this.attributes.get(this.name));
+            let src = this.attributes.get(this.name);
+
+            if(!src) {
+                src = '';
+            }
+
+            this.replace(src);
             return this;
         }
 

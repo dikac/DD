@@ -22,6 +22,12 @@ namespace Htme.Plugin.Container.Structure {
             super(element, function (jquery: JQuery) : StructureInterface {
 
                 let val = handler.deserialize(jquery);
+
+                if(!val) {
+
+                    throw new Error('Failed to deserialize');
+                }
+
                 handler.process(val);
                 return val;
             });

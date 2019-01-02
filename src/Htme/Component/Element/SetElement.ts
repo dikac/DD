@@ -15,7 +15,7 @@ namespace Htme.Component.Element {
 
         constructor(
             element : JQuery|string|null = null,
-            factory : (JQuery) => Value| null = null
+            factory : ((JQuery) => Value| null)|null = null
         ) {
 
             super();
@@ -23,13 +23,21 @@ namespace Htme.Component.Element {
             this.dom = new Dom(element);
             this.$content = this.dom.element.html();
 
-            let buffer = [];
+            let buffer : Value[]= [];
 
-            this.dom.element.children().each(function (k, v) {
+            if(factory) {
 
-                buffer.push(factory($(v)));
+                this.dom.element.children().each(function (k, v) {
 
-            });
+                    let result = factory($(v));
+
+                    if(result) {
+
+                        buffer.push(result);
+                    }
+
+                });
+            }
 
             //console.log(buffer);
 
