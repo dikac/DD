@@ -54,6 +54,7 @@ namespace Htme.Plugin.Attribute {
                 if(offset && w) {
 
                     editor.show(offset.top, offset.left + w);
+
                 } else {
 
                     throw new Error('Could not get coordinate');

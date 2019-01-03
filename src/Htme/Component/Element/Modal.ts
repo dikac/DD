@@ -64,7 +64,8 @@ namespace Htme.Component.Element {
             }).mousedown(function () {
 
                 let style = new Style($this.attributes);
-                style.fetch();
+               // style.fetch();
+                console.log('--');
                 console.log(style.toString());
                 style.set('z-index', index.toString());
                 console.log(style.toString());

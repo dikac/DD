@@ -2,15 +2,19 @@ namespace Htme.Component.Element.Attributes {
 
     import MapImplement = Htme.Component.Datastructure.MapImplement;
 
-    export class Attributes extends MapImplement<string, string> {
+    export class Attributes implements Map<string, string> {
 
         constructor(public jquery : JQuery)
         {
-            super();
 
-            let $this = this;
+        }
 
-            jquery.each(function() {
+
+        protected map() : Map<string, string> {
+
+            let map = new Map<string, string>();
+
+            this.jquery.each(function() {
 
                 $.each(this.attributes, function() {
                     // this.attributes is not a plain object, but an array
@@ -19,15 +23,12 @@ namespace Htme.Component.Element.Attributes {
 
                         let name = this.name.toLowerCase();
 
-                        $this.superSet(name, this.value);
+                        map.set(name, this.value);
                     }
                 });
             });
-        }
 
-        protected superSet(key: string, value: string) {
-
-            super.set(key, value);
+            return map;
         }
 
         toString() : string
@@ -46,13 +47,21 @@ namespace Htme.Component.Element.Attributes {
         set(key: string, value: string): this {
 
             this.jquery.attr(key, value);
-            return super.set(key, value);
+            return this;
         }
+
+        has(key: string): boolean {
+
+            return this.get(key) !== undefined;
+        }
+
 
         delete(key: string): boolean {
 
+            let has = this.has(key);
             this.jquery.removeAttr(key);
-            return super.delete(key);
+
+            return has;
         }
 
         // clean(key: string) {
@@ -76,12 +85,43 @@ namespace Htme.Component.Element.Attributes {
 
         get(attribute : string) : string|undefined
         {
-            // if(!this.has(attribute)) {
-            //
-            //     this.set(attribute, new Htme.Component.Element.Attributes.Attribute.Attribute(attribute, this.jquery));
-            // }
+           return this.jquery.attr(attribute);
+        }
 
-            return super.get(attribute);
+        readonly [Symbol.toStringTag]: string = 'Attributes';
+
+        get size(): number {
+
+            return this.map().size;
+        }
+
+        [Symbol.iterator](): IterableIterator<[string, string]> {
+
+            return this.map()[Symbol.iterator]();
+        }
+
+        clear(): void {
+        }
+
+        entries(): IterableIterator<[string, string]> {
+
+            return this.map().entries();
+        }
+
+        forEach(callbackfn: (value: string, key: string, map: Map<string, string>) => void, thisArg?: any): void {
+
+            this.map().forEach(callbackfn, thisArg);
+        }
+
+
+        keys(): IterableIterator<string> {
+
+            return this.map().keys();
+        }
+
+        values(): IterableIterator<string> {
+
+            return this.map().values();
         }
     }
 }

@@ -3,65 +3,89 @@ namespace Htme.Component.Map_ {
     /**
      *
      */
-    export class Map_<K, V> implements Map<K, V> {
+    export class Map_<K, V, Container extends Map<K, V>>
+
+        implements Map<K, V> {
+        private $map: Container;
+
 
         constructor(
-            private map: Map<K, V> = new Map<K, V>()
+            map: Container
         ) {
+
+            this.setMap(map);
 
         }
 
+        protected setMap (map : Container) {
+
+            this.$map = map;
+        }
+
+        protected map () : Container {
+
+            return this.$map;
+        }
+
         get [Symbol.toStringTag](): string {
-            return this.map[Symbol.toStringTag];
+
+            return this.map()[Symbol.toStringTag];
         }
 
         get size(): number
         {
-            return this.map.size;
+            return this.map().size;
         }
 
         has(key: K): boolean
         {
-            return this.map.has(key);
+            return this.map().has(key);
         }
 
         [Symbol.iterator](): IterableIterator<[K, V]>
         {
-            return this.map[Symbol.iterator]();
+            return this.map()[Symbol.iterator]();
         }
 
         clear(): void {
-            this.map.clear();
+
+            this.map().clear();
         }
 
         delete(key: K): boolean {
-            return this.map.delete(key);
+
+            return this.map().delete(key);
         }
 
         entries(): IterableIterator<[K, V]> {
-            return this.map.entries();
+
+            return this.map().entries();
         }
 
         forEach(callbackfn: (value: V, key: K, map: Map<K, V>) => void, thisArg?: any): void {
 
-            return this.map.forEach(callbackfn, thisArg);
+            return this.map().forEach(callbackfn, thisArg);
         }
 
         get(key: K): V | undefined {
-            return this.map.get(key);
+
+            return this.map().get(key);
         }
 
         keys(): IterableIterator<K> {
-            return this.map.keys();
+
+            return this.map().keys();
         }
 
         set(key: K, value: V): this {
-            this.map.set(key, value);
+
+            this.map().set(key, value);
             return this;
         }
 
         values(): IterableIterator<V> {
-            return this.map.values();
+
+            return this.map().values();
         }
     }
 

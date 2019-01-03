@@ -8,7 +8,7 @@ namespace Htme.Component.Map_ {
     /**
      *
      */
-    export class Attribute extends MapString {
+    export class Attribute extends Map_<string, string, MapString> {
 
         constructor(
             private attributes : Attributes,
@@ -17,43 +17,52 @@ namespace Htme.Component.Map_ {
             value : string
 
         ) {
-
-            super('', associative, value);
-            this.fetch();
+            super(new MapString('', associative, value));
         }
 
-        commit() : this {
+         protected  map () : MapString {
 
-            if(this.attributes) {
+            this.update();
+            return super.map();
+        }
 
-                this.attributes.set(this.name, this.toString());
-            }
+        toString() : string {
+
+            return super.map().toString();
+        }
+
+        protected commit() : this {
+
+            this.attributes.set(this.name, this.toString());
 
             return this;
         }
 
-        fetch() : this {
+        protected update() : this {
 
             let src = this.attributes.get(this.name);
 
             if(!src) {
+
                 src = '';
             }
 
-            this.replace(src);
+            super.map().replace(src);
+
             return this;
         }
 
         delete(key: string): boolean {
 
-            let $return  = super.delete(key);
+            let $return  = this.map().delete(key);
             this.commit();
             return $return;
         }
 
         set(key: string, value: string): this {
 
-            super.set(key, value);
+            let map = this.map();
+            map.set(key, value);
 
             this.commit();
 
@@ -62,17 +71,11 @@ namespace Htme.Component.Map_ {
 
         clear(): void {
 
-            super.clear();
-            // attribute does not set on super construction
-            if(this.attributes) {
-
-                this.attributes.set(this.name, '');
-            }
+            this.attributes.set(this.name, '');
         }
 
         remove() {
 
-            super.clear();
             this.attributes.delete(this.name);
         }
 
@@ -85,6 +88,7 @@ namespace Htme.Component.Map_ {
                 this.remove();
             }
         }
+
     }
 
 }

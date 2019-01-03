@@ -3,6 +3,8 @@ namespace Htme.Component.Map_ {
     import MapImplement = Htme.Component.Datastructure.MapImplement;
     import Attributes = Htme.Component.Element.Attributes.Attributes;
 
+    export type DataType = 'container' | 'content';
+
     export class Data extends MapImplement<string, string> {
 
         constructor(
@@ -21,6 +23,19 @@ namespace Htme.Component.Map_ {
                 }
             }
         }
+
+        // setType(type : DataType) {
+        //
+        // }
+        //
+        // getType() : DataType | undefined {
+        //
+        // }
+        //
+        // isType(type : DataType) {
+        //
+        // }
+
 
 
         set(key: string, value: string): this {

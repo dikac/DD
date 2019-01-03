@@ -9,7 +9,8 @@ namespace Htme.Component.Set_ {
     /**
      *
      */
-    export class Attribute extends SetString {
+    export class Attribute extends Set_<string, SetString> {
+
 
         constructor(
             private attributes : Attributes,
@@ -17,48 +18,30 @@ namespace Htme.Component.Set_ {
             delimiter : string = ' '
         ) {
 
-            super('', delimiter);
-            this.fetch();
+            super(new SetString('', delimiter));
         }
-        //
-        // get attribute () : string|undefined {
-        //
-        //     return this.attributes.get(this.name);
-        // }
 
 
+        protected set() : SetString {
+
+            this.update();
+            return super.set();
+        }
 
         replace(data: string) {
 
-            super.replace(data);
-
-            if(this.attributes) {
-
-                this.attributes.set(this.name, data);
-            }
+            this.attributes.set(this.name, data);
         }
 
-        // toString(): string {
-        //
-        //     let attribute =  this.attribute;
-        //
-        //     if(!attribute) {
-        //
-        //         attribute = '';
-        //     }
-        //
-        //     return attribute;
-        // }
+        toString(): string {
+
+            return super.set().toString();
+        }
 
 
         clear(): void {
 
-            super.clear();
-            // attribute does not set on super construction
-            if(this.attributes) {
-
-                this.attributes.set(this.name, '');
-            }
+            this.attributes.set(this.name, '');
         }
 
         remove() {
@@ -78,25 +61,25 @@ namespace Htme.Component.Set_ {
 
         add(value: string): this
         {
-            super.add(value);
+            this.set().add(value);
             this.commit();
             return this;
         }
 
         delete(value: string): boolean
         {
-            let $return = super.delete(value);
+            let $return = this.set().delete(value);
             this.commit();
             return $return;
         }
 
-        commit() : this {
+        protected commit() : this {
 
             this.attributes.set(this.name, this.toString());
             return this;
         }
 
-        fetch() : this
+        protected update() : this
         {
             let source = this.attributes.get(this.name);
 
@@ -105,10 +88,11 @@ namespace Htme.Component.Set_ {
                 source = '';
             }
 
-            super.replace(source);
+            super.set().replace(source);
 
             return this;
         }
+
 
     }
 

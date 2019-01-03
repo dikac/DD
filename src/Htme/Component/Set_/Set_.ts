@@ -2,10 +2,23 @@ namespace Htme.Component.Set_ {
     /**
      *
      */
-    export class Set_<T> implements Set<T> {
+    export class Set_<T, Container extends Set<T>> implements Set<T> {
 
-        constructor(protected $set: Set<T> = new Set<T>())
+        private $set: Container;
+
+        constructor(set: Container)
         {
+            this.setSet(set);
+        }
+
+        protected setSet (set : Container) {
+
+            this.$set = set;
+        }
+
+        protected set () : Container {
+
+            return this.$set;
         }
 
         [Symbol.iterator](): IterableIterator<T>

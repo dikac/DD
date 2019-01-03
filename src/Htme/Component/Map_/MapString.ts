@@ -2,10 +2,11 @@
 namespace Htme.Component.Map_ {
 
     import StringableI = Stringable.Stringable;
+    import Mp = Htme.Component.Map_.Map_ ;
     /**
      *
      */
-    export class MapString extends Map_<string, string> implements StringableI {
+    export class MapString extends Mp<string, string, Map<string, string>> implements StringableI {
 
         constructor(
             data : string,
@@ -13,7 +14,7 @@ namespace Htme.Component.Map_ {
             private value : string
         ) {
 
-            super();
+            super(new Map<string, string>());
             this.replace(data);
         }
 

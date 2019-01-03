@@ -35,12 +35,12 @@ namespace Htme.Plugin.TinyMCE.Element {
 
         get content () : string {
 
-            return '';
+            return this.tinyMCE.getContent();
         }
 
         set content(content : string) {
 
-
+            this.tinyMCE.setContent(content);
         }
 
         show() {
@@ -49,13 +49,15 @@ namespace Htme.Plugin.TinyMCE.Element {
 
             if(!this.tinyMCE) {
 
-                tinymce.init(this.tinyMCEArguments);
 
                 let $this = this;
                 this.tinyMCEArguments['init_instance_callback'] = function(editor) {
 
                     $this.tinyMCE = editor;
-                }
+                };
+
+                tinymce.init(this.tinyMCEArguments);
+
             }
         }
 

@@ -6,14 +6,14 @@ namespace Htme.Component.Set_ {
     /**
      *
      */
-    export class SetString extends Set_<string> implements StringableI {
+    export class SetString extends Set_<string, Set<string>> implements StringableI {
 
         constructor(
             data : string,
             public delimiter : string
         ) {
 
-            super();
+            super(new Set<string>());
             this.replace(data);
         }
 

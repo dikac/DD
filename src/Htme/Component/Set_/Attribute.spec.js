@@ -4,7 +4,7 @@ QUnit.test( "Htme.Component.Set_.Attribute construct", function( assert ) {
     let dom = $('<div class="class1 class2 class3"></div>');
     let map = new Htme.Component.Set_.Attribute(new Attributes(dom), 'class');
 
-    console.log(map);
+    //console.log(map);
 
     assert.ok(map.has('class1'),  "Passed!");
     assert.ok(map.has('class2'),  "Passed!");
