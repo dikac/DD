@@ -1,6 +1,6 @@
 // QUnit.test( "Htme.Component.Map_.Attribute construct", function( assert ) {
 //
-//     let Attributes = Htme.Component.Element.Attributes.Attributes;
+//     let Attributes = Htme.Component.Map_.Attributes;
 //     let dom = $('<div style="padding:10px;margin:10px"></div>');
 //     let map = new Htme.Component.Map_.Attribute(new Attributes(dom), 'style', ':', ';');
 //
@@ -11,7 +11,7 @@
 
 QUnit.test( "Htme.Component.Map_.Attribute set", function( assert ) {
 
-    let Attributes = Htme.Component.Element.Attributes.Attributes;
+    let Attributes = Htme.Component.Map_.Attributes;
     let dom = $('<div></div>');
     let map = new Htme.Component.Map_.Attribute(new Attributes(dom), 'style', ':', ';');
 
@@ -29,7 +29,7 @@ QUnit.test( "Htme.Component.Map_.Attribute set", function( assert ) {
 //
 // QUnit.test( "Htme.Component.Map_.Attribute delete", function( assert ) {
 //
-//     let Attributes = Htme.Component.Element.Attributes.Attributes;
+//     let Attributes = Htme.Component.Map_.Attributes;
 //     let dom = $('<div style="z-index:1;padding:10px;margin:10px"></div>');
 //     let map = new Htme.Component.Map_.Attribute(new Attributes(dom), 'style', ':', ';');
 //
@@ -47,7 +47,7 @@ QUnit.test( "Htme.Component.Map_.Attribute set", function( assert ) {
 //
 // QUnit.test( "Htme.Component.Map_.Attribute fetch", function( assert ) {
 //
-//     let Attributes = Htme.Component.Element.Attributes.Attributes;
+//     let Attributes = Htme.Component.Map_.Attributes;
 //     let dom = $('<div></div>');
 //     let map = new Htme.Component.Map_.Attribute(new Attributes(dom), 'style', ':', ';');
 //     dom.attr('style', "z-index:1;padding:10px;margin:11px");

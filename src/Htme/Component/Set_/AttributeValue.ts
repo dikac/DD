@@ -3,14 +3,13 @@
 namespace Htme.Component.Set_ {
 
     import StringableI = Stringable.Stringable;
-    import Attributes = Htme.Component.Element.Attributes.Attributes;
+    import Attributes = Htme.Component.Map_.Attributes;
     import Stringable = Htme.Component.Stringable.Stringable;
 
     /**
      *
      */
-    export class Attribute extends Set_<string, SetString> {
-
+    export class AttributeValue extends Set_<string, SetString> {
 
         constructor(
             private attributes : Attributes,

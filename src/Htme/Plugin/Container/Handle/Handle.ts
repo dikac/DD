@@ -8,7 +8,7 @@ namespace Htme.Plugin.Container.Handle {
             super('Container');
         }
     }
-    // import Attributes = Htme.Component.Element.Attributes.Attributes;
+    // import Attributes = Htme.Component.Map_.Attributes;
     //
     // export function ToContainer(attributes : Attributes) : boolean {
     //

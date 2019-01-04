@@ -1,6 +1,6 @@
 QUnit.test( "Htme.Component.Set_.Attribute construct", function( assert ) {
 
-    let Attributes = Htme.Component.Element.Attributes.Attributes;
+    let Attributes = Htme.Component.Map_.Attributes;
     let dom = $('<div class="class1 class2 class3"></div>');
     let map = new Htme.Component.Set_.Attribute(new Attributes(dom), 'class');
 
@@ -17,7 +17,7 @@ QUnit.test( "Htme.Component.Set_.Attribute construct", function( assert ) {
 
 QUnit.test( "Htme.Component.Set_.Attribute fetch", function( assert ) {
 
-    let Attributes = Htme.Component.Element.Attributes.Attributes;
+    let Attributes = Htme.Component.Map_.Attributes;
     let dom = $('<div class="test"></div>');
     let map = new Htme.Component.Set_.Attribute(new Attributes(dom), 'class');
 
@@ -33,7 +33,7 @@ QUnit.test( "Htme.Component.Set_.Attribute fetch", function( assert ) {
 
 QUnit.test( "Htme.Component.Set_.Attribute set", function( assert ) {
 
-    let Attributes = Htme.Component.Element.Attributes.Attributes;
+    let Attributes = Htme.Component.Map_.Attributes;
     let dom = $('<div></div>');
     let map = new Htme.Component.Set_.Attribute(new Attributes(dom), 'class');
 
@@ -62,7 +62,7 @@ QUnit.test( "Htme.Component.Set_.Attribute set", function( assert ) {
 
 QUnit.test( "Htme.Component.Set_.Attribute delete", function( assert ) {
 
-    let Attributes = Htme.Component.Element.Attributes.Attributes;
+    let Attributes = Htme.Component.Map_.Attributes;
     let dom = $('<div class="class1 class2 class3"></div>');
     let map = new Htme.Component.Set_.Attribute(new Attributes(dom), 'class');
 
@@ -79,7 +79,7 @@ QUnit.test( "Htme.Component.Set_.Attribute delete", function( assert ) {
 
 QUnit.test( "Htme.Component.Set_.Attribute clean", function( assert ) {
 
-    let Attributes = Htme.Component.Element.Attributes.Attributes;
+    let Attributes = Htme.Component.Map_.Attributes;
     let dom = $('<div class></div>');
     let map = new Htme.Component.Set_.Attribute(new Attributes(dom), 'class');
 

@@ -1,6 +1,6 @@
 namespace Htme.Component.Structure.Handle {
 
-    import Attributes = Htme.Component.Element.Attributes.Attributes;
+    import Attributes = Htme.Component.Map_.Attributes;
 
     export abstract class Handle {
 

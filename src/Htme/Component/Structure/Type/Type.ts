@@ -1,7 +1,7 @@
 namespace Htme.Component.Structure.Type {
 
-    import Attributes = Htme.Component.Element.Attributes.Attributes;
-    import SetAttribute = Htme.Component.Set_.Attribute;
+    import Attributes = Htme.Component.Map_.Attributes;
+    import SetAttribute = Htme.Component.Set_.AttributeValue;
 
     export abstract class Type {
 

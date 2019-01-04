@@ -4,7 +4,7 @@ namespace Htme.Component.Structure.Panel.Menu {
     import MapElement = Htme.Component.Element.MapElement;
     import Dom = Htme.Component.Element.Dom;
     import Item = Htme.Component.Structure.Panel.Menu.Item.Item;
-    import SetAttribute = Htme.Component.Set_.Attribute;
+    import SetAttribute = Htme.Component.Set_.AttributeValue;
 
     export class Standard extends Dom implements Menu, Map<string, Item>{
 

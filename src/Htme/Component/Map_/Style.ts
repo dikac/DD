@@ -1,17 +1,17 @@
 ///<reference path="Map_.ts"/>
 ///<reference path="MapString.ts"/>
-///<reference path="Attribute.ts"/>
+///<reference path="AttributeValue.ts"/>
 namespace Htme.Component.Map_ {
 
     import StringableI = Stringable.Stringable;
-    import Attributes = Htme.Component.Element.Attributes.Attributes;
+    import Attributes = Htme.Component.Map_.Attributes;
 
     /**
      *
      */
-    export class Style extends Attribute {
+    export class Style extends AttributeValue {
 
-        constructor(    attributes : Attributes) {
+        constructor(attributes : Attributes) {
 
             super(attributes, 'style', ':', ';');
         }

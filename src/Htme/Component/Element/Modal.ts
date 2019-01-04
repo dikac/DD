@@ -1,8 +1,9 @@
-///<reference path="../Set_/Attribute.ts"/>
+
 ///<reference path="../Map_/Style.ts"/>
+///<reference path="../Set_/AttributeValue.ts"/>
 namespace Htme.Component.Element {
 
-    import SetAttribute = Htme.Component.Set_.Attribute;
+    import SetAttribute = Htme.Component.Set_.AttributeValue;
     import Style = Htme.Component.Map_.Style;
     export const IDENTIFIER : string = 'HtmeModal';
 

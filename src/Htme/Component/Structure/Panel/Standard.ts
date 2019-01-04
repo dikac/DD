@@ -9,7 +9,7 @@ namespace Htme.Component.Structure.Panel {
     import MenuStandard = Htme.Component.Structure.Panel.Menu.Standard;
     import MapElement = Htme.Component.Element.MapElement;
     import PanelElement = Htme.Component.Element.Panel;
-    import SetAttribute = Htme.Component.Set_.Attribute;
+    import SetAttribute = Htme.Component.Set_.AttributeValue;
 
     // export function defaultFactory (element : JQuery|string|null = null) : Menu | null {
     //

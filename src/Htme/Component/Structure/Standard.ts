@@ -4,7 +4,7 @@ namespace Htme.Component.Structure {
     import Dom = Htme.Component.Element.Dom;
    // import AbstractBlock = Htme.Component.Element.Standard;
    // import PanelStandard = Htme.Component.Structure.Panel.Standard;
-    import SetAttribute = Htme.Component.Set_.Attribute;
+    import SetAttribute = Htme.Component.Set_.AttributeValue;
 
     export class Standard extends Dom implements Structure {
 

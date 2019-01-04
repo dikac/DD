@@ -1,6 +1,6 @@
 namespace Htme.Component.Element {
 
-    import Attributes = Htme.Component.Element.Attributes.Attributes;
+    import Attributes = Htme.Component.Map_.Attributes;
 
     export class String implements Element {
 

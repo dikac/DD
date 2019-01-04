@@ -3,7 +3,7 @@ namespace Htme.Component.Map_ {
 
     import MapImplement = Htme.Component.Datastructure.MapImplement;
     import Element = Htme.Component.Element.Element;
-   // import Attributes = Htme.Component.Element.Attributes.Attributes;
+   // import Attributes = Htme.Component.Map_.Attributes;
 
     export class MapElement<Value extends Element> extends MapImplement<string, Value>  {
 
@@ -95,7 +95,7 @@ namespace Htme.Component.Map_ {
             }
         }
 
-        get attributes(): Htme.Component.Element.Attributes.Attributes {
+        get attributes(): Htme.Component.Map_.Attributes {
 
             return this.dom.attributes;
         }

@@ -2,7 +2,7 @@
 namespace Htme.Component.Element {
 
     import MapImplement = Htme.Component.Datastructure.MapImplement;
-    import Attributes = Htme.Component.Element.Attributes.Attributes;
+    import Attributes = Htme.Component.Map_.Attributes;
     import SetImplement = Htme.Component.Datastructure.SetImplement;
     import Element = Htme.Component.Element.Element;
 

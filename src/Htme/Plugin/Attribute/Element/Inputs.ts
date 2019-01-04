@@ -1,15 +1,7 @@
 namespace Htme.Plugin.Attribute.Element {
 
-    import Structure = Htme.Component.Structure.Structure;
-    import Modal = Htme.Component.Element.Modal;
-    import Attributes = Htme.Component.Element.Attributes.Attributes;
-    import Block = Htme.Component.Element.Block;
-    import MapElement = Htme.Component.Element.MapElement;
+    import Attributes = Htme.Component.Map_.Attributes;
     import Element = Htme.Component.Element.Element;
-    import Panel = Htme.Component.Element.Panel;
-    import MapString = Htme.Component.Map_.MapString;
-    import Dom = Htme.Component.Element.Dom;
-    import MapImplement = Htme.Component.Datastructure.MapImplement;
 
     export class Inputs /*extends Dom */implements Element {
 

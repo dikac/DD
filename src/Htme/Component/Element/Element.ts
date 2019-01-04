@@ -1,8 +1,10 @@
 namespace Htme.Component.Element {
 
+    import Attributes = Htme.Component.Map_.Attributes;
+
     export interface Element {
 
-        attributes : Attributes.Attributes;
+        attributes : Attributes;
 
         readonly element: JQuery;
 

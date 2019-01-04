@@ -1,12 +1,8 @@
-///<reference path="../../Component/Set_/Attribute.ts"/>
+
 namespace Htme.Plugin.Sortable {
 
     import PluginInterface = Htme.Plugin.Plugin;
-
     import Structure = Htme.Component.Structure.Structure;
-    import ContainerStructure = Htme.Plugin.Container.Structure.Structure;
-    import Click = Htme.Component.Structure.Panel.Menu.Item.Click;
-    import Dom = Htme.Component.Element.Dom;
 
     export class Plugin implements PluginInterface {
 
@@ -28,7 +24,7 @@ namespace Htme.Plugin.Sortable {
 
             if((new Htme.Component.Structure.Type.Container).valid(structure.attributes)) {
 
-                let set = new Htme.Component.Set_.Attribute(structure.attributes, 'class');
+                let set = new Htme.Component.Set_.AttributeValue(structure.attributes, 'class');
                 set.add('HtmeSortable');
 
                 // structure.attributes.edit('class', function (str: string) {

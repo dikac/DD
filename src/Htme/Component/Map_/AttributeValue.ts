@@ -2,13 +2,10 @@
 ///<reference path="MapString.ts"/>
 namespace Htme.Component.Map_ {
 
-    import StringableI = Stringable.Stringable;
-    import Attributes = Htme.Component.Element.Attributes.Attributes;
-
     /**
      *
      */
-    export class Attribute extends Map_<string, string, MapString> {
+    export class AttributeValue extends Map_<string, string, MapString> {
 
         constructor(
             private attributes : Attributes,

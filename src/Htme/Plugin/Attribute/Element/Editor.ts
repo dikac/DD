@@ -2,10 +2,6 @@ namespace Htme.Plugin.Attribute.Element {
 
     import Structure = Htme.Component.Structure.Structure;
     import Modal = Htme.Component.Element.Modal;
-    import Attributes = Htme.Component.Element.Attributes.Attributes;
-    import Block = Htme.Component.Element.Block;
-    import MapElement = Htme.Component.Element.MapElement;
-    import Panel = Htme.Component.Element.Panel;
     import SetElement = Htme.Component.Element.SetElement;
 
     export class Editor {
@@ -19,7 +15,7 @@ namespace Htme.Plugin.Attribute.Element {
 
             this.modal.handlerIn = function(event) {
 
-                let set = new Htme.Component.Set_.Attribute(structure.attributes, 'class');
+                let set = new Htme.Component.Set_.AttributeValue(structure.attributes, 'class');
                 set.add('HtmeActive');
 
                 // structure.attributes.edit('class', function(attribute : string) : string {
@@ -33,7 +29,7 @@ namespace Htme.Plugin.Attribute.Element {
             this.modal.handlerOut = function(event) {
 
 
-                let set = new Htme.Component.Set_.Attribute(structure.attributes, 'class');
+                let set = new Htme.Component.Set_.AttributeValue(structure.attributes, 'class');
                 set.delete('HtmeActive');
 
                 // structure.attributes.edit('class', function(attribute : string) : string {

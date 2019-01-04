@@ -1,4 +1,4 @@
-namespace Htme.Component.Element.Attributes {
+namespace Htme.Component.Map_ {
 
     import MapImplement = Htme.Component.Datastructure.MapImplement;
 
