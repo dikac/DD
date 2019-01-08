@@ -1,10 +1,13 @@
-///<reference path="Plugin/MapPlugin.ts"/>
-///<reference path="Plugin/Container/Structure/Structure.ts"/>
+///<reference path="Component/Plugin/MapPlugin.ts"/>
+///<reference path="Plugin/Container/Structure.ts"/>
 
 namespace Htme {
 
-    import MapPlugin = Htme.Plugin.MapPlugin;
-    import Container = Htme.Plugin.Container.Structure.Structure;
+    import Plugin = Htme.Component.Plugin.Plugin;
+    import MapPlugin = Htme.Component.Plugin.MapPlugin;
+    import Structure = Htme.Plugin.Container.Structure;
+    import Loader = Htme.Component.Plugin.Loader.Loader;
+    import Load = Htme.Component.Plugin.Loader.Load;
 
     export class app  {
 
@@ -12,30 +15,35 @@ namespace Htme {
 
         constructor(
             selector : JQuery|string,
-            private plugins : Htme.Plugin.Plugin[] = [],
+            private plugins : Loader[] = [],
         ) {
-            let unordered = {};
+
+            let unordered : {[key:string]:Loader} = {};
+
             for(let plugin of plugins) {
 
                 unordered[plugin.name] = plugin;
             }
 
-            const ordered = {};
+            const ordered : {[key:string]:Loader} = {};
+
             Object.keys(unordered).sort().forEach(function(key) {
+
                 ordered[key] = unordered[key];
             });
 
-
             let map = new MapPlugin();
+
             for(let k in ordered) {
 
-                let plugin = ordered[k];
-                plugin.plugin(map);
+                let Loader = ordered[k];
+
+                let plugin = Loader.create(map);
 
                 map.set(k, plugin);
             }
 
-            this.container = new Container(selector, map);
+            this.container = new Structure(selector, map);
            // console.log(this.container);
         }
 

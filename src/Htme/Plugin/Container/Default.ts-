@@ -1,7 +1,8 @@
 namespace Htme.Plugin {
 
 
-    import PluginInterface = Htme.Plugin.Plugin;
+    import
+    PluginInterface = Htme.Plugin.Plugin;
 
     import Standard = Htme.Component.Structure.Standard;
     import ContainerStructure = Htme.Plugin.Container.Structure.Structure;

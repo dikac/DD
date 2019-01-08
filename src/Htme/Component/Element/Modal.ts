@@ -66,10 +66,10 @@ namespace Htme.Component.Element {
 
                 let style = new Style($this.attributes);
                // style.fetch();
-                console.log('--');
-                console.log(style.toString());
+               // console.log('--');
+               // console.log(style.toString());
                 style.set('z-index', index.toString());
-                console.log(style.toString());
+               // console.log(style.toString());
                 index++;
 
             })/*.selectable()*/;

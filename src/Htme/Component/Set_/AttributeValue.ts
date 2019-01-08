@@ -34,9 +34,14 @@ namespace Htme.Component.Set_ {
 
         toString(): string {
 
-            return super.set().toString();
+            return this.set().toString();
         }
 
+        protected commit() : this {
+
+            this.attributes.set(this.name, super.set().toString());
+            return this;
+        }
 
         clear(): void {
 
@@ -50,9 +55,7 @@ namespace Htme.Component.Set_ {
 
         clean() {
 
-            let attribute = this.attributes.get(this.name);
-
-            if(!attribute) {
+            if(!this.size) {
 
                 this.remove();
             }
@@ -72,11 +75,6 @@ namespace Htme.Component.Set_ {
             return $return;
         }
 
-        protected commit() : this {
-
-            this.attributes.set(this.name, this.toString());
-            return this;
-        }
 
         protected update() : this
         {

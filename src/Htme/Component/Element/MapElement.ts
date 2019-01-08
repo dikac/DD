@@ -1,10 +1,10 @@
+///<reference path="../Map_/Map_.ts"/>
 namespace Htme.Component.Element {
 
-    import MapImplement = Htme.Component.Datastructure.MapImplement;
-   // import Attributes = Htme.Component.Map_.Attributes;
+    import Map_ = Htme.Component.Map_.Map_;
 
     export class MapElement<Value extends Element>
-        extends MapImplement<string, Value>
+        extends Map_<string, Value, Map<string, Value>>
         implements Element
     {
 
@@ -15,7 +15,7 @@ namespace Htme.Component.Element {
             factory : ((JQuery) => Value|null)| null = null
         ) {
 
-            super();
+            super(new Map<string, Value>());
 
             this.dom = new Dom(element);
 
@@ -47,47 +47,6 @@ namespace Htme.Component.Element {
             this.element.empty();
         }
 
-        // attach() {
-        //
-        //     this.detach();
-        //     for(let [key, value] of this) {
-        //
-        //         this.element.append(value.element);
-        //     }
-        // }
-
-        // detach() {
-        //
-        //     for(let [key, value] of this) {
-        //
-        //         value.detach();
-        //     }
-        //
-        //     this.element.empty();
-        // }
-
-        // protected ensureKey(key : string|null) : string {
-        //
-        //     if(key === null) {
-        //
-        //         for(let i = 0; this.children.hasOwnProperty(key = '_' + i); i++);
-        //     }
-        //
-        //     this.remove(key);
-        //
-        //     return key;
-        // }
-
-        // hide(key : string) {
-        //
-        //     let value = this.get(key);
-        //
-        //     if(value) {
-        //
-        //         value.element.detach();
-        //     }
-        // }
-
         delete(key : string) : boolean {
 
             if(this.has(key)) {
@@ -112,8 +71,6 @@ namespace Htme.Component.Element {
             this.delete(key);
             super.set(key, element);
             this.element.append(element.element);
-            // this.detach();
-            // this.attach();
             return this;
         }
 

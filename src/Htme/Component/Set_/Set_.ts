@@ -23,58 +23,58 @@ namespace Htme.Component.Set_ {
 
         [Symbol.iterator](): IterableIterator<T>
         {
-            return this.$set[Symbol.iterator]();
+            return this.set()[Symbol.iterator]();
         }
 
         entries(): IterableIterator<[T, T]>
         {
-            return this.$set.entries();
+            return this.set().entries();
         }
 
         keys(): IterableIterator<T>
         {
-            return this.$set.keys();
+            return this.set().keys();
         }
 
         forEach(callbackfn: (value: T, value2: T, set: Set<T>) => void, thisArg?: any): void
         {
-            this.$set.forEach(callbackfn, thisArg);
+            this.set().forEach(callbackfn, thisArg);
         }
 
         values(): IterableIterator<T>
         {
-            return this.$set.values();
+            return this.set().values();
         }
 
         add(value: T) : this
         {
-            this.$set.add(value);
+            this.set().add(value);
             return this;
         }
 
         clear(): void
         {
-            this.$set.clear();
+            this.set().clear();
         }
 
         delete(value: T): boolean
         {
-            return this.$set.delete(value);
+            return this.set().delete(value);
         }
 
         get [Symbol.toStringTag](): string
         {
-            return this.$set[Symbol.toStringTag];
+            return this.set()[Symbol.toStringTag];
         }
 
         get size(): number
         {
-            return this.$set.size;
+            return this.set().size;
         }
 
         has(value: T): boolean
         {
-            return this.$set.has(value);
+            return this.set().has(value);
         }
     }
 

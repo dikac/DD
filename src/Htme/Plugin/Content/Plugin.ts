@@ -1,65 +1,55 @@
-///<reference path="Structure/Structure.ts"/>
+
 namespace Htme.Plugin.Content {
 
-    import PluginInterface = Htme.Plugin.Plugin;
-    import Structure = Htme.Component.Structure.Structure;
-    import ContentStructure = Htme.Plugin.Content.Structure.Structure;
+    import PluginInterface = Htme.Component.Plugin.Plugin;
+    import StructureInterface = Htme.Component.Structure.Structure;
     import Click = Htme.Component.Structure.Panel.Menu.Item.Click;
     import Dom = Htme.Component.Element.Dom;
-    import Type = Htme.Component.Structure.Type.Container;
+    import AutoMatch = Htme.Component.Plugin.AutoMatch;
+    import DataType = Htme.Component.Map_.DataType;
+   // import Type = Htme.Component.Structure.Type.Container;
 
-    export class Plugin implements PluginInterface {
+    export class Plugin extends AutoMatch {
 
-        name : string = 'Content';
+       // name : string = 'Content';
 
-        private $plugin : PluginInterface;
+       // private $plugin : PluginInterface;
 
-        plugin(plugin : PluginInterface) {
+        constructor(
+            private plugin : PluginInterface
+        ) {
 
-            this.$plugin = plugin;
+            super(DataType.content, 'content');
+           // this.$plugin = plugin;
         }
 
-        deserialize(
-            jquery : JQuery,
-        ): Structure|null {
+        protected structure (jquery : JQuery): StructureInterface {
 
             let element = new Dom(jquery);
-
-            if((new Handle.Handle).valid(element.attributes)) {
-
-                return new ContentStructure(element.element, this.$plugin);
-            }
-
-            return null;
+            return new Structure(element.element, this.plugin);
         }
 
-        process(structure : Structure) {
+        protected insertProcess(structure : StructureInterface) {
 
-            if((new Type).valid(structure.attributes)) {
+            let $this = this;
 
-                let $this = this;
+            let click = new Click('<div>Content</div>',function (event, structure) {
 
-                let click = new Click('<div>Content</div>',function (event, structure) {
+                let container = new Structure(null, $this.plugin);
+                structure.element.append(container.element)
+            });
 
-                    let container = new ContentStructure(null, $this.$plugin);
-                    structure.element.append(container.element)
-                });
+            let edit = structure.panel.get('new');
 
+            if(edit) {
 
+                edit.set('content', click);
 
-                let edit = structure.panel.get('new');
+            } else {
 
-                if(edit) {
-
-                    edit.set(this.name.toLowerCase(), click);
-
-                } else {
-
-                    throw new Error('Menu New is not defined');
-                }
-
-                //structure.panel.get('new').set(this.name.toLowerCase(), click);
+                throw new Error('Menu New is not defined');
             }
+
         }
 
     }

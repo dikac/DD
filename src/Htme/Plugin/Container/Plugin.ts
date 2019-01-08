@@ -1,63 +1,60 @@
+///<reference path="../../Component/Plugin/AutoMatch.ts"/>
 namespace Htme.Plugin.Container {
 
-    import PluginInterface = Htme.Plugin.Plugin;
-
-    import Structure = Htme.Component.Structure.Structure;
-    import ContainerStructure = Htme.Plugin.Container.Structure.Structure;
+    import PluginInterface = Htme.Component.Plugin.Plugin;
+    import StructureInterface = Htme.Component.Structure.Structure;
     import Click = Htme.Component.Structure.Panel.Menu.Item.Click;
     import Dom = Htme.Component.Element.Dom;
+    import Data = Htme.Component.Map_.Data;
+    import DataType = Htme.Component.Map_.DataType;
+    import AutoMatch = Htme.Component.Plugin.AutoMatch;
 
-    export class Plugin implements PluginInterface {
+    // export const HANDLE = 'container';
+    // export const TYPE = DataType.container;
+
+    export class Plugin extends AutoMatch  {
 
         name : string = 'Container';
 
-        private $plugin : PluginInterface;
+       // private $plugin : PluginInterface;
 
-        plugin(plugin : PluginInterface) {
 
-            this.$plugin = plugin;
+        constructor(private plugin : PluginInterface) {
+
+            super(
+                DataType.container,
+                'container'
+            );
+
+           // this.$plugin = plugin;
         }
 
-        deserialize(
+        protected structure(
             jquery : JQuery,
-        ): Structure|null {
+        ): StructureInterface {
 
-          //  console.log(jquery);
             let element = new Dom(jquery);
 
-            if((new Handle.Handle).valid(element.attributes)) {
-
-               // if(Validator.IsContainer(element.attributes)) {
-
-                    return new Htme.Plugin.Container.Structure.Structure(element.element, this.$plugin);
-              //  }
-
-            }
-
-            return null;
+            return new Structure(element.element, this.plugin);
         }
 
 
-        process(structure : Structure) {
+        protected insertProcess(structure : StructureInterface) {
 
-            if((new Htme.Component.Structure.Type.Container).valid(structure.attributes)) {
+            let $this = this;
 
-                let $this = this;
+            let click = new Click('<div>Container</div>',function (event, structure) {
 
-                let click = new Click('<div>Container</div>',function (event, structure) {
+                let container = new Structure(null, $this.plugin);
+                structure.element.append(container.element)
 
-                    let container = new ContainerStructure(null, $this.$plugin);
-                    structure.element.append(container.element)
+            });
 
-                });
+            let menu = structure.panel.get('new');
 
-                let menu = structure.panel.get('new');
+            if(menu) {
 
-                if(menu) {
-
-                    menu.set(this.name.toLowerCase(), click);
-                }
-
+                menu.set(this.name.toLowerCase(), click);
             }
         }
 

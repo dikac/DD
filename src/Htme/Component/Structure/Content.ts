@@ -1,30 +1,30 @@
-///<reference path="../../../Component/Structure/Panel/Standard.ts"/>
-///<reference path="../Handle/Handle.ts"/>
-namespace Htme.Plugin.Content.Structure {
+///<reference path="./Panel/Standard.ts"/>
+namespace Htme.Component.Structure {
 
     import StructureInterface = Htme.Component.Structure.Structure;
     import StdPanel = Htme.Component.Structure.Panel.Standard;
-    import Content = Htme.Component.Structure.Type.Content;
-    import Handle = Htme.Plugin.Content.Handle.Handle;
+    import Data = Htme.Component.Map_.Data;
 
-    export class Structure extends Htme.Component.Element.String implements StructureInterface {
+    export class Content extends Htme.Component.Element.String implements StructureInterface {
 
         private $panel : Htme.Component.Structure.Panel.Standard;
 
         constructor(
             element : JQuery|string|null = null,
-            handler : Htme.Plugin.Plugin
+            handler : Htme.Component.Plugin.Plugin,
+            handle : string,
+            type : string,
         ) {
 
             super(element);
 
             this.$panel =  new  StdPanel(this, null, 'Content');
 
-            (new Content).set(this.attributes);
-            (new Handle).set(this.attributes);
+            let data = new Data(this.attributes);
+            data.handle().set(handle);
+            data.type().set(type);
 
             handler.process(this);
-
 
             this.$panel.get('edit');
             this.$panel.get('window');

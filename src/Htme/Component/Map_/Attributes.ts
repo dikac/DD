@@ -1,7 +1,5 @@
 namespace Htme.Component.Map_ {
 
-    import MapImplement = Htme.Component.Datastructure.MapImplement;
-
     export class Attributes implements Map<string, string> {
 
         constructor(public jquery : JQuery)

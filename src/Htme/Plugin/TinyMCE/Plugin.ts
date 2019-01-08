@@ -1,46 +1,29 @@
 namespace Htme.Plugin.TinyMCE {
 
-    import PluginInterface = Htme.Plugin.Plugin;
+    import PluginInterface = Htme.Component.Plugin.Plugin;
 
     import Structure = Htme.Component.Structure.Structure;
+    import Data = Htme.Component.Map_.Data;
+    import Attributes = Htme.Component.Map_.Attributes;
 
-    let ID_ITERATION = 0;
 
-    function id() {
-
-        ID_ITERATION++;
-
-        return 'HtmeTinyMCEUID' + ID_ITERATION;
-    }
 
     export class Plugin implements PluginInterface {
 
-        name : string = 'TinyMCE';
+       // name : string = 'TinyMCE';
 
-        private $plugin : PluginInterface;
-        private $id;
+        constructor(
+            private plugin : PluginInterface,
+            private tinyMCE : {} = {}
+            ) {
 
-        constructor(private tinyMCE : {} = {}) {
-
-            this.$id = id();
-
-
-            this.tinyMCE = Object.assign(
-                {
-                    selector : '#' + this.$id
-                },
-                tinyMCE
-            );
         }
 
-        plugin(plugin : PluginInterface) {
-
-            this.$plugin = plugin;
-        }
 
         deserialize(jquery : JQuery): Structure|null
         {
-
+            let data = new Data(new Attributes(jquery));
+            //data.h
             return null;
         }
 

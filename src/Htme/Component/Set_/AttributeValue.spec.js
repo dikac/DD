@@ -1,10 +1,10 @@
-QUnit.test( "Htme.Component.Set_.Attribute construct", function( assert ) {
+QUnit.test( "Htme.Component.Set_.AttributeValue construct", function( assert ) {
 
     let Attributes = Htme.Component.Map_.Attributes;
     let dom = $('<div class="class1 class2 class3"></div>');
-    let map = new Htme.Component.Set_.Attribute(new Attributes(dom), 'class');
+    let map = new Htme.Component.Set_.AttributeValue(new Attributes(dom), 'class');
 
-    //console.log(map);
+    //console.log(map[Symbol.iterator]());
 
     assert.ok(map.has('class1'),  "Passed!");
     assert.ok(map.has('class2'),  "Passed!");
@@ -15,27 +15,26 @@ QUnit.test( "Htme.Component.Set_.Attribute construct", function( assert ) {
     assert.equal(map.toString(), 'class1 class2 class3', "Passed!");
 });
 
-QUnit.test( "Htme.Component.Set_.Attribute fetch", function( assert ) {
+QUnit.test( "Htme.Component.Set_.AttributeValue fetch", function( assert ) {
 
     let Attributes = Htme.Component.Map_.Attributes;
     let dom = $('<div class="test"></div>');
-    let map = new Htme.Component.Set_.Attribute(new Attributes(dom), 'class');
+    let map = new Htme.Component.Set_.AttributeValue(new Attributes(dom), 'class');
 
     assert.equal(dom.attr('class'), map.toString());
 
     dom.attr('class', 'test2');
-    assert.notEqual(dom.attr('class'), map.toString());
+    //assert.notEqual(dom.attr('class'), map.toString());
 
-    map.fetch();
     assert.equal(dom.attr('class'), map.toString());
 });
 
 
-QUnit.test( "Htme.Component.Set_.Attribute set", function( assert ) {
+QUnit.test( "Htme.Component.Set_.AttributeValue set", function( assert ) {
 
     let Attributes = Htme.Component.Map_.Attributes;
     let dom = $('<div></div>');
-    let map = new Htme.Component.Set_.Attribute(new Attributes(dom), 'class');
+    let map = new Htme.Component.Set_.AttributeValue(new Attributes(dom), 'class');
 
     // commit 1
     assert.notOk(map.has('class1'),  "Passed!");
@@ -60,11 +59,11 @@ QUnit.test( "Htme.Component.Set_.Attribute set", function( assert ) {
 
 });
 
-QUnit.test( "Htme.Component.Set_.Attribute delete", function( assert ) {
+QUnit.test( "Htme.Component.Set_.AttributeValue delete", function( assert ) {
 
     let Attributes = Htme.Component.Map_.Attributes;
     let dom = $('<div class="class1 class2 class3"></div>');
-    let map = new Htme.Component.Set_.Attribute(new Attributes(dom), 'class');
+    let map = new Htme.Component.Set_.AttributeValue(new Attributes(dom), 'class');
 
     map.delete('class1');
     assert.equal(map.toString(), 'class2 class3');
@@ -77,29 +76,29 @@ QUnit.test( "Htme.Component.Set_.Attribute delete", function( assert ) {
 });
 
 
-QUnit.test( "Htme.Component.Set_.Attribute clean", function( assert ) {
+QUnit.test( "Htme.Component.Set_.AttributeValue clean", function( assert ) {
 
     let Attributes = Htme.Component.Map_.Attributes;
     let dom = $('<div class></div>');
-    let map = new Htme.Component.Set_.Attribute(new Attributes(dom), 'class');
+    let map = new Htme.Component.Set_.AttributeValue(new Attributes(dom), 'class');
 
-   // assert.equal(map.attribute, '');
+    assert.equal(dom.attr('class'), '');
     assert.equal(map.toString(), '');
 
     map.clean();
 
-    //assert.equal(map.attribute, undefined);
+    assert.equal(dom.attr('class'), undefined);
     assert.equal(map.toString(), '');
 
     dom = $('<div class = "class1"></div>');
-    map = new Htme.Component.Set_.Attribute(new Attributes(dom), 'class');
+    map = new Htme.Component.Set_.AttributeValue(new Attributes(dom), 'class');
 
     map.delete('class1');
-    //assert.equal(map.attribute, '');
+    assert.equal(dom.attr('class'), '');
     assert.equal(map.toString(), '');
 
     map.clean();
 
-    //assert.equal(map.attribute, undefined);
+    assert.equal(dom.attr('class'), undefined);
     assert.equal(map.toString(), '');
 });

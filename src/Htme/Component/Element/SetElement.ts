@@ -1,13 +1,12 @@
-///<reference path="../Datastructure/SetImplement.ts"/>
+///<reference path="../Set_/Set_.ts"/>
 namespace Htme.Component.Element {
 
-    import MapImplement = Htme.Component.Datastructure.MapImplement;
     import Attributes = Htme.Component.Map_.Attributes;
-    import SetImplement = Htme.Component.Datastructure.SetImplement;
+    import Set_ = Htme.Component.Set_.Set_;
     import Element = Htme.Component.Element.Element;
 
     export class SetElement<Value extends Element = Element>
-        extends SetImplement<Value>
+        extends Set_<Value, Set<Value>>
         implements Element {
 
         private dom : Dom;
@@ -18,7 +17,7 @@ namespace Htme.Component.Element {
             factory : ((JQuery) => Value| null)|null = null
         ) {
 
-            super();
+            super(new Set<Value>());
 
             this.dom = new Dom(element);
             this.$content = this.dom.element.html();
@@ -39,7 +38,6 @@ namespace Htme.Component.Element {
                 });
             }
 
-            //console.log(buffer);
 
             for(let v of buffer) {
 

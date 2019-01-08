@@ -12,23 +12,13 @@ namespace Htme.Component.Structure {
 
         constructor(
             element : JQuery|string|null = null,
-            handler : Htme.Plugin.Plugin
+            handler : Htme.Component.Plugin.Plugin
         ) {
 
             super(element);
 
-            //this.attributes.get('class').add(Structure.IDENTIFIER);
             let set = new SetAttribute(this.attributes, 'class');
             set.add(IDENTIFIER);
-           // return set.toString();
-
-            // this.attributes.edit('class', function (attribute : string) : string {
-            //
-            //     let set = new SetAttribute(attribute);
-            //     set.add(IDENTIFIER);
-            //     return set.toString();
-            //
-            // });
 
             this.$panel = new Htme.Component.Structure.Panel.Standard(this, null,'%name%');
 

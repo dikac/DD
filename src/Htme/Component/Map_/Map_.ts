@@ -8,7 +8,6 @@ namespace Htme.Component.Map_ {
         implements Map<K, V> {
         private $map: Container;
 
-
         constructor(
             map: Container
         ) {

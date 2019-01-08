@@ -1,63 +1,57 @@
 
 namespace Htme.Plugin.Sortable {
 
-    import PluginInterface = Htme.Plugin.Plugin;
+    import PluginInterface = Htme.Component.Plugin.Plugin;
     import Structure = Htme.Component.Structure.Structure;
+    import AutoMatch = Htme.Component.Plugin.AutoMatch;
+    import DataType = Htme.Component.Map_.DataType;
 
-    export class Plugin implements PluginInterface {
+    //export const HANDLE = 'container';
+    //export const TYPE = DataType.container;
 
-        name : string = 'Sortable';
+    export class Plugin extends AutoMatch {
 
-        private $plugin : PluginInterface;
+        //name : string = 'Sortable';
 
-        plugin(plugin : PluginInterface) {
+        //private $plugin : PluginInterface;
 
-            this.$plugin = plugin;
+        constructor() {
+
+            super(DataType.container, '');
         }
 
-        deserialize(jquery : JQuery): Structure|null
+        protected structure(jquery : JQuery): Structure
         {
-            return null;
+           throw new Error('invalid method call');
         }
 
-        process(structure : Structure) {
+        protected insertProcess(structure : Structure) {
 
-            if((new Htme.Component.Structure.Type.Container).valid(structure.attributes)) {
+            let set = new Htme.Component.Set_.AttributeValue(structure.attributes, 'class');
+            set.add('HtmeSortable');
 
-                let set = new Htme.Component.Set_.AttributeValue(structure.attributes, 'class');
-                set.add('HtmeSortable');
+            structure.element.sortable({
+                containment: "parent",
+                tolerance:'pointer',
+                helper : 'clone',
+                items : '>.HtmeStructure'  ,
+                handle: ".HtmePanel",
+               // cancel: '.' + Htme.Component.Structure.Panel.IDENTIFIER,
+                stop : function (event, ui) {
 
-                // structure.attributes.edit('class', function (str: string) {
-                //
-                //     let set = new Htme.Component.Set_.Attribute(str);
-                //     set.add('HtmeSortable');
-                //     return set.toString();
-                // });
+                    $(event.target).children().each(function (k, v) {
 
-                structure.element.sortable({
-                    containment: "parent",
-                    tolerance:'pointer',
-                    helper : 'clone',
-                    items : '>.HtmeStructure'  ,
-                    handle: ".HtmePanel",
-                   // cancel: '.' + Htme.Component.Structure.Panel.IDENTIFIER,
-                    stop : function (event, ui) {
+                        let dom = $(v);
+                        let style = dom.attr('style');
+                        if(style === undefined || style.length === 0) {
 
-                        $(event.target).children().each(function (k, v) {
+                            dom.removeAttr('style')
+                        }
+                    })
+                }
 
-                            let dom = $(v);
-                            let style = dom.attr('style');
-                            if(style === undefined || style.length === 0) {
+            }).disableSelection();
 
-                                dom.removeAttr('style')
-
-                            }
-                        })
-                    }
-
-                }).disableSelection();
-
-            }
         }
 
     }

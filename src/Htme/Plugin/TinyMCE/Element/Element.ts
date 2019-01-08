@@ -4,6 +4,15 @@ namespace Htme.Plugin.TinyMCE.Element {
 
     import Modal = Htme.Component.Element.Modal;
 
+    let ID_ITERATION = 0;
+
+    function id() {
+
+        ID_ITERATION++;
+
+        return 'HtmeTinyMCE-UID-' + ID_ITERATION;
+    }
+
     export class Element  {
 
         private modal : Modal;
@@ -12,20 +21,20 @@ namespace Htme.Plugin.TinyMCE.Element {
         name : string = 'TinyMCE';
         readonly element;
         //
-        // private $id;
+         private id;
 
         constructor(
-            private tinyMCEArguments : {},
-            private id : string
-            ) {
+            private $arguments : {}
+             ) {
 
             this.modal = new Modal();
+            this.id = id();
 
-            this.tinyMCEArguments = Object.assign(
+            this.$arguments = Object.assign(
                 {
                     selector : '#' + this.id
                 },
-                tinyMCEArguments
+                $arguments
             );
 
             this.element = $(`<textarea id="${this.id}"></textarea>`);
@@ -51,12 +60,12 @@ namespace Htme.Plugin.TinyMCE.Element {
 
 
                 let $this = this;
-                this.tinyMCEArguments['init_instance_callback'] = function(editor) {
+                this.$arguments['init_instance_callback'] = function(editor) {
 
                     $this.tinyMCE = editor;
                 };
 
-                tinymce.init(this.tinyMCEArguments);
+                tinymce.init(this.$arguments);
 
             }
         }

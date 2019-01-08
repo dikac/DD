@@ -1,18 +1,25 @@
-///<reference path="../Component/Datastructure/MapImplement.ts"/>
-namespace Htme.Plugin {
+///<reference path="../Map_/Map_.ts"/>
+namespace Htme.Component.Plugin {
 
-    import MapImplement = Htme.Component.Datastructure.MapImplement;
+    import MapImplement = Htme.Component.Map_.Map_;
 
-    export class MapPlugin extends MapImplement<string, Plugin> implements Plugin  {
+    export class MapPlugin extends MapImplement<string, Plugin, Map<string, Plugin>> implements Plugin  {
 
-        name : string = 'Map';
+        // handle: string = '';
+        // type: string = '';
+        name : string = 'CoreMap';
+
+        constructor() {
+
+            super(new Map<string, Plugin>());
+        }
 
         deserialize(jquery: JQuery): Htme.Component.Structure.Structure | null
         {
             let structure;
 
             for(let [k, value] of this) {
-               // console.log(value);
+
                 structure = value.deserialize(jquery);
 
                 if(structure) {
@@ -24,10 +31,6 @@ namespace Htme.Plugin {
             return null;
         }
 
-        plugin(Plugin) {
-
-        }
-
         process(structure: Htme.Component.Structure.Structure)
         {
             for(let [k, value] of this) {
@@ -35,5 +38,6 @@ namespace Htme.Plugin {
                 value.process(structure);
             }
         }
+
     }
 }

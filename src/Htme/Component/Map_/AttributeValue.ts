@@ -25,12 +25,12 @@ namespace Htme.Component.Map_ {
 
         toString() : string {
 
-            return super.map().toString();
+            return this.map().toString();
         }
 
         protected commit() : this {
 
-            this.attributes.set(this.name, this.toString());
+            this.attributes.set(this.name, super.map().toString());
 
             return this;
         }
@@ -58,9 +58,8 @@ namespace Htme.Component.Map_ {
 
         set(key: string, value: string): this {
 
-            let map = this.map();
-            map.set(key, value);
-
+            super.set(key, value);
+          //  console.log(super.map()[Symbol.iterator]());
             this.commit();
 
             return this;
