@@ -36,15 +36,15 @@ namespace Htme {
 
             for(let k in ordered) {
 
-                let Loader = ordered[k];
+                let loader = ordered[k];
 
-                let plugin = Loader.create(map);
+                let plugin = loader.create(map);
 
                 map.set(k, plugin);
             }
-
+            console.log(map);
             this.container = new Structure(selector, map);
-           // console.log(this.container);
+
         }
 
 

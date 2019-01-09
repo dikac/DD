@@ -92,11 +92,21 @@ namespace Htme.Component.Map_ {
 
             if(data) {
 
-                let parsed = JSON.parse(data);
-                for(let k in parsed) {
+                try {
 
-                    super.map().set(k, parsed[k]);
+                    let parsed = JSON.parse(data);
+
+                    for(let k in parsed) {
+
+                        super.map().set(k, parsed[k]);
+                    }
+
+                } catch (e) {
+
+                    console.log(data);
+                    throw e;
                 }
+
             }
 
             // let src = this.attributes.get(this.name);
