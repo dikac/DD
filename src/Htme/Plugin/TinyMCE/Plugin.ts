@@ -6,7 +6,7 @@ namespace Htme.Plugin.TinyMCE {
     import Data = Htme.Component.Map_.Data;
     import Attributes = Htme.Component.Map_.Attributes;
 
-
+    const Handle = 'tinyMCE';
 
     export class Plugin implements PluginInterface {
 
@@ -23,12 +23,15 @@ namespace Htme.Plugin.TinyMCE {
         deserialize(jquery : JQuery): Structure|null
         {
             let data = new Data(new Attributes(jquery));
-            //data.h
             return null;
         }
 
         process(structure : Structure) {
 
+            let data = new Data(structure.attributes);
+            if(data.handle().is('content') || data.type()) {
+
+            }
         }
 
     }

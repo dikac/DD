@@ -1,11 +1,13 @@
 ///<reference path="../Element/SetElement.ts"/>
 ///<reference path="./Panel/Menu/Item/Click.ts"/>
 ///<reference path="../Map_/Data.ts"/>
+///<reference path="../Set_/AttributeValue.ts"/>
 namespace Htme.Component.Structure {
 
     import StructureInterface = Htme.Component.Structure.Structure;
     import SetElement = Htme.Component.Element.SetElement;
     import Data = Htme.Component.Map_.Data;
+    import AttributeValue = Htme.Component.Set_.AttributeValue;
 
     export class Container extends SetElement<StructureInterface> implements StructureInterface {
 
@@ -43,6 +45,8 @@ namespace Htme.Component.Structure {
             data.type().set(type);
 
             handler.process(this);
+
+            (new AttributeValue(this.attributes, 'class')).add(IDENTIFIER);
         }
 
         get panel() : Htme.Component.Structure.Panel.Panel {

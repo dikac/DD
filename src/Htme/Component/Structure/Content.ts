@@ -4,6 +4,7 @@ namespace Htme.Component.Structure {
     import StructureInterface = Htme.Component.Structure.Structure;
     import StdPanel = Htme.Component.Structure.Panel.Standard;
     import Data = Htme.Component.Map_.Data;
+    import AttributeValue = Htme.Component.Set_.AttributeValue;
 
     export class Content extends Htme.Component.Element.String implements StructureInterface {
 
@@ -30,6 +31,8 @@ namespace Htme.Component.Structure {
             this.$panel.get('window');
 
             this.attachPanel();
+
+            (new AttributeValue(this.attributes, 'class')).add(IDENTIFIER);
         }
 
         get panel() : Htme.Component.Structure.Panel.Panel
